@@ -1,0 +1,11 @@
+<% if @queue_list.empty? %>
+  Empty
+<% else %>
+  <ol>
+  <% @queue_list.each do |queue| %>
+
+    <li><%= image_tag("icon/music_48x48.png", :size => "24x24", :class=> "entity_icon") %><%= queue.name %><%= link_to("取消", {:action => "remove", :id => queue}, :class => "queue_remove") %></li>
+
+  <% end %>
+  </ol>
+<% end %>

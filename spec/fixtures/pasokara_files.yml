@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+amalove:
+  id: 1
+  name: "あまらぶ.mp4"
+  fullpath: "E:\pasokara\C&C\あまらぶ.mp4"
+  directory_id: 1
+  rootpath: "E:\pasokara"
+#
+# two:
+#   column: value

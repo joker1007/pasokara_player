@@ -1,0 +1,18 @@
+<%= javascript_include_tag :defaults  %>
+
+<%= periodically_call_remote(:url => {:action => "list"}, :frequency => 5) %>
+
+<h1>queue list</h1>
+<div id="queue_table">
+<% if @queue_list.empty? %>
+  Empty
+<% else %>
+  <ol>
+  <% @queue_list.each do |queue| %>
+
+    <li><%= image_tag("icon/music_48x48.png", :size => "24x24", :class=> "entity_icon") %><%= queue.name %><%= link_to("取消", {:action => "remove", :id => queue}, :class => "queue_remove") %></li>
+
+  <% end %>
+  </ol>
+<% end %>
+</div>

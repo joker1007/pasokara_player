@@ -1,0 +1,14 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+cool_and_create:
+  id: 1
+  name: "C&C"
+  fullpath: "E:\pasokara\C&C"
+  rootpath: "E:\pasokara"
+
+amanerio:
+  id: 2
+  name: "あまねりお"
+  fullpath: "E:\pasokara\C&C\あまねりお"
+  directory_id: 1
+  rootpath: "E:\pasokara"
