@@ -18,11 +18,15 @@ class QueuedFile < ActiveRecord::Base
 
   def play
     sleep PRE_SLEEP
-    @@growl.notify({
-      :name => "Play",
-      :title => "Playing",
-      :text => "#{name}を再生します",
-    })
+    begin
+      @@growl.notify({
+        :name => "Play",
+        :title => "#{name}",
+        :text => "#{name}を再生します",
+      })
+    rescue Exception
+      puts "Growl failed"
+    end
     if (TWEET) 
       tweet
     end
@@ -37,11 +41,15 @@ class QueuedFile < ActiveRecord::Base
 
   def self.enq(pasokara)
     QueuedFile.create :name => pasokara.name, :fullpath => pasokara.fullpath
-    @@growl.notify({
-      :name => "Queue",
-      :title => "Queueing",
-      :text => "#{pasokara.name}を予約しました",
-    })
+    begin
+      @@growl.notify({
+        :name => "Queue",
+        :title => "#{pasokara.name}",
+        :text => "#{pasokara.name}を予約しました",
+      })
+    rescue Exception
+      puts "Growl failed"
+    end
   end
 
   def self.deq
