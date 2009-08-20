@@ -5,7 +5,10 @@
 <% form_tag :controller => 'pasokara', :action => 'search' do %>
   <%= search_form %>
 <% end %>
-
+<% form_tag :controller => 'pasokara', :action => 'tag_search' do %>
+  <%= tag_search_form %>
+<% end %>
+<%= all_tag_list %>
 <% @grouping.each do |rootpath, dirs| %>
   <h2><%= h rootpath %></h2>
   <ul>

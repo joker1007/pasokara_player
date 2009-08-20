@@ -1,6 +1,8 @@
 require 'kconv'
 
 class PasokaraFile < ActiveRecord::Base
+  acts_as_taggable_on :tags
+
   belongs_to :directory
 
   validates_uniqueness_of :fullpath
