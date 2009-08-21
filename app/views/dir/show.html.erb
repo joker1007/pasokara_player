@@ -1,12 +1,6 @@
 <%= image_tag("icon/arrow_up_48.png", :size => "24x24") %><%= link_to("Go Up Directory", :action => 'show', :id => @dir.directory) %><br />
-<%= image_tag("icon/kghostview.png", :size => "24x24") %><%= link_to("予約確認", :controller => 'queue', :action => 'list') %>
 <h1><%= image_tag("icon/elastic_movie.png", :class => "parent_dir", :size => "32x32") %><%= h @dir.name %></h1>
-<% form_tag :controller => 'pasokara', :action => 'search' do %>
-  <%= search_form %>
-<% end %>
-<% form_tag :controller => 'pasokara', :action => 'tag_search' do %>
-  <%= tag_search_form %>
-<% end %>
+<%= render 'layouts/search_header' %>
 <ul>
   <%= entity_li(@entities) %>
 </ul>

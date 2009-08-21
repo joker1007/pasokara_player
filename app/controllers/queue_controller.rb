@@ -1,5 +1,6 @@
 class QueueController < ApplicationController
-  layout "dir"
+  layout 'pasokara_player'
+
 
   def list
     @queue_list = QueuedFile.find(:all, :order => "created_at")

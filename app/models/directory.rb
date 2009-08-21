@@ -1,12 +1,12 @@
 class Directory < ActiveRecord::Base
-  has_many :directories
-  has_many :pasokara_files
+  has_many :directories, :order => 'name'
+  has_many :pasokara_files, :order => 'name'
   belongs_to :directory
 
   validates_uniqueness_of :fullpath
 
   def entities
-    (directories + pasokara_files).sort {|a, b| a.name <=> b.name}
+    (directories + pasokara_files)
   end
 
   def self.struct_all(force = false)

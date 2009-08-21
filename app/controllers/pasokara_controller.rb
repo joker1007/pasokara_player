@@ -1,4 +1,6 @@
 class PasokaraController < ApplicationController
+  layout 'pasokara_player'
+
   def queue
     @pasokara = PasokaraFile.find(params[:id])
     QueuedFile.enq @pasokara

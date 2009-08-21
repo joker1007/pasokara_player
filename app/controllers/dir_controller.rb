@@ -1,4 +1,6 @@
 class DirController < ApplicationController
+  layout 'pasokara_player'
+
   def index
     @top_dirs = Directory.find(:all, :conditions => ["directory_id is null"], :order => "rootpath, name")
     @grouping = {}
