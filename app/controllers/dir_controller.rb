@@ -18,8 +18,7 @@ class DirController < ApplicationController
     @dir = Directory.find(params[:id])
     sub_dirs = @dir.directories.paginate(:all, :page => params[:page], :per_page => 50)
     pasokara_files = @dir.pasokara_files.paginate(:all, :page => params[:page], :per_page => 50)
-    @entities = (sub_dirs + pasokara_files).sort {|a, b| a.name <=> b.name}
-    @paging_target = sub_dirs.total_pages > pasokara_files.total_pages ? sub_dirs : pasokara_files
+    @entities = @dir.entities.paginate(:page => params[:page], :per_page => 50)
   end
 
 end
