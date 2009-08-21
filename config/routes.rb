@@ -7,6 +7,12 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample of named route:
   #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
+  map.search 'search/:query', :controller => 'pasokara', :action => 'search'
+  map.tag_search 'tag_search/:tag', :controller => 'pasokara', :action => 'tag_search'
+  map.tag_remove 'tag_remove/:id/:tag', :controller => 'pasokara', :action => 'remove_tag'
+  map.tagging 'tagging/:id', :controller => 'pasokara', :action => 'tagging'
+  map.tag_form_open 'tag_form_open/:id', :controller => 'pasokara', :action => 'open_tag_form'
+  map.tag_form_close 'tag_form_close/:id', :controller => 'pasokara', :action => 'close_tag_form'
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):

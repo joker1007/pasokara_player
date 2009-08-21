@@ -2,7 +2,7 @@ class DirController < ApplicationController
   layout 'pasokara_player'
 
   def index
-    @top_dirs = Directory.find(:all, :conditions => ["directory_id is null"], :order => "rootpath, name")
+    @top_dirs = Directory.find(:all, :conditions => ["directory_id is null"], :order => "rootpath, name", :include => [:directories, :pasokara_files])
     @grouping = {}
     @top_dirs.each do |dir|
       @grouping[dir.rootpath] ||= []
@@ -15,9 +15,7 @@ class DirController < ApplicationController
       redirect_to :action => 'index' and return
     end
 
-    @dir = Directory.find(params[:id])
-    sub_dirs = @dir.directories.paginate(:all, :page => params[:page], :per_page => 50)
-    pasokara_files = @dir.pasokara_files.paginate(:all, :page => params[:page], :per_page => 50)
+    @dir = Directory.find(params[:id], :include => [:directories, :pasokara_files])
     @entities = @dir.entities.paginate(:page => params[:page], :per_page => 50)
   end
 

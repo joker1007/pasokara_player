@@ -22,14 +22,34 @@ class PasokaraController < ApplicationController
   def tagging
     @pasokara = PasokaraFile.find(params[:id])
     tags = params[:tags].split(" ")
+    count = @pasokara.tag_list.size
     @pasokara.tag_list.add tags
     @pasokara.save
-    flash[:notice] = @pasokara.tag_list.join(", ")
-    redirect_to :controller => "dir", :action => "index"
+    if request.xhr?
+      render :update do |page|
+        tag_idx = 0
+        tags.each do |tag|
+          page.insert_html :bottom, "tag-line-box-#{@pasokara.id}", tag_line_edit(@pasokara, tag, count+tag_idx+1)
+        end
+      end
+    else
+      flash[:notice] = @pasokara.tag_list.join(", ")
+      redirect_to :controller => "dir", :action => "index"
+    end
   end
 
-  def edit_tag
-    @pasokara = Pasokara.find(params[:id])
+  def open_tag_form
+    @pasokara = PasokaraFile.find(params[:id])
+    render :update do |page|
+      page.replace "tag-list-#{@pasokara.id}", tag_list_edit(@pasokara)
+    end
+  end
+
+  def close_tag_form
+    @pasokara = PasokaraFile.find(params[:id])
+    render :update do |page|
+      page.replace "tag-list-#{@pasokara.id}", tag_list(@pasokara)
+    end
   end
 
   def remove_tag
