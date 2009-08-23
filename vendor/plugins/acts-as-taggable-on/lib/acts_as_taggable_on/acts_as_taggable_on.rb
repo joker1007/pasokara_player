@@ -205,7 +205,7 @@ module ActiveRecord
             :joins      => joins.join(" "),
             :conditions => conditions,
             :group      => group_by
-          }
+          }.merge(options)
         end    
         
         def is_taggable?

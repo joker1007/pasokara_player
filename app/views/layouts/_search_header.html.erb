@@ -1,9 +1,5 @@
 <%= image_tag("icon/kghostview.png", :size => "24x24") %><%= link_to("予約確認", :controller => 'queue', :action => 'list') %><br />
 <br />
-<% form_tag :controller => 'pasokara', :action => 'search' do %>
-  <%= search_form %>
-<% end %>
-<% form_tag :controller => 'pasokara', :action => 'tag_search' do %>
-  <%= tag_search_form %>
-<% end %>
+<%- search_form -%>
+<%- tag_search_form -%>
 <%= all_tag_list %>

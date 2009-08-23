@@ -63,20 +63,26 @@ module ApplicationHelper
   end
 
   def search_form
-    content_tag(:label, "曲名検索: ") +
-    text_field_tag("query", "", :size => 32) +
-    submit_tag("Search")
+    form_tag_str = form_tag :controller => 'pasokara', :action => 'search' do
+      content_tag(:label, "曲名検索: ") +
+      text_field_tag("query", "", :size => 32) +
+      submit_tag("Search")
+    end
+    form_tag_str
   end
 
   def tag_search_form
-    content_tag(:label, "タグ検索: ") +
-    text_field_tag("tag", "", :size => 32) +
-    submit_tag("Search")
+    form_tag_str = form_tag :controller => 'pasokara', :action => 'tag_search' do
+      content_tag(:label, "タグ検索: ") +
+      text_field_tag("tag", "", :size => 32) +
+      submit_tag("Search")
+    end
+    form_tag_str
   end
 
   def all_tag_list
     tag_str = ""
-    PasokaraFile.tag_counts.each do |t|
+    PasokaraFile.tag_counts(:limit => 20, :order => 'count desc').each do |t|
       tag_str += content_tag("span",
         link_to(t.name, tag_search_path(:tag => t.name)) + "(#{t.count})",
       {:class=> "tag"})

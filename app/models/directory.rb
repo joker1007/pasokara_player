@@ -45,10 +45,42 @@ class Directory < ActiveRecord::Base
           crowl_dir(dir_obj.fullpath, rootdir, dir_obj.id)
         elsif File.extname(entity) =~ /(mpg|avi|flv|ogm|mkv|mp4|wmv|swf)/i
           pasokara_file = PasokaraFile.create(:name => entity.toutf8, :fullpath => dir.toutf8 + "/" + entity.toutf8, :rootpath => rootdir.toutf8, :directory_id => higher_directory_id)
+          tags = self.nico_check(entity, dir)
+          tags.each do |tag|
+            pasokara_file.tag_list.add tag.toutf8
+          end
+          pasokara_file.save
         end
       end
     rescue Errno::ENOENT
       puts "Dir Open Error"
     end
+  end
+
+  def self.nico_check(entity, dir)
+    tag_mode = false
+    tags = []
+
+    info_file = File.basename(entity, ".*") + ".txt"
+    if File.exist?(dir + "/" + info_file)
+      File.open(dir + "/" + info_file) {|file|
+        file.binmode
+        converted = NKF.nkf('-W16L -s', file.read)
+        converted.each_line do |line|
+          if line.chop.empty?
+            tag_mode = false
+          end
+
+          if tag_mode == true
+            tags << line.chop
+          end
+
+          if line.chop == "[tags]"
+            tag_mode = true
+          end
+        end
+      }
+    end
+    tags
   end
 end
