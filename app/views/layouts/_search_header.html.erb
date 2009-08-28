@@ -2,4 +2,4 @@
 <br />
 <%- search_form -%>
 <%- tag_search_form -%>
-<%= all_tag_list %>
+<%= all_tag_list(:limit => 20, :order => "count desc") %>

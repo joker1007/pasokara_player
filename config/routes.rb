@@ -13,6 +13,8 @@ ActionController::Routing::Routes.draw do |map|
   map.tagging 'tagging/:id', :controller => 'pasokara', :action => 'tagging'
   map.tag_form_open 'tag_form_open/:id', :controller => 'pasokara', :action => 'open_tag_form'
   map.tag_form_close 'tag_form_close/:id', :controller => 'pasokara', :action => 'close_tag_form'
+  map.all_tag 'all_tag', :controller => 'pasokara', :action => 'all_tag'
+
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):

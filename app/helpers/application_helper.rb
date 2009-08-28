@@ -80,13 +80,15 @@ module ApplicationHelper
     form_tag_str
   end
 
-  def all_tag_list
+  def all_tag_list(options = {})
+    options.assert_valid_keys :start_at, :end_at, :conditions, :at_least, :at_most, :order, :limit, :on, :id
     tag_str = ""
-    PasokaraFile.tag_counts(:limit => 20, :order => 'count desc').each do |t|
+    PasokaraFile.tag_counts(options).each do |t|
       tag_str += content_tag("span",
         link_to(t.name, tag_search_path(:tag => t.name)) + "(#{t.count})",
       {:class=> "tag"})
     end
-    content_tag("div", content_tag("h3", "タグ一覧") + tag_str, {:class => "all_tag_list"})
+    tag_str += link_to_remote("[全てのタグを表示]", {:url => all_tag_path, :html => {:href => all_tag_path}})
+    content_tag("div", content_tag("h3", "タグ一覧") + tag_str, {:class => "all_tag_list", :id => "all_tag_list"})
   end
 end

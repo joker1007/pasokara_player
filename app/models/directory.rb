@@ -9,6 +9,10 @@ class Directory < ActiveRecord::Base
     (directories + pasokara_files)
   end
 
+  def fullpath_win
+    fullpath.gsub(/\//, "\\").tosjis
+  end
+
   def self.struct_all(force = false)
     if force
       self.destroy_all

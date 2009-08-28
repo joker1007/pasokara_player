@@ -25,6 +25,7 @@ class PasokaraController < ApplicationController
     count = @pasokara.tag_list.size
     @pasokara.tag_list.add tags
     @pasokara.save
+    @pasokara.write_out_tag
     if request.xhr?
       render :update do |page|
         tag_idx = 0
@@ -59,6 +60,7 @@ class PasokaraController < ApplicationController
 
     @pasokara.tag_list.remove tag
     @pasokara.save
+    @pasokara.write_out_tag
 
     if request.xhr?
       render :update do |page|
@@ -67,6 +69,12 @@ class PasokaraController < ApplicationController
     else
       flash[:notice] = "#{@pasokara.name}から#{tag}を削除しました"
       redirect_to :controller => "dir", :action => "index"
+    end
+  end
+
+  def all_tag
+    render :update do |page|
+      page.replace "all_tag_list", all_tag_list(:order => "count desc")
     end
   end
 end
