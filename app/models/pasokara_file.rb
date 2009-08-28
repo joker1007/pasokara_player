@@ -9,8 +9,8 @@ class PasokaraFile < ActiveRecord::Base
 
   def play
     sleep PRE_SLEEP
-    #system("echo \"#{Time.now.to_s} - #{fullpath}\" >> /tmp/pasokara_test")
-    system(MPC_PATH, fullpath_win, "/close")
+    #system(MPC_PATH, fullpath_win, "/close")
+    system(NICOPLAY_PATH, fullpath_win)
   end
 
   def fullpath_win
@@ -33,5 +33,36 @@ class PasokaraFile < ActiveRecord::Base
       }
     rescue Exception
     end
+  end
+
+  def nico_check_tag
+    tag_mode = false
+    tags = []
+
+    info_file = fullpath_win.gsub(/\.[a-zA-Z0-9]+$/, ".txt")
+    if File.exist?(info_file)
+      File.open(info_file) {|file|
+        file.binmode
+        converted = NKF.nkf('-W16L -s', file.read)
+        converted.each_line do |line|
+          if line.chop.empty?
+            tag_mode = false
+          end
+
+          if tag_mode == true
+            tags << line.chop
+          end
+
+          if line.chop == "[tags]"
+            tag_mode = true
+          end
+        end
+      }
+    end
+    tags
+    tags.each do |tag|
+      tag_list.add tag.toutf8
+    end
+    save
   end
 end

@@ -31,8 +31,8 @@ class QueuedFile < ActiveRecord::Base
       tweet
     end
     destroy
-    #system("echo \"#{Time.now.to_s} - #{fullpath}\" >> /tmp/pasokara_test")
-    system(MPC_PATH, fullpath_win, "/close")
+    #system(MPC_PATH, fullpath_win, "/close")
+    system(NICOPLAY_PATH + " \"#{fullpath_win}\"")
   end
 
   def fullpath_win
