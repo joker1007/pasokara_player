@@ -36,7 +36,9 @@ class QueuedFile < ActiveRecord::Base
 
   def self.deq
     queue = QueuedFile.find(:first, :order => "created_at")
-    queue.destroy
+    if queue
+      queue.destroy
+    end
     queue
   end
 
