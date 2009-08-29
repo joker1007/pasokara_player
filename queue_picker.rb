@@ -16,15 +16,17 @@ end
 
 ActiveRecord::Base.establish_connection(db_setting[AR_ENV])
 
-require 'app/models/queued_file.rb'
+#require 'app/models/queued_file.rb'
+#require 'app/models/pasokara_file.rb'
 
 puts "キューピッカー起動"
 while true
   begin
     queue = QueuedFile.deq
     if queue
-      puts "Playing:: #{queue.name.tosjis}"
-      queue.play
+      pasokara = queue.pasokara_file
+      puts "Playing:: #{pasokara.name.tosjis}"
+      pasokara.play
     end
     sleep 1
   rescue ActiveRecord::ActiveRecordError

@@ -50,6 +50,9 @@ class Directory < ActiveRecord::Base
         elsif File.extname(entity) =~ /(mpg|avi|flv|ogm|mkv|mp4|wmv|swf)/i
           pasokara_file = PasokaraFile.new(:name => entity.toutf8, :fullpath => dir.toutf8 + "/" + entity.toutf8, :rootpath => rootdir.toutf8, :directory_id => higher_directory_id)
           pasokara_file.nico_check_tag
+          pasokara_file.nico_check_thumb
+          pasokara_file.nico_check_comment
+          pasokara_file.save
         end
       end
     rescue Errno::ENOENT

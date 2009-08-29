@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090820104614) do
+ActiveRecord::Schema.define(:version => 20090828093638) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -47,15 +47,17 @@ ActiveRecord::Schema.define(:version => 20090820104614) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "rootpath"
+    t.string   "comment_file"
+    t.string   "thumb_file"
   end
 
   create_table "queued_files", :force => true do |t|
-    t.string   "name",                          :null => false
-    t.string   "fullpath",                      :null => false
-    t.boolean  "finished",   :default => false
+    t.integer  "pasokara_file_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "queued_files", ["pasokara_file_id"], :name => "index_queued_files_on_pasokara_file_id"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
