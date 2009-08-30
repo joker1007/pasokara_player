@@ -110,8 +110,8 @@ class PasokaraFile < ActiveRecord::Base
   private
   def tweet
     begin
-      oauth = ::Twitter::OAuth.new('am8c14QPRrO9MZ32M0WoQ', 'BcPeTLZfRBJRigklbTektpisaqxZPuLdi5hg7pX3ows')
-      oauth.authorize_from_access('6592592-oerbccD0sozNOrtM1PTSBD5DXoc106paNZJJvawbWz', 'PUKJqbnw4kOsH3xhcixlub4X306M3C3sUtsKjOGA')
+      oauth = ::Twitter::OAuth.new(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
+      oauth.authorize_from_access(TWITTER_AUTH_KEY, TWITTER_AUTH_SECRET)
       client = ::Twitter::Base.new(oauth)
       client.update("歌ってるなう::#{File.basename(name, ".*")}")
     rescue Exception

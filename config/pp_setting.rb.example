@@ -1,0 +1,12 @@
+PASOKARA_DIRS = [
+"Directory path",
+]
+PRE_SLEEP = 5
+MPC_PATH = 'c:\mpc.exe'
+NICOPLAY_PATH = 'c:\uwsc.exe'
+WIN32 = true
+TWEET = true
+TWITTER_CONSUMER_KEY = "consumer_key"
+TWITTER_CONSUMER_SECRET = "consumer_secret"
+TWITTER_AUTH_KEY = "auth_key"
+TWITTER_AUTH_SECRET = "secret"

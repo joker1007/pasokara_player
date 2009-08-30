@@ -40,9 +40,4 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
-PASOKARA_DIRS = File.open(File.join(File.dirname(__FILE__), 'pasokara_dir_setting')) {|file| file.readlines}.map {|line| line.chomp}
-PRE_SLEEP = 5
-MPC_PATH = 'C:\Documents and Settings\joker\My Documents\toolz\Media Player Classic\mplayerc.exe'
-NICOPLAY_PATH = 'G:\uwsc44b\UWSC.exe G:\uwsc44b\nicoplayer_launch.uws'
-WIN32 = true
-TWEET = true
+require File.join(File.dirname(__FILE__), 'pp_setting')
