@@ -16,9 +16,6 @@ end
 
 ActiveRecord::Base.establish_connection(db_setting[AR_ENV])
 
-#require 'app/models/queued_file.rb'
-#require 'app/models/pasokara_file.rb'
-
 puts "キューピッカー起動"
 while true
   begin

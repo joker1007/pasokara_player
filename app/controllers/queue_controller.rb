@@ -3,7 +3,7 @@ class QueueController < ApplicationController
 
 
   def list
-    @queue_list = QueuedFile.find(:all, :order => "created_at")
+    @queue_list = QueuedFile.find(:all, :order => "created_at", :include => :pasokara_file)
     if request.xhr?
       render :update do |page|
         page.replace_html("queue_table", :partial => "list", :object => @queue_list)

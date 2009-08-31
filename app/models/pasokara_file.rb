@@ -25,6 +25,17 @@ class PasokaraFile < ActiveRecord::Base
 
   def play
     sleep PRE_SLEEP
+    notify
+    system(MPC_PATH, fullpath_win, "/close")
+    #system(NICOPLAY_PATH + " \"#{fullpath_win}\"")
+  end
+
+  def play_cmd
+    notify
+    "\"#{MPC_PATH}\" \"#{fullpath_win}\" /close"
+  end
+
+  def notify
     begin
       @@growl.notify({
         :name => "Play",
@@ -37,8 +48,6 @@ class PasokaraFile < ActiveRecord::Base
     if (TWEET) 
       tweet
     end
-    system(MPC_PATH, fullpath_win, "/close")
-    #system(NICOPLAY_PATH + " \"#{fullpath_win}\"")
   end
 
   def fullpath_win
