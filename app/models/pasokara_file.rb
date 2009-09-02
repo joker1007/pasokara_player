@@ -9,33 +9,38 @@ class PasokaraFile < ActiveRecord::Base
 
   validates_uniqueness_of :fullpath
 
-  @@growl = GNTP.new("Ruby/GNTP Pasokara Player")
-  @@growl.register({
-    :notifications => [
-      {
-        :name => "Queue",
-        :enabled => true,
-      },
-      {
-        :name => "Play",
-        :enabled => true,
-      },
-    ]
-  })
+  begin
+    @@growl = GNTP.new("Ruby/GNTP Pasokara Player")
+    @@growl.register({
+      :notifications => [
+        {
+          :name => "Queue",
+          :enabled => true,
+        },
+        {
+          :name => "Play",
+          :enabled => true,
+        },
+      ]
+    })
+  rescue Exception
+    @@growl = nil
+    puts "NoGrowl"
+  end
 
   def play
     sleep PRE_SLEEP
-    notify
+    play_notify
     system(MPC_PATH, fullpath_win, "/close")
     #system(NICOPLAY_PATH + " \"#{fullpath_win}\"")
   end
 
   def play_cmd
-    notify
+    play_notify
     "\"#{MPC_PATH}\" \"#{fullpath_win}\" /close"
   end
 
-  def notify
+  def play_notify
     begin
       @@growl.notify({
         :name => "Play",

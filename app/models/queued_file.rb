@@ -3,19 +3,24 @@ require 'ruby_gntp'
 class QueuedFile < ActiveRecord::Base
   belongs_to :pasokara_file
 
-  @@growl = GNTP.new("Ruby/GNTP Pasokara Player")
-  @@growl.register({
-    :notifications => [
-      {
-        :name => "Queue",
-        :enabled => true,
-      },
-      {
-        :name => "Play",
-        :enabled => true,
-      },
-    ]
-  })
+  begin
+    @@growl = GNTP.new("Ruby/GNTP Pasokara Player")
+    @@growl.register({
+      :notifications => [
+        {
+          :name => "Queue",
+          :enabled => true,
+        },
+        {
+          :name => "Play",
+          :enabled => true,
+        },
+      ]
+    })
+  rescue Exception
+    @@growl = nil
+    puts "NoGrowl"
+  end
 
 
   def self.enq(pasokara)

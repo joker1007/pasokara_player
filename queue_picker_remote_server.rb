@@ -24,6 +24,7 @@ class QueuePickerServer
       queue = QueuedFile.deq
       if queue
         pasokara = queue.pasokara_file
+        puts pasokara.play_cmd + "\n"
         return pasokara.play_cmd
       end
       return nil
@@ -38,12 +39,34 @@ class QueuePickerServer
       queue = QueuedFile.deq
       if queue
         pasokara = queue.pasokara_file
-        pasokara.notify
+        puts pasokara.fullpath_win + "\n"
+        pasokara.play_notify
         return pasokara.fullpath_win
       end
       return nil
     rescue ActiveRecord::ActiveRecordError
       puts $@
+      return nil
+    end
+  end
+
+  def create_directory(attributes = {})
+    directory = Directory.new(attributes)
+    if directory.save
+      puts directory.inspect
+      return directory.id
+    else
+      return nil
+    end
+  end
+
+  def create_pasokara_file(attributes = {}, tags = [])
+    pasokara_file = PasokaraFile.new(attributes)
+    pasokara_file.tag_list.add tags
+    if pasokara_file.save
+      puts pasokara_file.inspect
+      return pasokara_file.id
+    else
       return nil
     end
   end

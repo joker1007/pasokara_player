@@ -2,6 +2,8 @@ require 'rubygems'
 require 'drb/drb'
 require 'win32/process'
 
+$KCODE = 's'
+
 include Windows::Synchronize
 include Windows::Process
 include Windows::Handle
@@ -13,6 +15,17 @@ class QueuePickerClient
     @remote_queue_picker = DRbObject.new_with_uri("druby://" + ARGV[0]) #キューピッカーサーバーに接続
     @player_thread = nil
     @playing = false
+	
+	player_setting = File.open(File.join(File.dirname(__FILE__), "pasokara_player_setting.txt")) {|file| file.gets.chop}
+    player_setting.gsub!(/%f/, '#{@file_path}')
+    player_setting.gsub!(/\\/, "\\\\\\")
+    player_setting.gsub!(/\"/, '\"')
+  # 再生コマンド定義。再生対象ファイルのパスは@file_pathで参照できる
+	self.class.class_eval <<-RUBY
+		def play_cmd
+			"#{player_setting}"
+		end
+	RUBY
   end
 
   def play_loop
@@ -33,6 +46,7 @@ class QueuePickerClient
               puts "PlayerThread start"
               @playing = true
               puts "Play Start" + Thread.current.inspect
+              puts play_cmd
               pi = Process.create("app_name" => play_cmd)
               handle = OpenProcess(PROCESS_ALL_ACCESS, 0, pi.process_id)
               until WaitForSingleObject(handle, 0) == WAIT_OBJECT_0
@@ -62,10 +76,6 @@ class QueuePickerClient
     end
   end
 
-  # 再生コマンド定義。再生対象ファイルのパスは@file_pathで参照できる
-  def play_cmd
-    'G:\nicoplayer\NicoPlayer.exe' + ' ' + "\"#{@file_path}\""
-  end
 
 end
 

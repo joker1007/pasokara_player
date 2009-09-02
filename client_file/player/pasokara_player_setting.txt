@@ -1,0 +1,1 @@
+G:\nicoplayer\NicoPlayer.exe "%f"
