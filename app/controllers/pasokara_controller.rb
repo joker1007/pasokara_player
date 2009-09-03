@@ -1,5 +1,6 @@
 class PasokaraController < ApplicationController
   layout 'pasokara_player'
+  caches_page :search, :tag_search
 
   def queue
     @pasokara = PasokaraFile.find(params[:id])

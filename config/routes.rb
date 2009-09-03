@@ -7,8 +7,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample of named route:
   #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  map.search 'search/:query', :controller => 'pasokara', :action => 'search'
-  map.tag_search 'tag_search/:tag', :controller => 'pasokara', :action => 'tag_search'
+  map.search 'search/:query/:page', :controller => 'pasokara', :action => 'search', :page => nil
+  map.tag_search 'tag_search/:tag/:page', :controller => 'pasokara', :action => 'tag_search', :page => nil
   map.tag_remove 'tag_remove/:id/:tag', :controller => 'pasokara', :action => 'remove_tag'
   map.tagging 'tagging/:id', :controller => 'pasokara', :action => 'tagging'
   map.tag_form_open 'tag_form_open/:id', :controller => 'pasokara', :action => 'open_tag_form'
@@ -48,4 +48,6 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing or commenting them out if you're using named routes and resources.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
+  map.connect ':controller/:action/:id/:page'
+  map.connect ':controller/:action/:id/:page.:format'
 end
