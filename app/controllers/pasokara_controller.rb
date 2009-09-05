@@ -6,7 +6,7 @@ class PasokaraController < ApplicationController
     @pasokara = PasokaraFile.find(params[:id])
     QueuedFile.enq @pasokara
     flash[:notice] = "#{@pasokara.name} の予約が完了しました"
-    redirect_to :controller => "dir", :action => "show", :id => @pasokara.directory.id
+    redirect_to root_path
   end
 
   def search

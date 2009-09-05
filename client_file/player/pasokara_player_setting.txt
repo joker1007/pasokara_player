@@ -1,1 +1,1 @@
-G:\nicoplayer\NicoPlayer.exe "%f"
+"C:\Documents and Settings\joker\My Documents\toolz\nicoplayer109\nicoplayer109\NicoPlayer.exe" "%f"
