@@ -26,7 +26,6 @@ class PasokaraController < ApplicationController
     count = @pasokara.tag_list.size
     @pasokara.tag_list.add tags
     @pasokara.save
-    @pasokara.write_out_tag
     if request.xhr?
       render :update do |page|
         tag_idx = 0
@@ -61,7 +60,6 @@ class PasokaraController < ApplicationController
 
     @pasokara.tag_list.remove tag
     @pasokara.save
-    @pasokara.write_out_tag
 
     if request.xhr?
       render :update do |page|

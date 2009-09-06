@@ -60,6 +60,11 @@ class PasokaraFile < ActiveRecord::Base
   end
 
   def write_out_tag
+    
+    unless File.exist?(fullpath_win)
+      return false
+    end
+
     tag_file = directory.fullpath_win + "/" + File.basename(name.tosjis, ".*") + ".txt"
     buff = ""
 
@@ -73,7 +78,9 @@ class PasokaraFile < ActiveRecord::Base
         file.binmode
         file.write NKF.nkf("-W8 -w16L", buff)
       }
+      return true
     rescue Exception
+      return false
     end
   end
 

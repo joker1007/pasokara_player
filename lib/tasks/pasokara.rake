@@ -5,6 +5,13 @@ namespace :pasokara do
   task :struct do
     Directory.struct_all
   end
+
+  desc 'Write Out TagFile from DB'
+  task :write_tag do
+    PasokaraFile.find(:all).each do |p|
+      p.write_out_tag
+    end
+  end
 end
 
 namespace :queue do
