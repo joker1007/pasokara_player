@@ -7,7 +7,9 @@ class PasokaraFile < ActiveRecord::Base
 
   belongs_to :directory
 
-  validates_uniqueness_of :fullpath
+  validates_uniqueness_of :fullpath, :scope => [:computer_name]
+
+  before_validation_on_create :md5_check
 
   begin
     @@growl = GNTP.new("Ruby/GNTP Pasokara Player")
@@ -137,6 +139,19 @@ class PasokaraFile < ActiveRecord::Base
       client.update("歌ってるなう::#{File.basename(name, ".*")}")
     rescue Exception
       puts "Tweet Failed."
+    end
+  end
+
+  def md5_check
+    already_record = self.class.find_by_md5_hash_and_computer_name(md5_hash, computer_name)
+    if already_record
+      if already_record.tag_list.empty? && !self.tag_list.empty?
+        already_record.destroy
+      else
+        errors.add("md5_hash", "is duprecated")
+      end
+    else
+      true
     end
   end
 end

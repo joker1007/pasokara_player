@@ -6,6 +6,7 @@ class CreatePasokaraFiles < ActiveRecord::Migration
       t.integer :directory_id
       t.timestamps
     end
+    add_index :pasokara_files, :directory_id
   end
 
   def self.down

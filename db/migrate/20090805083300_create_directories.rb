@@ -6,6 +6,7 @@ class CreateDirectories < ActiveRecord::Migration
       t.integer :directory_id
       t.timestamps
     end
+    add_index :directories, :directory_id
   end
 
   def self.down
