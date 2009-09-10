@@ -9,7 +9,7 @@ class PasokaraFile < ActiveRecord::Base
 
   validates_uniqueness_of :fullpath, :scope => [:computer_name]
 
-  before_validation_on_create :md5_check
+  after_validation_on_create :md5_check
 
   begin
     @@growl = GNTP.new("Ruby/GNTP Pasokara Player")
@@ -145,11 +145,8 @@ class PasokaraFile < ActiveRecord::Base
   def md5_check
     already_record = self.class.find_by_md5_hash_and_computer_name(md5_hash, computer_name)
     if already_record
-      if already_record.tag_list.empty? && !self.tag_list.empty?
-        already_record.destroy
-      else
-        errors.add("md5_hash", "is duprecated")
-      end
+      self.tag_list.add already_record.tag_list
+      already_record.destroy
     else
       true
     end
