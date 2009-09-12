@@ -3,11 +3,12 @@
 module ApplicationHelper
   def entity_li(entities)
     tag_str = ""
+    icon_size = request.mobile? ? "12x12" : "24x24"
     entities.each do |entity|
       if entity.class == Directory and !entity.entities.empty?
-        tag_str += "<li class=\"dir\">#{image_tag("icon/elastic_movie.png", :size => "24x24", :class=> "entity_icon")}#{link_to(h(entity.name), :action => 'show', :id => entity)}</li>\n"
+        tag_str += "<li class=\"dir\">#{image_tag("icon/elastic_movie.png", :size => icon_size, :class=> "entity_icon")}#{link_to(h(entity.name), :action => 'show', :id => entity)}</li>\n"
       elsif entity.class == PasokaraFile
-        tag_str += "<li class=\"pasokara\">#{image_tag("icon/music_48x48.png", :size => "24x24", :class=> "entity_icon")}#{link_to(h(entity.name), :controller => 'pasokara', :action => 'queue', :id => entity)}</li>\n"
+        tag_str += "<li class=\"pasokara\">#{image_tag("icon/music_48x48.png", :size => icon_size, :class=> "entity_icon")}#{link_to(h(entity.name), :controller => 'pasokara', :action => 'queue', :id => entity)}</li>\n"
         tag_str += tag_box(entity)
       end
     end
@@ -88,6 +89,7 @@ module ApplicationHelper
       tag_str += content_tag("span",
         link_to(t.name, tag_search_path(:tag => t.name, :page => nil)) + "(#{t.count})",
       {:class=> "tag"})
+      tag_str += "\n"
     end
     tag_str += link_to_remote("[全てのタグを表示]", {:url => all_tag_path, :html => {:href => all_tag_path}})
     content_tag("div", content_tag("h3", "タグ一覧") + tag_str, {:class => "all_tag_list", :id => "all_tag_list"})

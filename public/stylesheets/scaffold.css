@@ -6,6 +6,10 @@ body, p, ol, ul, td {
   line-height: 20px;
 }
 
+ul {
+  padding-left: 3px;
+}
+
 li {
   margin-top: 8px;
   margin-bottom: 4px;
@@ -47,6 +51,7 @@ div.all_tag_list {
 span.tag {
   margin-right: 10px;
   line-height: 40px;
+  white-space: nowrap;
 }
 
 span.tag img {
