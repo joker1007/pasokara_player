@@ -1,3 +1,4 @@
+# _*_ coding: utf-8 _*_
 require File.dirname(__FILE__) + '/../../config/environment'
 
 namespace :pasokara do

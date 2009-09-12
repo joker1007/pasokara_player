@@ -1,3 +1,4 @@
+# _*_ coding: utf-8 _*_
 class DirController < ApplicationController
   layout 'pasokara_player'
   caches_page :index, :show

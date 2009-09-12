@@ -1,3 +1,4 @@
+# _*_ coding: utf-8 _*_
 require 'kconv'
 require 'ruby_gntp'
 require 'twitter'

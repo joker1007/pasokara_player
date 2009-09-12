@@ -1,3 +1,4 @@
+# _*_ coding: utf-8 _*_
 class Directory < ActiveRecord::Base
   has_many :directories, :order => 'name'
   has_many :pasokara_files, :order => 'name'

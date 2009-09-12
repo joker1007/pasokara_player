@@ -1,3 +1,4 @@
+# _*_ coding: utf-8 _*_
 require 'ruby_gntp'
 
 class QueuedFile < ActiveRecord::Base

@@ -1,3 +1,4 @@
+# _*_ coding: utf-8 _*_
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def entity_li(entities)
