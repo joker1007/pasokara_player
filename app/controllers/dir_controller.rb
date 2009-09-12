@@ -1,7 +1,6 @@
 # _*_ coding: utf-8 _*_
 class DirController < ApplicationController
   layout 'pasokara_player'
-  caches_page :index, :show
 
   def index
     @top_dirs = Directory.find(:all, :conditions => ["directory_id is null"], :order => "rootpath, name", :include => [:directories, :pasokara_files])

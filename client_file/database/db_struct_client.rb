@@ -13,7 +13,7 @@ class DatabaseStructer
 	puts "ディレクトリリスト読み込み\n"
     @pasokara_dirs = File.open(File.join(File.dirname(__FILE__), "pasokara_dir_setting.txt")) {|file|
       file.readlines
-    }.map {|line| line.chop}
+    }.map {|line| line.chomp}
 	@hostname = `hostname`.chomp
   end
 
