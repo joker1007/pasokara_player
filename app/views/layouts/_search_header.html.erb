@@ -2,6 +2,5 @@
 <%= image_tag("icon/kghostview.png", :size => icon_size) %><%= link_to("予約確認", :controller => 'queue', :action => 'list') %><br />
 <br />
 <%- search_form -%>
-<%- tag_search_form -%>
 <% tag_limit = request.mobile? ? 10 : 25 %>
 <%= all_tag_list(:limit => tag_limit, :order => "count desc, tags.name asc") %>

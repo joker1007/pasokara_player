@@ -11,13 +11,10 @@ class PasokaraController < ApplicationController
 
   def search
     @query = params[:query]
-    @pasokaras = PasokaraFile.paginate(:all, :conditions => ["fullpath LIKE ?", "%#{@query}%"], :page => params[:page], :per_page => 50, :order => "name")
-  end
-
-  def tag_search
-    @query = params[:tag].split(" ")
-    @pasokaras = PasokaraFile.tagged_with(@query, :on => :tags, :match_all => true).paginate(:page => params[:page], :per_page => 50)
-    render :action => 'search'
+    @pasokaras = PasokaraFile.find(:all, :conditions => ["fullpath LIKE ?", "%#{@query}%"], :order => "name")
+    @pasokaras += PasokaraFile.tagged_with(@query, :on => :tags, :match_all => true, :order => "name")
+    @pasokaras.sort! {|a, b| a.name <=> b.name }
+    @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => 50)
   end
 
   def tagging

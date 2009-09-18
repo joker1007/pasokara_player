@@ -1,1 +1,1 @@
-"C:\Documents and Settings\joker\My Documents\toolz\nicoplayer109\nicoplayer109\NicoPlayer.exe" "%f"
+"C:\Documents and Settings\joker\My Documents\toolz\mpc2kxp116040_jpn_r5\mplayerc-hc.exe" "%f" /close /fullscreen
