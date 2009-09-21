@@ -15,7 +15,6 @@ class QueueController < ApplicationController
   def remove
     @queue = QueuedFile.find(params[:id])
     @queue.destroy
-    flash[:notice] = "#{@queue.name}の予約が取り消されました"
     redirect_to :action => 'list'
   end
 

@@ -66,7 +66,7 @@ module ApplicationHelper
 
   def search_form
     form_tag_str = form_tag :controller => 'pasokara', :action => 'search', :query => nil, :page => nil do
-      content_tag(:label, "曲名検索: ") +
+      content_tag(:label, "曲名・タグ検索: ") +
       text_field_tag("query", "", :size => 32) +
       submit_tag("Search")
     end

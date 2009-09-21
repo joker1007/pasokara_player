@@ -17,6 +17,13 @@ class PasokaraController < ApplicationController
     @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => 50)
   end
 
+  def tag_search
+    @query = params[:tag].split(" ")
+    @pasokaras = PasokaraFile.tagged_with(@query, :on => :tags, :match_all => true).paginate(:page => params[:page], :per_page => 50)
+    render :action => 'search'
+  end
+
+
   def tagging
     @pasokara = PasokaraFile.find(params[:id])
     tags = params[:tags].split(" ")
