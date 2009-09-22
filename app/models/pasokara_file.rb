@@ -4,6 +4,7 @@ require 'ruby_gntp'
 require 'twitter'
 
 class PasokaraFile < ActiveRecord::Base
+  include OnlineFind
   acts_as_taggable_on :tags
 
   belongs_to :directory

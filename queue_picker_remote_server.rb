@@ -18,6 +18,15 @@ end
 ActiveRecord::Base.establish_connection(db_setting[AR_ENV])
 
 class QueuePickerServer
+  attr_reader :online_computers
+
+  def initialize
+    @online_computers = []
+  end
+
+  def add_online_computer(computer_name)
+    @online_computers << computer_name
+  end
   
   def get_play_cmd
     begin

@@ -77,7 +77,7 @@ class PasokaraController < ApplicationController
 
   def all_tag
     render :update do |page|
-      page.replace "all_tag_list", all_tag_list(:order => "count desc, tags.name asc")
+      page.replace "all_tag_list", all_tag_list(:at_least => 2, :order => "count desc, tags.name asc")
     end
   end
 end
