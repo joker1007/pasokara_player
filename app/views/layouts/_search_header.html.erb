@@ -3,4 +3,6 @@
 <br />
 <%- search_form -%>
 <% tag_limit = request.mobile? ? 10 : 25 %>
-<%= all_tag_list(:limit => tag_limit, :order => "count desc, tags.name asc") %>
+<% cache("all_tag_list_#{tag_limit}") do -%>
+  <%= all_tag_list(:limit => tag_limit, :order => "count desc, tags.name asc") %>
+<% end -%>

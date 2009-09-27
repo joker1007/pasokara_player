@@ -22,7 +22,7 @@ class PasokaraController < ApplicationController
   def tag_search
     @query = params[:tag].split(" ")
     unless fragment_exist?("search_#{@query}_#{params[:page]}")
-      @pasokaras = PasokaraFile.tagged_with(@query, :on => :tags, :match_all => true).paginate(:page => params[:page], :per_page => 50)
+      @pasokaras = PasokaraFile.tagged_with(@query, :on => :tags, :match_all => true, :order => "name").paginate(:page => params[:page], :per_page => 50)
     end
     render :action => 'search'
   end
