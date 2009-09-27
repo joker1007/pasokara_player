@@ -15,6 +15,7 @@ class PasokaraController < ApplicationController
       @pasokaras = PasokaraFile.find(:all, :conditions => ["fullpath LIKE ?", "%#{@query}%"], :order => "name")
       @pasokaras += PasokaraFile.tagged_with(@query, :on => :tags, :match_all => true, :order => "name")
       @pasokaras.sort! {|a, b| a.name <=> b.name }
+      @pasokaras.uniq!
       @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => 50)
     end
   end

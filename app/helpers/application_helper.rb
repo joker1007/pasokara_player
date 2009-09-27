@@ -5,9 +5,9 @@ module ApplicationHelper
     tag_str = ""
     icon_size = request.mobile? ? "12x12" : "24x24"
     entities.each do |entity|
-      if entity.class == Directory and !entity.entities.empty?
+      if entity.class == Directory
         tag_str += "<li class=\"dir\">#{image_tag("icon/elastic_movie.png", :size => icon_size, :class=> "entity_icon")}#{link_to(h(entity.name), :action => 'show', :id => entity)}</li>\n"
-      elsif entity.class == PasokaraFile
+      else
         tag_str += "<li class=\"pasokara\">#{image_tag("icon/music_48x48.png", :size => icon_size, :class=> "entity_icon")}#{link_to(h(entity.name), :controller => 'pasokara', :action => 'queue', :id => entity)}</li>\n"
         tag_str += tag_box(entity)
       end
