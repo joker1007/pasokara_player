@@ -3,11 +3,13 @@ class DirController < ApplicationController
   layout 'pasokara_player'
 
   def index
-    @top_dirs = Directory.find(:all, :conditions => ["directory_id is null"], :order => "rootpath, name", :include => [:directories, :pasokara_files])
-    @grouping = {}
-    @top_dirs.each do |dir|
-      @grouping[dir.rootpath] ||= []
-      @grouping[dir.rootpath] << dir
+    unless fragment_exist?(:action => "index")
+      @top_dirs = Directory.find(:all, :conditions => ["directory_id is null"], :order => "rootpath, name", :include => [:directories, :pasokara_files])
+      @grouping = {}
+      @top_dirs.each do |dir|
+        @grouping[dir.rootpath] ||= []
+        @grouping[dir.rootpath] << dir
+      end
     end
   end
 
@@ -17,7 +19,9 @@ class DirController < ApplicationController
     end
 
     @dir = Directory.find(params[:id], :include => [:directories, :pasokara_files])
-    @entities = @dir.entities.paginate(:page => params[:page], :per_page => 50)
+    unless fragment_exist?(:action => "show", :page => params[:page])
+      @entities = @dir.entities.paginate(:page => params[:page], :per_page => 50)
+    end
   end
 
 end

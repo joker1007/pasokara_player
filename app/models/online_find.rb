@@ -17,10 +17,10 @@ module OnlineFind
     def find(*args)
       begin
         queue_server = DRbObject.new_with_uri("druby://localhost:12345")
+        online_computers = queue_server.nil? ? [] : queue_server.online_computers
       rescue Exception
-        queue_server = nil
+        online_computers = []
       end
-      online_computers = queue_server ? queue_server.online_computers : []
       conditions = [Array.new(online_computers.size, "computer_name = ?").join(" OR ")] + online_computers
 
       with_scope(:find => {:conditions => conditions}) do

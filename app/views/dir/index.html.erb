@@ -1,9 +1,11 @@
 <h1>Pasokara Player</h1>
 
 <%= render 'layouts/search_header' %>
-<% @grouping.each do |rootpath, dirs| %>
-  <h2><%= h rootpath %></h2>
-  <ul>
-    <%= entity_li(dirs) %>
-  </ul>
-<% end %>
+<% cache do -%>
+  <% @grouping.each do |rootpath, dirs| %>
+    <h2><%= h rootpath %></h2>
+    <ul>
+      <%= entity_li(dirs) %>
+    </ul>
+  <% end %>
+<% end -%>

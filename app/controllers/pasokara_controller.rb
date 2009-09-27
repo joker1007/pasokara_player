@@ -11,15 +11,19 @@ class PasokaraController < ApplicationController
 
   def search
     @query = params[:query]
-    @pasokaras = PasokaraFile.find(:all, :conditions => ["fullpath LIKE ?", "%#{@query}%"], :order => "name")
-    @pasokaras += PasokaraFile.tagged_with(@query, :on => :tags, :match_all => true, :order => "name")
-    @pasokaras.sort! {|a, b| a.name <=> b.name }
-    @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => 50)
+    unless fragment_exist?("search_#{@query}_#{params[:page]}")
+      @pasokaras = PasokaraFile.find(:all, :conditions => ["fullpath LIKE ?", "%#{@query}%"], :order => "name")
+      @pasokaras += PasokaraFile.tagged_with(@query, :on => :tags, :match_all => true, :order => "name")
+      @pasokaras.sort! {|a, b| a.name <=> b.name }
+      @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => 50)
+    end
   end
 
   def tag_search
     @query = params[:tag].split(" ")
-    @pasokaras = PasokaraFile.tagged_with(@query, :on => :tags, :match_all => true).paginate(:page => params[:page], :per_page => 50)
+    unless fragment_exist?("search_#{@query}_#{params[:page]}")
+      @pasokaras = PasokaraFile.tagged_with(@query, :on => :tags, :match_all => true).paginate(:page => params[:page], :per_page => 50)
+    end
     render :action => 'search'
   end
 

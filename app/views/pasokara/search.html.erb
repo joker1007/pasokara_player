@@ -1,10 +1,12 @@
 <%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :controller => 'dir', :action => 'index') %><br />
 <h1><%= image_tag("icon/search.png", :class => "parent_dir", :size => "32x32") %><%= h @query %></h1>
 <%= render 'layouts/search_header' %>
-<ul>
-  <%= entity_li(@pasokaras) %>
-</ul>
-<br />
-<%= will_paginate(@pasokaras, :params => {:query => params[:query]}) %>
+<% cache("search_#{@query}_#{params[:page]}") do -%>
+  <ul>
+    <%= entity_li(@pasokaras) %>
+  </ul>
+  <br />
+  <%= will_paginate(@pasokaras, :params => {:query => params[:query]}) %>
+<% end -%>
 <br />
 <%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :controller => 'dir', :action => 'index') %>
