@@ -1,5 +1,6 @@
 require 'drb/drb'
 require 'kconv'
+require 'cgi'
 require 'nkf'
 require 'digest/md5'
 
@@ -77,7 +78,7 @@ class DatabaseStructer
           end
 
           if tag_mode == true
-            tags << line.chop.toutf8
+            tags << CGI.unescapeHTML(line.chop.toutf8)
           end
 
           if line.chop == "[tags]"

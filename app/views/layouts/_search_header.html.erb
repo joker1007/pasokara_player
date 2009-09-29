@@ -2,7 +2,7 @@
 <%= image_tag("icon/kghostview.png", :size => icon_size) %><%= link_to("予約確認", :controller => 'queue', :action => 'list') %><br />
 <br />
 <%- search_form -%>
-<% tag_limit = request.mobile? ? 10 : 25 %>
-<% cache("all_tag_list_#{tag_limit}") do -%>
-  <%= all_tag_list(:limit => tag_limit, :order => "count desc, tags.name asc") %>
+<% cache(@tag_list_cache_key) do -%>
+  <%= header_tag_list(@header_tags, @tag_search_url_builder) %>
 <% end -%>
+<hr />

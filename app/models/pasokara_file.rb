@@ -63,6 +63,12 @@ class PasokaraFile < ActiveRecord::Base
     fullpath.gsub(/\//, "\\").tosjis
   end
 
+  def self.related_tags(tags, limit = 30)
+    tagged = self.tagged_with(tags, :on => :tags, :match_all => true, :order => "pasokara_files.id", :select => "pasokara_files.id")
+    conditions = "taggings.taggable_id IN (" + tagged.map {|p| p.id}.join(",") + ")"
+    self.tag_counts(:conditions => conditions, :limit => limit, :order => "count desc, tags.name asc")
+  end
+
   def write_out_tag
     
     unless File.exist?(fullpath_win)
@@ -114,7 +120,7 @@ class PasokaraFile < ActiveRecord::Base
     end
     tags
     tags.each do |tag|
-      tag_list.add tag.toutf8
+      tag_list.add CGI.unescapeHTML(tag.toutf8)
     end
   end
 

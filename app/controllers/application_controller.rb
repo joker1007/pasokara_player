@@ -8,4 +8,18 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+
+  protected
+  def top_tag_load
+    tag_limit = request.mobile? ? 10 : 30
+    @tag_list_cache_key = "top_tags_#{tag_limit}"
+    unless fragment_exist?(@tag_list_cache_key)
+      options = {:limit => tag_limit, :order => "count desc, tags.name asc"}
+      @header_tags = PasokaraFile.tag_counts(options)
+      @tag_search_url_builder = Proc.new {|t|
+        tag_search_path(:tag => t.name, :page => nil)
+      }
+    end
+    true
+  end
 end

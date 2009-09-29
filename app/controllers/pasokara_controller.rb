@@ -1,6 +1,8 @@
 # _*_ coding: utf-8 _*_
 class PasokaraController < ApplicationController
   layout 'pasokara_player'
+  before_filter :top_tag_load, :except => [:tag_search]
+  before_filter :related_tag_load, :only => [:tag_search]
 
   def queue
     @pasokara = PasokaraFile.find(params[:id])
@@ -11,9 +13,12 @@ class PasokaraController < ApplicationController
 
   def search
     @query = params[:query]
-    unless fragment_exist?("search_#{@query}_#{params[:page]}")
-      @pasokaras = PasokaraFile.find(:all, :conditions => ["fullpath LIKE ?", "%#{@query}%"], :order => "name")
-      @pasokaras += PasokaraFile.tagged_with(@query, :on => :tags, :match_all => true, :order => "name")
+    unless fragment_exist?(:query => @query, :page => params[:page])
+      query_words = @query.split(/[\s　]/)
+      conditions = query_words.inject([""]) {|cond_arr, query| cond_arr[0] += "name LIKE ? AND "; cond_arr << "%#{query}%"}
+      conditions[0] = conditions[0][0..-6]
+      @pasokaras = PasokaraFile.find(:all, :conditions => conditions, :order => "name")
+      @pasokaras += PasokaraFile.tagged_with(query_words, :on => :tags, :match_all => true, :order => "name")
       @pasokaras.sort! {|a, b| a.name <=> b.name }
       @pasokaras.uniq!
       @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => 50)
@@ -21,13 +26,28 @@ class PasokaraController < ApplicationController
   end
 
   def tag_search
-    @query = params[:tag].split(" ")
-    unless fragment_exist?("search_#{@query}_#{params[:page]}")
-      @pasokaras = PasokaraFile.tagged_with(@query, :on => :tags, :match_all => true, :order => "name").paginate(:page => params[:page], :per_page => 50)
+    @query = params[:tag]
+    @tag_words = @query.split("+")
+    if params[:remove]
+      @tag_words.delete params[:remove]
+      if @tag_words.empty?
+        redirect_to(root_path) and return
+      else
+        redirect_to(:action => "tag_search", :tag => @tag_words.join("+")) and return
+      end
+    end
+
+    unless fragment_exist?(:query => @query, :page => params[:page])
+      @pasokaras = PasokaraFile.tagged_with(@tag_words, :on => :tags, :match_all => true, :order => "name").paginate(:page => params[:page], :per_page => 50)
+      
     end
     render :action => 'search'
   end
 
+  def append_search_tag
+    tag = params[:tag] + "+" + params[:append]
+    redirect_to :action => "tag_search", :tag => tag
+  end
 
   def tagging
     @pasokara = PasokaraFile.find(params[:id])
@@ -80,9 +100,18 @@ class PasokaraController < ApplicationController
     end
   end
 
-  def all_tag
-    render :update do |page|
-      page.replace "all_tag_list", all_tag_list(:at_least => 2, :order => "count desc, tags.name asc")
+  protected
+  def related_tag_load
+    @query = params[:tag]
+    @tag_words = @query.split("+")
+
+    tag_limit = request.mobile? ? 10 : 30
+    @tag_list_cache_key = "#{@query}_related_tags_#{tag_limit}"
+    unless fragment_exist?(@tag_list_cache_key)
+      @header_tags = PasokaraFile.related_tags(@tag_words, tag_limit)
+      @tag_search_url_builder = Proc.new {|t|
+        url_for(:action => "append_search_tag", :tag => @query, :append => t.name, :page => nil)
+      }
     end
   end
 end

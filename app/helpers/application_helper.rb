@@ -17,9 +17,10 @@ module ApplicationHelper
 
   def tag_box(entity)
     tag_str = ""
-    tag_str += content_tag("h3", "タグ")
-    tag_str += tag_list(entity)
-    content_tag("div", tag_str, {:id => "tag-box-#{entity.id}", :class => "tag_box"}) + "\n"
+    content_tag("div", :id => "tag-box-#{entity.id}", :class => "tag_box") do
+      content_tag("h3", "タグ") +
+      tag_list(entity)
+    end + "\n"
   end
 
   def tag_list(entity)
@@ -27,7 +28,7 @@ module ApplicationHelper
     tag_idx = 1
     entity.tag_list.each do |p_tag|
       tag_str += content_tag("span",
-        link_to(p_tag, tag_search_path(:tag => p_tag)),
+        link_to(h(p_tag), tag_search_path(:tag => p_tag)),
       {:class => "tag"})
       tag_idx += 1
     end
@@ -59,7 +60,7 @@ module ApplicationHelper
 
   def tag_line_edit(entity, p_tag, tag_idx)
     content_tag("div", content_tag("span",
-      link_to(p_tag, tag_search_path(:tag => p_tag)) + " " +
+      link_to(h(p_tag), tag_search_path(:tag => p_tag)) + " " +
       link_to_remote(image_tag("icon/tag_del_button.png"), {:url => tag_remove_path(:id => entity, :tag => p_tag, :tag_idx => tag_idx), :confirm => "#{p_tag}を削除してよろしいですか？"}, :href => tag_remove_path(:id => entity, :tag => p_tag)),
     {:class => "tag"}), {:id => "tag-#{entity.id}-#{tag_idx}"})
   end
@@ -67,8 +68,10 @@ module ApplicationHelper
   def search_form
     form_tag_str = form_tag :controller => 'pasokara', :action => 'search', :query => nil, :page => nil do
       content_tag(:label, "曲名・タグ検索: ") +
-      text_field_tag("query", "", :size => 32) +
-      submit_tag("Search")
+      text_field_tag("query", params[:query], :size => 32) +
+      submit_tag("Search") +
+      "<br />" +
+      "半角スペースでAND検索"
     end
     form_tag_str
   end
@@ -82,16 +85,29 @@ module ApplicationHelper
     form_tag_str
   end
 
-  def all_tag_list(options = {})
-    options.assert_valid_keys :start_at, :end_at, :conditions, :at_least, :at_most, :order, :limit, :on, :id
-    tag_str = ""
-    PasokaraFile.tag_counts(options).each do |t|
-      tag_str += content_tag("span",
-        link_to(t.name, tag_search_path(:tag => t.name, :page => nil)) + "(#{t.count})",
-      {:class=> "tag"})
-      tag_str += "\n"
-    end
-    tag_str += link_to_remote("[全てのタグを表示]", {:url => all_tag_path, :html => {:href => all_tag_path}})
-    content_tag("div", content_tag("h3", "タグ一覧") + tag_str, {:class => "all_tag_list", :id => "all_tag_list"})
+  def scoped_tags(tags)
+    form_tag(:action => "append_search_tag") +
+    tags.inject("") do |str, t|
+      remove_scope = link_to(image_tag("icon/cancel_16.png"), {:remove => t}, :class => "remove_scope")
+      str += content_tag(:span, h(t) + remove_scope, :class => "scoped_tag") + " > "
+      str
+    end +
+    hidden_field_tag("tag", params[:tag]) +
+    text_field_tag("append", "", :size => 16) +
+    submit_tag("タグ追加") +
+    "</form>"
   end
+
+  def header_tag_list(tags, url_builder)
+    content_tag(:div, :class => "all_tag_list", :id => "all_tag_list") do 
+      content_tag("h3", "タグ一覧") +
+      tags.inject("") do |str, t|
+        str += content_tag(:span, :class => "tag") do
+          link_to(h(t.name), url_builder.call(t)) + "(#{t.count})"
+        end + "\n"
+        str
+      end
+    end
+  end
+
 end

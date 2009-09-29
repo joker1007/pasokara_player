@@ -1,11 +1,12 @@
 <h1>Pasokara Player</h1>
 
 <%= render 'layouts/search_header' %>
-<% cache do -%>
+<% cache(:action => "index", :page => params[:page]) do -%>
   <% @grouping.each do |rootpath, dirs| %>
     <h2><%= h rootpath %></h2>
     <ul>
       <%= entity_li(dirs) %>
     </ul>
   <% end %>
+  <%= will_paginate(@top_dirs) %>
 <% end -%>

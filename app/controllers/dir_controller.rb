@@ -1,10 +1,11 @@
 # _*_ coding: utf-8 _*_
 class DirController < ApplicationController
   layout 'pasokara_player'
+  before_filter :top_tag_load
 
   def index
-    unless fragment_exist?(:action => "index")
-      @top_dirs = Directory.find(:all, :conditions => ["directory_id is null"], :order => "rootpath, name", :include => [:directories, :pasokara_files])
+    unless fragment_exist?(:action => "index", :page => params[:page])
+      @top_dirs = Directory.paginate(:all, :conditions => ["directory_id is null"], :order => "rootpath, name", :include => [:directories, :pasokara_files], :page => params[:page], :per_page => 50)
       @grouping = {}
       @top_dirs.each do |dir|
         @grouping[dir.rootpath] ||= []
