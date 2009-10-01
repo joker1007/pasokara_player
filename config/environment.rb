@@ -18,6 +18,7 @@ Rails::Initializer.run do |config|
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   config.gem "sqlite3-ruby", :lib => "sqlite3"
+  config.gem "elkinsware-erubis_rails_helper", :lib => "erubis_rails_helper", :source => "http://gems.github.com"
   # config.gem "aws-s3", :lib => "aws/s3"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
@@ -40,5 +41,11 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 end
+
+#require 'erubis/helpers/rails_helper'
+Erubis::Helpers::RailsHelper.engine_class = Erubis::FastEruby
+#Erubis::Helpers::RailsHelper.init_properties = {}
+#Erubis::Helpers::RailsHelper.show_src = nil
+#Erubis::Helpers::RailsHelper.preprocessing = true
 
 require File.join(File.dirname(__FILE__), 'pp_setting')

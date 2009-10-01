@@ -3,7 +3,12 @@
 <%= render 'layouts/search_header' %>
 <% cache(:action => "show", :page => params[:page]) do -%>
   <ul>
-    <%= entity_li(@entities) %>
+    <% @entities.each do |entity| %>
+      <% cache("pasokara_li_#{entity.id}") do %>
+        <%= entity_li(entity) %>
+        <%= tag_box(entity) if entity.class == PasokaraFile %>
+      <% end %>
+    <% end %>
   </ul>
   <%= will_paginate(@entities) %>
 <% end -%>

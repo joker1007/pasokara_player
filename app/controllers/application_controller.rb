@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+  #
+  before_filter :icon_size
 
   protected
   def top_tag_load
@@ -17,9 +19,13 @@ class ApplicationController < ActionController::Base
       options = {:limit => tag_limit, :order => "count desc, tags.name asc"}
       @header_tags = PasokaraFile.tag_counts(options)
       @tag_search_url_builder = Proc.new {|t|
-        tag_search_path(:tag => t.name, :page => nil)
+        "/tag_search/#{CGI.escape(t.name)}"
       }
     end
     true
+  end
+
+  def icon_size
+    @icon_size = request.mobile? ? "12x12" : "24x24"
   end
 end

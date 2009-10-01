@@ -4,7 +4,6 @@ require 'ruby_gntp'
 require 'twitter'
 
 class PasokaraFile < ActiveRecord::Base
-  include OnlineFind
   acts_as_taggable_on :tags
 
   belongs_to :directory
@@ -12,6 +11,10 @@ class PasokaraFile < ActiveRecord::Base
   validates_uniqueness_of :fullpath, :scope => [:computer_name]
 
   after_validation_on_create :md5_check
+
+  cattr_reader :icon_name, :link_to_action
+  @@icon_name = "music_48x48.png"
+  @@link_to_action = {:controller => 'pasokara', :action => 'queue'}
 
   begin
     @@growl = GNTP.new("Ruby/GNTP Pasokara Player")
@@ -64,7 +67,7 @@ class PasokaraFile < ActiveRecord::Base
   end
 
   def self.related_tags(tags, limit = 30)
-    tagged = self.tagged_with(tags, :on => :tags, :match_all => true, :order => "pasokara_files.id", :select => "pasokara_files.id")
+    tagged = self.tagged_with(tags, :on => :tags, :match_all => true, :order => "name").find(:all)
     conditions = "taggings.taggable_id IN (" + tagged.map {|p| p.id}.join(",") + ")"
     self.tag_counts(:conditions => conditions, :limit => limit, :order => "count desc, tags.name asc")
   end

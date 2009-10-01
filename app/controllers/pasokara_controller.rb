@@ -27,7 +27,7 @@ class PasokaraController < ApplicationController
 
   def tag_search
     @query = params[:tag]
-    @tag_words = @query.split("+")
+    @tag_words = @query.split(/\+|\s/)
     if params[:remove]
       @tag_words.delete params[:remove]
       if @tag_words.empty?
@@ -38,14 +38,14 @@ class PasokaraController < ApplicationController
     end
 
     unless fragment_exist?(:query => @query, :page => params[:page])
-      @pasokaras = PasokaraFile.tagged_with(@tag_words, :on => :tags, :match_all => true, :order => "name").paginate(:page => params[:page], :per_page => 50)
+      @pasokaras = PasokaraFile.tagged_with(@tag_words, :on => :tags, :match_all => true, :order => "name").find(:all).paginate(:page => params[:page], :per_page => 50)
       
     end
     render :action => 'search'
   end
 
   def append_search_tag
-    tag = params[:tag] + "+" + params[:append]
+    tag = params[:tag].split(/\+|\s/).push(params[:append]).join("+")
     redirect_to :action => "tag_search", :tag => tag
   end
 
@@ -110,7 +110,7 @@ class PasokaraController < ApplicationController
     unless fragment_exist?(@tag_list_cache_key)
       @header_tags = PasokaraFile.related_tags(@tag_words, tag_limit)
       @tag_search_url_builder = Proc.new {|t|
-        url_for(:action => "append_search_tag", :tag => @query, :append => t.name, :page => nil)
+        "/pasokara/append_search_tag?tag=#{CGI.escape(@query)}&append=#{t.name}"
       }
     end
   end

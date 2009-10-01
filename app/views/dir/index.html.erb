@@ -5,7 +5,9 @@
   <% @grouping.each do |rootpath, dirs| %>
     <h2><%= h rootpath %></h2>
     <ul>
-      <%= entity_li(dirs) %>
+      <% dirs.each do |entity| %>
+        <%= entity_li(entity) %>
+      <% end %>
     </ul>
   <% end %>
   <%= will_paginate(@top_dirs) %>

@@ -1,39 +1,31 @@
 # _*_ coding: utf-8 _*_
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  def entity_li(entities)
-    tag_str = ""
-    icon_size = request.mobile? ? "12x12" : "24x24"
-    entities.each do |entity|
-      if entity.class == Directory
-        tag_str += "<li class=\"dir\">#{image_tag("icon/elastic_movie.png", :size => icon_size, :class=> "entity_icon")}#{link_to(h(entity.name), :action => 'show', :id => entity)}</li>\n"
-      else
-        tag_str += "<li class=\"pasokara\">#{image_tag("icon/music_48x48.png", :size => icon_size, :class=> "entity_icon")}#{link_to(h(entity.name), :controller => 'pasokara', :action => 'queue', :id => entity)}</li>\n"
-        tag_str += tag_box(entity)
-      end
+
+  def entity_li(entity)
+    content_tag(:li, :class=> "dir") do
+      image_tag("icon/#{entity.icon_name}", :size => @icon_size, :class => "entity_icon") +
+      link_to(h(entity.name), entity.link_to_action.merge({:id => entity.id}))
     end
-    tag_str
   end
 
   def tag_box(entity)
-    tag_str = ""
-    content_tag("div", :id => "tag-box-#{entity.id}", :class => "tag_box") do
-      content_tag("h3", "タグ") +
-      tag_list(entity)
-    end + "\n"
+    %Q{<div id="tag-box-#{entity.id}" class="tag_box">
+      <h3>タグ</h3>
+      #{tag_list(entity)}
+      </div>}
   end
 
   def tag_list(entity)
-    tag_str = ""
-    tag_idx = 1
-    entity.tag_list.each do |p_tag|
-      tag_str += content_tag("span",
-        link_to(h(p_tag), tag_search_path(:tag => p_tag)),
-      {:class => "tag"})
-      tag_idx += 1
+    content_tag("div", {:id => "tag-list-#{entity.id}", :class => "tag_list"}) do
+      entity.tag_list.inject("") do |str, p_tag|
+        str << content_tag("span", {:class => "tag"}) do
+          "<a href=\"/tag_search/#{CGI.escape(p_tag)}\">#{h p_tag}</a>"
+        end
+        str
+      end +
+      link_to_remote("[編集]", :url => tag_form_open_path(:id => entity), :html => {:href => tag_form_open_path(:id => entity), :class => "tag_edit_link"})
     end
-    tag_str += link_to_remote("[編集]", :url => tag_form_open_path(:id => entity), :html => {:href => tag_form_open_path(:id => entity), :class => "tag_edit_link"})
-    content_tag("div", tag_str, {:id => "tag-list-#{entity.id}", :class => "tag_list"})
   end
 
   def tag_list_edit(entity)
@@ -59,30 +51,29 @@ module ApplicationHelper
   end
 
   def tag_line_edit(entity, p_tag, tag_idx)
-    content_tag("div", content_tag("span",
-      link_to(h(p_tag), tag_search_path(:tag => p_tag)) + " " +
-      link_to_remote(image_tag("icon/tag_del_button.png"), {:url => tag_remove_path(:id => entity, :tag => p_tag, :tag_idx => tag_idx), :confirm => "#{p_tag}を削除してよろしいですか？"}, :href => tag_remove_path(:id => entity, :tag => p_tag)),
-    {:class => "tag"}), {:id => "tag-#{entity.id}-#{tag_idx}"})
+    content_tag("div", {:id => "tag-#{entity.id}-#{tag_idx}"}) do
+      content_tag("span", {:class => "tag"}) do
+        link_to(h(p_tag), tag_search_path(:tag => p_tag)) + " " +
+        link_to_remote(image_tag("icon/tag_del_button.png"), {:url => tag_remove_path(:id => entity, :tag => p_tag, :tag_idx => tag_idx), :confirm => "#{p_tag}を削除してよろしいですか？"}, :href => tag_remove_path(:id => entity, :tag => p_tag))
+      end
+    end
   end
 
   def search_form
-    form_tag_str = form_tag :controller => 'pasokara', :action => 'search', :query => nil, :page => nil do
-      content_tag(:label, "曲名・タグ検索: ") +
-      text_field_tag("query", params[:query], :size => 32) +
-      submit_tag("Search") +
-      "<br />" +
-      "半角スペースでAND検索"
-    end
-    form_tag_str
+    form_tag(:controller => 'pasokara', :action => 'search', :query => nil, :page => nil) + "\n" +
+    content_tag(:label, "曲名・タグ検索: ") +
+    text_field_tag("query", params[:query], :size => 32) +
+    submit_tag("Search") + "\n" +
+    "</form>" + "\n" +
+    "半角スペースでAND検索"
   end
 
   def tag_search_form
-    form_tag_str = form_tag :controller => 'pasokara', :action => 'tag_search', :tag => nil, :page => nil do
-      content_tag(:label, "タグ検索: ") +
-      text_field_tag("tag", "", :size => 32) +
-      submit_tag("Search")
-    end
-    form_tag_str
+    form_tag(:controller => 'pasokara', :action => 'tag_search', :tag => nil, :page => nil) + "\n" +
+    content_tag(:label, "タグ検索: ") +
+    text_field_tag("tag", "", :size => 32) +
+    submit_tag("Search") + "\n" +
+    "</form>"
   end
 
   def scoped_tags(tags)
