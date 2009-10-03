@@ -94,7 +94,7 @@ module ApplicationHelper
       content_tag("h3", "タグ一覧") +
       tags.inject("") do |str, t|
         str += content_tag(:span, :class => "tag") do
-          link_to(h(t.name), url_builder.call(t)) + "(#{t.count})"
+          "<a href=\"#{url_builder.call(t)}\">#{h(t.name)}</a>" + "(#{t.count})"
         end + "\n"
         str
       end

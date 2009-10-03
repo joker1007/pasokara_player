@@ -12,7 +12,7 @@ class PasokaraController < ApplicationController
   end
 
   def search
-    @query = params[:query]
+    @query = params[:query].respond_to?(:force_encoding) ? params[:query].force_encoding(Encoding::UTF_8) : params[:query]
     unless fragment_exist?(:query => @query, :page => params[:page])
       query_words = @query.split(/[\s　]/)
       conditions = query_words.inject([""]) {|cond_arr, query| cond_arr[0] += "name LIKE ? AND "; cond_arr << "%#{query}%"}
@@ -26,10 +26,11 @@ class PasokaraController < ApplicationController
   end
 
   def tag_search
-    @query = params[:tag]
+    @query = params[:tag].respond_to?(:force_encoding) ? params[:tag].force_encoding(Encoding::UTF_8) : params[:tag]
     @tag_words = @query.split(/\+|\s/)
-    if params[:remove]
-      @tag_words.delete params[:remove]
+    remove_tag = params[:remove].respond_to?(:force_encoding) ? params[:remove].force_encoding(Encoding::UTF_8) : params[:remove]
+    if remove_tag
+      @tag_words.delete remove_tag
       if @tag_words.empty?
         redirect_to(root_path) and return
       else
@@ -102,7 +103,7 @@ class PasokaraController < ApplicationController
 
   protected
   def related_tag_load
-    @query = params[:tag]
+    @query = params[:tag].force_encoding("UTF-8")
     @tag_words = @query.split("+")
 
     tag_limit = request.mobile? ? 10 : 30

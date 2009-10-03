@@ -1,4 +1,5 @@
-<%= image_tag("icon/arrow_up_48.png", :size => "24x24") %><%= link_to("Go Up Directory", :action => 'show', :id => @dir.directory) %><br />
+<%# encoding: utf-8 %>
+<%= image_tag("icon/arrow_up_48.png", :size => "24x24") %><%= link_to("上のディレクトリへ", :action => 'show', :id => @dir.directory) %><br />
 <h1><%= image_tag("icon/elastic_movie.png", :class => "parent_dir", :size => "32x32") %><%= h @dir.name %></h1>
 <%= render 'layouts/search_header' %>
 <% cache(:action => "show", :page => params[:page]) do -%>
