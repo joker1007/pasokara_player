@@ -103,7 +103,7 @@ class PasokaraController < ApplicationController
 
   protected
   def related_tag_load
-    @query = params[:tag].force_encoding("UTF-8")
+    @query = params[:tag].respond_to?(:force_encoding) ? params[:tag].force_encoding(Encoding::UTF_8) : params[:tag]
     @tag_words = @query.split("+")
 
     tag_limit = request.mobile? ? 10 : 30
