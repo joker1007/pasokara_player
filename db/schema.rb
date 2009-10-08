@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090907075245) do
+ActiveRecord::Schema.define(:version => 20091005132407) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(:version => 20090907075245) do
 
   add_index "directories", ["computer_name"], :name => "index_directories_on_computer_name"
   add_index "directories", ["directory_id"], :name => "index_directories_on_directory_id"
+
+  create_table "favorites", :force => true do |t|
+    t.integer  "user_id",          :null => false
+    t.integer  "pasokara_file_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "favorites", ["user_id", "pasokara_file_id"], :name => "index_favorites_on_user_id_and_pasokara_file_id"
 
   create_table "pasokara_files", :force => true do |t|
     t.string   "name",                          :null => false
@@ -83,6 +92,12 @@ ActiveRecord::Schema.define(:version => 20090907075245) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

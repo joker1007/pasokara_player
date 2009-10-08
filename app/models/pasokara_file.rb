@@ -7,6 +7,7 @@ class PasokaraFile < ActiveRecord::Base
   acts_as_taggable_on :tags
 
   belongs_to :directory
+  has_many :users, :through => :favorites
 
   validates_uniqueness_of :fullpath, :scope => [:computer_name]
 

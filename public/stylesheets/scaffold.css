@@ -6,6 +6,22 @@ body, p, ol, ul, td {
   line-height: 20px;
 }
 
+div#user_info {
+  float: right;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+span.notification {
+  border: 2px solid #32CD32;
+  background-color: #ADFF2F;
+  margin-top: 10px;
+  padding-top: 4px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-bottom: 4px;
+}
+
 ul {
   padding-left: 3px;
 }
@@ -46,6 +62,10 @@ div.all_tag_list {
   margin: 10px;
   padding: 5px;
   border: 1px solid #000;
+}
+
+span.login_user {
+  margin-right: 10px;
 }
 
 span.tag {

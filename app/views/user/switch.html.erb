@@ -1,0 +1,14 @@
+<h3>ユーザー一覧</h3>
+<% if @users.empty? %>
+  Empty
+<% else %>
+  <ol>
+  <% @users.each do |user| %>
+
+    <li class="user_list"><%= link_to(user.name, {:controller => "user", :action => "login", :id => user}) %></li>
+
+  <% end %>
+    <li class="user_list"><%= link_to("ログアウト", {:controller => "user", :action => "logout"}) %></li>
+  </ol>
+<% end %>
+</div>
