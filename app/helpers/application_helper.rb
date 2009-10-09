@@ -3,11 +3,25 @@
 module ApplicationHelper
 
   def entity_li(entity)
+    send(entity.class.to_s.underscore + "_li", entity)
+  end
+
+  def directory_li(directory)
     content_tag(:li, :class=> "dir") do
-      image_tag("icon/#{entity.icon_name}", :size => @icon_size, :class => "entity_icon") +
-      link_to(h(entity.name), entity.link_to_action.merge({:id => entity.id}))
+      image_tag("icon/#{directory.icon_name}", :size => @icon_size, :class => "directory_icon") +
+      link_to(h(directory.name), {:controller => "dir", :action => "show", :id => directory.id})
     end
   end
+
+  def pasokara_file_li(pasokara)
+    content_tag(:li, :class=> "dir") do
+      image_tag("icon/#{pasokara.icon_name}", :size => @icon_size, :class => "pasokara_icon") +
+      link_to(h(pasokara.name), {:controller => 'pasokara', :action => 'queue', :id => pasokara.id}) +
+      link_to_remote(image_tag("icon/star_off_48.png", :size => @icon_size), :url => {:controller => "favorite", :action => "add", :id => pasokara.id}, :html => {:href => url_for(:controller => "favorite", :action => "add", :id => pasokara.id), :class => "add_favorite"})
+    end
+  end
+
+
 
   def tag_box(entity)
     %Q{<div id="tag-box-#{entity.id}" class="tag_box">

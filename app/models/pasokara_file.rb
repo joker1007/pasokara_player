@@ -13,9 +13,8 @@ class PasokaraFile < ActiveRecord::Base
 
   after_validation_on_create :md5_check
 
-  cattr_reader :icon_name, :link_to_action
+  cattr_reader :icon_name
   @@icon_name = "music_48x48.png"
-  @@link_to_action = {:controller => 'pasokara', :action => 'queue'}
 
   begin
     @@growl = GNTP.new("Ruby/GNTP Pasokara Player")

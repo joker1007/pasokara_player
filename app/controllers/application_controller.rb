@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
   #
-  before_filter :icon_size
+  before_filter :icon_size, :login_check
 
   protected
   def top_tag_load
@@ -23,6 +23,10 @@ class ApplicationController < ActionController::Base
       }
     end
     true
+  end
+
+  def login_check
+    @user = User.find(session[:current_user]) if session[:current_user]
   end
 
   def icon_size

@@ -21,14 +21,16 @@
         j$("a.fancygroup").fancybox({
           'zoomSpeedIn': 300,
           'zoomSpeedOut': 300,
+          'frameWidth': 250,
           'hideOnContentClick': false,
           'centerOnScroll': false,
         });
+
     }); 
   </script>
 </head>
 <body>
-  <div id="user_info"><%= content_tag(:span, "現在のログインユーザー: " + session[:current_user].name, :class => "login_user") if session[:current_user] %><a class="fancygroup" href="/user/switch">ユーザー切り替え</a></div>
+  <div id="user_info"><%= content_tag(:span, "現在のログインユーザー: " + @user.name, :class => "login_user") if session[:current_user] %><a class="fancygroup" href="/user/switch">ユーザー切り替え</a></div>
 
   <br />
 <% if flash[:notice] -%>

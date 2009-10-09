@@ -8,7 +8,7 @@ class UserController < ApplicationController
   def login
     id = params[:id]
     @user = User.find(id)
-    session[:current_user] = @user
+    session[:current_user] = id
     flash[:notice] = "#{@user.name}でログインしました"
     redirect_to root_path
   end
