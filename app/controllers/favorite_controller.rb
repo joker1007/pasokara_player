@@ -1,3 +1,4 @@
+# _*_ coding: utf-8 _*_
 class FavoriteController < ApplicationController
   before_filter :top_tag_load
   layout "pasokara_player"
