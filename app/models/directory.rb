@@ -7,9 +7,6 @@ class Directory < ActiveRecord::Base
 
   validates_uniqueness_of :fullpath, :scope => [:computer_name]
 
-  cattr_reader :icon_name
-  @@icon_name = "elastic_movie.png"
-
   def entities
     (directories + pasokara_files)
   end

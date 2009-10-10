@@ -117,6 +117,7 @@ a img {
 a { color: #4169E1; }
 a:visited { color: #666; }
 a:hover { color: #fff; background-color:#000; }
+a.tag_list_link { color: red; }
 a.tag_edit_link { color: red; }
 
 a.queue_remove {

@@ -1,27 +1,7 @@
 # _*_ coding: utf-8 _*_
-require 'ruby_gntp'
 
 class QueuedFile < ActiveRecord::Base
   belongs_to :pasokara_file
-
-  begin
-    @@growl = GNTP.new("Ruby/GNTP Pasokara Player")
-    @@growl.register({
-      :notifications => [
-        {
-          :name => "Queue",
-          :enabled => true,
-        },
-        {
-          :name => "Play",
-          :enabled => true,
-        },
-      ]
-    })
-  rescue Exception
-    @@growl = nil
-    puts "NoGrowl"
-  end
 
 
   def self.enq(pasokara)
@@ -29,15 +9,7 @@ class QueuedFile < ActiveRecord::Base
       q.pasokara_file = pasokara
     end
 
-    begin
-      @@growl.notify({
-        :name => "Queue",
-        :title => "#{pasokara.name}",
-        :text => "#{pasokara.name}を予約しました",
-      })
-    rescue Exception
-      puts "Growl failed"
-    end
+    PasokaraNotifier.instance.queue_notify(pasokara.name)
   end
 
   def self.deq

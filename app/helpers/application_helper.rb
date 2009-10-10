@@ -8,26 +8,36 @@ module ApplicationHelper
 
   def directory_li(directory)
     content_tag(:li, :class=> "dir") do
-      image_tag("icon/#{directory.icon_name}", :size => @icon_size, :class => "directory_icon") +
+      image_tag("icon/elastic_movie.png", :size => @icon_size, :class => "directory_icon") +
       link_to(h(directory.name), {:controller => "dir", :action => "show", :id => directory.id})
     end
   end
 
   def pasokara_file_li(pasokara)
     content_tag(:li, :class=> "dir") do
-      image_tag("icon/#{pasokara.icon_name}", :size => @icon_size, :class => "pasokara_icon") +
+      image_tag("icon/music_48x48.png", :size => @icon_size, :class => "pasokara_icon") +
       link_to(h(pasokara.name), {:controller => 'pasokara', :action => 'queue', :id => pasokara.id}) +
       link_to_remote(image_tag("icon/star_off_48.png", :size => @icon_size), :url => {:controller => "favorite", :action => "add", :id => pasokara.id}, :html => {:href => url_for(:controller => "favorite", :action => "add", :id => pasokara.id), :class => "add_favorite"})
+    end
+  end
+
+  def tag_li(tag_obj)
+    content_tag(:li, :class=> "dir") do
+      image_tag("icon/search.png", :size => @icon_size, :class => "tag_icon") +
+      link_to(h(tag_obj.name), {:controller => "pasokara", :action => "tag_search", :tag => tag_obj.name}) +
+      "(#{tag_obj.count})"
     end
   end
 
 
 
   def tag_box(entity)
-    %Q{<div id="tag-box-#{entity.id}" class="tag_box">
-      <h3>タグ</h3>
-      #{tag_list(entity)}
-      </div>}
+    %Q{
+      <div id="tag-box-#{entity.id}" class="tag_box">
+        <h3>タグ</h3>
+        #{tag_list(entity)}
+      </div>
+    }
   end
 
   def tag_list(entity)
@@ -105,7 +115,8 @@ module ApplicationHelper
 
   def header_tag_list(tags, url_builder)
     content_tag(:div, :class => "all_tag_list", :id => "all_tag_list") do 
-      content_tag("h3", "タグ一覧") +
+      content_tag("h3", "タグ一覧", :style => "display: inline; margin-right: 10px;") +
+      link_to("[タグ一覧]", {:controller => "tag", :action => "list"}, :class => "tag_list_link") + "<br />\n" +
       tags.inject("") do |str, t|
         str += content_tag(:span, :class => "tag") do
           "<a href=\"#{url_builder.call(t)}\">#{h(t.name)}</a>" + "(#{t.count})"

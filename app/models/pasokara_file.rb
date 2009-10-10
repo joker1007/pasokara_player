@@ -1,7 +1,5 @@
 # _*_ coding: utf-8 _*_
 require 'kconv'
-require 'ruby_gntp'
-require 'twitter'
 
 class PasokaraFile < ActiveRecord::Base
   acts_as_taggable_on :tags
@@ -13,53 +11,16 @@ class PasokaraFile < ActiveRecord::Base
 
   after_validation_on_create :md5_check
 
-  cattr_reader :icon_name
-  @@icon_name = "music_48x48.png"
-
-  begin
-    @@growl = GNTP.new("Ruby/GNTP Pasokara Player")
-    @@growl.register({
-      :notifications => [
-        {
-          :name => "Queue",
-          :enabled => true,
-        },
-        {
-          :name => "Play",
-          :enabled => true,
-        },
-      ]
-    })
-  rescue Exception
-    @@growl = nil
-    puts "NoGrowl"
-  end
-
   def play
     sleep PRE_SLEEP
-    play_notify
+    PasokaraNotifier.instance.play_notify(name)
     system(MPC_PATH, fullpath_win, "/close")
     #system(NICOPLAY_PATH + " \"#{fullpath_win}\"")
   end
 
   def play_cmd
-    play_notify
+    PasokaraNotifier.instance.play_notify(name)
     "\"#{MPC_PATH}\" \"#{fullpath_win}\" /close"
-  end
-
-  def play_notify
-    begin
-      @@growl.notify({
-        :name => "Play",
-        :title => "#{name}",
-        :text => "#{name}を再生します",
-      })
-    rescue Exception
-      puts "Growl failed"
-    end
-    if (TWEET) 
-      tweet
-    end
   end
 
   def fullpath_win
@@ -142,17 +103,6 @@ class PasokaraFile < ActiveRecord::Base
   end
 
   private
-  def tweet
-    begin
-      oauth = ::Twitter::OAuth.new(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
-      oauth.authorize_from_access(TWITTER_AUTH_KEY, TWITTER_AUTH_SECRET)
-      client = ::Twitter::Base.new(oauth)
-      client.update("歌ってるなう::#{File.basename(name, ".*")}")
-    rescue Exception
-      puts "Tweet Failed."
-    end
-  end
-
   def md5_check
     already_record = self.class.find_by_md5_hash_and_computer_name(md5_hash, computer_name)
     if already_record
