@@ -24,6 +24,21 @@ class FavoriteController < ApplicationController
     end
   end
 
+  def remove
+    @pasokara = PasokaraFile.find(params[:id])
+    Favorite.find_by_user_id_and_pasokara_file_id(session[:current_user], params[:id]).destroy
+    message = "#{@pasokara.name}が#{@user.name}のお気に入りから削除されました"
+
+    if request.xhr?
+      render :update do |page|
+        page.alert(message)
+      end
+    else
+      flash[:notice] = message
+      redirect_to :action => "list"
+    end
+  end
+
   def list
     @pasokaras = @user.pasokara_files.paginate(:page => params[:page], :per_page => 50)
   end

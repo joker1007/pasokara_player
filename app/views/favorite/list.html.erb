@@ -3,10 +3,9 @@
 <%= render 'layouts/search_header' %>
 <ul>
   <% @pasokaras.each do |pasokara| %>
-    <% cache("pasokara_li_#{pasokara.id}") do %>
-      <%= entity_li(pasokara) %>
-      <%= tag_box(pasokara) %>
-    <% end %>
+    <%= link_to_remote("お気に入りから削除する", :url => {:controller => "favorite", :action => "remove", :id => pasokara.id}, :html => {:href => url_for(:controller => "favorite", :action => "remove", :id => pasokara.id), :class => "remove_favorite"}) %>
+    <%= entity_li(pasokara) %>
+    <%= tag_box(pasokara) %>
   <% end %>
 </ul>
 <br />
