@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'activerecord'
+require 'ruby_gntp'
 require 'twitter'
 require 'yaml'
 require 'kconv'
@@ -49,7 +50,7 @@ class QueuePickerServer
       if queue
         pasokara = queue.pasokara_file
         puts pasokara.fullpath_win + "\n"
-        pasokara.play_notify
+        PasokaraNotifier.instance.play_notify(pasokara.name)
         return pasokara.fullpath_win
       end
       return nil

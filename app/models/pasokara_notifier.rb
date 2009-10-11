@@ -1,4 +1,6 @@
 # _*_ coding: utf-8 _*_
+require "ruby_gntp"
+require "twitter"
 
 class PasokaraNotifier
   include Singleton
