@@ -11,8 +11,6 @@ class PasokaraFile < ActiveRecord::Base
   validates_uniqueness_of :fullpath, :scope => [:computer_name]
   validates_uniqueness_of :md5_hash, :scope => [:computer_name]
 
-  #before_validation_on_create :md5_check
-
   def play
     sleep PRE_SLEEP
     PasokaraNotifier.instance.play_notify(name)
