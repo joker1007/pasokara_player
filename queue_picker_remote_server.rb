@@ -61,23 +61,78 @@ class QueuePickerServer
   end
 
   def create_directory(attributes = {})
-    directory = Directory.new(attributes)
-    if directory.save
-      puts directory.inspect
-      return directory.id
-    else
-      return nil
+    begin
+      already_record = Directory.find_by_fullpath_and_computer_name(attributes[:fullpath], attributes[:computer_name])
+      return already_record.id if already_record
+      
+      directory = Directory.new(attributes)
+      if directory.save
+        puts directory.inspect
+        return directory.id
+      else
+        return nil
+      end
+    rescue ActiveRecord::ActiveRecordError
+      p $@
+      raise "ARError"
     end
   end
 
   def create_pasokara_file(attributes = {}, tags = [])
-    pasokara_file = PasokaraFile.new(attributes)
-    pasokara_file.tag_list.add tags
-    if pasokara_file.save
-      puts pasokara_file.inspect
-      return pasokara_file.id
-    else
-      return nil
+    begin
+      already_record = PasokaraFile.find_by_md5_hash_and_computer_name(attributes[:md5_hash], attributes[:computer_name])
+      pasokara_file = PasokaraFile.new(attributes)
+      pasokara_file.tag_list.add tags
+      if already_record
+
+        changed = false
+
+        if already_record.tag_list.empty? and !pasokara_file.tag_list.empty?
+          already_record.tag_list.add pasokara_file.tag_list
+          changed = true
+        end
+
+        if already_record.nico_name.nil? and !pasokara_file.nico_name.nil?
+          already_record.nico_name = pasokara_file.nico_name
+          changed = true
+        end
+
+        if already_record.nico_post.nil? and !pasokara_file.nico_post.nil?
+          already_record.nico_post = pasokara_file.nico_post
+          changed = true
+        end
+
+        if already_record.nico_view_counter.nil? and !pasokara_file.nico_view_counter.nil?
+          already_record.nico_view_counter = pasokara_file.nico_view_counter
+          changed = true
+        end
+
+        if already_record.nico_comment_num.nil? and !pasokara_file.nico_comment_num.nil?
+          already_record.nico_comment_num = pasokara_file.nico_comment_num
+          changed = true
+        end
+
+        if already_record.nico_mylist_counter.nil? and !pasokara_file.nico_mylist_counter.nil?
+          already_record.nico_mylist_counter = pasokara_file.nico_mylist_counter
+          changed = true
+        end
+
+        if changed
+          already_record.save
+          puts already_record.inspect
+          return already_record.id
+        end
+      else
+        if pasokara_file.save
+          puts pasokara_file.inspect
+          return pasokara_file.id
+        else
+          return nil
+        end
+      end
+    rescue ActiveRecord::ActiveRecordError
+      p $@
+      raise "ARError"
     end
   end
 
@@ -85,4 +140,4 @@ end
 
 puts "キューピッカーサーバー起動"
 DRb.start_service("druby://" + ARGV[0], QueuePickerServer.new)
-sleep
+DRb.thread.join

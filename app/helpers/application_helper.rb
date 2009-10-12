@@ -35,6 +35,7 @@ module ApplicationHelper
     %Q{
       <div id="tag-box-#{entity.id}" class="tag_box">
         <h3>タグ</h3>
+        <div class="nico_info"><span>#{entity.nico_name}</span></div>
         #{tag_list(entity)}
       </div>
     }

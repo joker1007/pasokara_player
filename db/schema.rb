@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091005132407) do
+ActiveRecord::Schema.define(:version => 20091012052214) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(:version => 20091005132407) do
   add_index "favorites", ["user_id", "pasokara_file_id"], :name => "index_favorites_on_user_id_and_pasokara_file_id"
 
   create_table "pasokara_files", :force => true do |t|
-    t.string   "name",                          :null => false
-    t.string   "fullpath",                      :null => false
+    t.string   "name",                                :null => false
+    t.string   "fullpath",                            :null => false
     t.integer  "directory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -63,11 +63,18 @@ ActiveRecord::Schema.define(:version => 20091005132407) do
     t.string   "comment_file"
     t.string   "thumb_file"
     t.string   "computer_name"
-    t.string   "md5_hash",      :default => "", :null => false
+    t.string   "md5_hash",            :default => "", :null => false
+    t.string   "nico_name"
+    t.datetime "nico_post"
+    t.integer  "nico_view_counter"
+    t.integer  "nico_comment_num"
+    t.integer  "nico_mylist_counter"
   end
 
   add_index "pasokara_files", ["computer_name"], :name => "index_pasokara_files_on_computer_name"
   add_index "pasokara_files", ["directory_id"], :name => "index_pasokara_files_on_directory_id"
+  add_index "pasokara_files", ["nico_post"], :name => "index_pasokara_files_on_nico_post"
+  add_index "pasokara_files", ["nico_view_counter"], :name => "index_pasokara_files_on_nico_view_counter"
 
   create_table "queued_files", :force => true do |t|
     t.integer  "pasokara_file_id", :null => false

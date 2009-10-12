@@ -41,19 +41,20 @@ class DatabaseStructer
         if File.directory?(entity_fullpath)
 		  attributes = {:name => entity.toutf8, :fullpath => dir.toutf8 + "/" + entity.toutf8, :rootpath => rootdir.toutf8, :directory_id => higher_directory_id, :computer_name => @hostname}
 		  puts "Attr: "
-		  p attributes
+		  puts attributes.inspect
           dir_id = @remote_controller.create_directory(attributes)
           crowl_dir(entity_fullpath, rootdir, dir_id)
         elsif File.extname(entity) =~ /(mpg|avi|flv|ogm|mkv|mp4|wmv|swf)/i
-          md5_hash = File.open(entity_fullpath) {|file| file.binmode; head = file.read(100*1024); Digest::MD5.hexdigest(head)}
+          md5_hash = File.open(entity_fullpath) {|file| file.binmode; head = file.read(300*1024); Digest::MD5.hexdigest(head)}
           attributes = {:name => entity.toutf8, :fullpath => dir.toutf8 + "/" + entity.toutf8, :rootpath => rootdir.toutf8, :directory_id => higher_directory_id, :computer_name => @hostname, :md5_hash => md5_hash}
           tags = nico_check_tag(entity_fullpath)
+          attributes.merge!(nico_check_info(entity_fullpath))
           attributes.merge!(nico_check_comment(entity_fullpath))
           attributes.merge!(nico_check_thumb(entity_fullpath))
 		  puts "Attr: "
-		  p attributes
+		  puts attributes.inspect
 		  puts "Tags: "
-		  p tags
+		  puts tags.inspect
           pasokara_file_id = @remote_controller.create_pasokara_file(attributes, tags)
         end
       end
@@ -90,10 +91,41 @@ class DatabaseStructer
     tags
   end
 
+  def nico_check_info(fullpath)
+    parse_mode = false
+    info = {}
+    info_key = ""
+    valid_keys = ["name", "post", "view_counter", "comment_num", "mylist_counter"]
+
+    info_file = fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".txt")
+    if File.exist?(info_file)
+      File.open(info_file) {|file|
+        file.binmode
+        converted = NKF.nkf('-W16L -s', file.read)
+        converted.each_line do |line|
+          if line.chomp.empty?
+            parse_mode = false
+          end
+
+          if parse_mode == true
+            info.merge!({"nico_#{info_key}".to_sym => line.chomp.toutf8})
+          end
+
+          if line.chomp =~ /\[(.*)\]/
+            next unless valid_keys.include?($1)
+            parse_mode = true
+            info_key = $1
+          end
+        end
+      }
+    end
+    info
+  end
+
   def nico_check_comment(fullpath)
     comment = fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".xml")
     if File.exist?(comment)
-      {:comment_file => comment}
+      {:comment_file => comment.toutf8}
     else
       {}
     end
@@ -102,7 +134,7 @@ class DatabaseStructer
   def nico_check_thumb(fullpath)
     thumb = fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".jpg")
     if File.exist?(thumb)
-      {:thumb_file => thumb}
+      {:thumb_file => thumb.toutf8}
     else
       {}
     end
