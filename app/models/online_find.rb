@@ -13,7 +13,8 @@ module OnlineFind
   end
 
   module ClassMethods
-    @@online_computers = ["phoenix4"]
+    hostname = `hostname`.chomp
+    @@online_computers = [hostname]
 
     def find(*args)
       conditions = [Array.new(@@online_computers.size, "computer_name = ?").join(" OR ")] + @@online_computers
