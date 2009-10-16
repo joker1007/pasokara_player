@@ -1,5 +1,5 @@
 <%# encoding: utf-8 %>
-<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :controller => 'dir', :action => 'index') %><br />
+<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", root_path) %><br />
 <h1><%= image_tag("icon/search.png", :class => "parent_dir", :size => "32x32") %>タグ一覧</h1>
 <% cache(:action => "list", :page => params[:page]) do -%>
   <ul>
@@ -10,4 +10,4 @@
   <%= will_paginate(@tags) %>
 <% end -%>
 <br />
-<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :action => 'index') %>
+<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", root_path) %>

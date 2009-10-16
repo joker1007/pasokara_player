@@ -4,6 +4,9 @@ class UserController < ApplicationController
 
   def switch
     @users = User.find(:all)
+    if request.xhr?
+      render :layout => false
+    end
   end
 
   def login
