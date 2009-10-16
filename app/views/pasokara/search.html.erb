@@ -6,7 +6,7 @@
   <div id="tag_scope"><%= scoped_tags(@tag_words) %></div>
 <% end -%>
 <% cache(:query => @query, :page => params[:page]) do -%>
-  <ul>
+  <ul class="autopagerize_page_element">
     <% @pasokaras.each do |pasokara| %>
       <% cache("pasokara_li_#{pasokara.id}") do %>
         <%= entity_li(pasokara) %>
