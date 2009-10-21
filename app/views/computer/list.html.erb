@@ -1,0 +1,8 @@
+<h3>コンピューターリスト</h3>
+<ol>
+<% @computers.each do |computer| %>
+
+  <li class="computer_list"><%= computer.computer_name %><span><%= link_to("ON", {:controller => "computer", :action => "view_on", :name => computer.computer_name}) %> : <%= link_to("OFF", {:controller => "computer", :action => "view_off", :name => computer.computer_name}) %></span></li>
+
+<% end %>
+</ol>

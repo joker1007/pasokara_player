@@ -2,8 +2,8 @@
 require 'kconv'
 
 class PasokaraFile < ActiveRecord::Base
-  include OnlineFind
   acts_as_taggable_on :tags
+  include OnlineFind
 
   belongs_to :directory
   has_many :users, :through => :favorites

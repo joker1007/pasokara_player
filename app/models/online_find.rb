@@ -3,25 +3,30 @@
 module OnlineFind
 
   def self.included(base)
-    base.class_eval <<-RUBY
-      class << self
-        alias :__find :find
-        cattr_accessor :online_computers
+    base.instance_eval <<-RUBY
+      alias :__find :find
+
+      hostname = `hostname`.chomp
+      @@online_computers ||= ["phoenix4"]
+
+      def find(*args)
+        conditions = [Array.new(@@online_computers.size, "computer_name = ?").join(" OR ")] + @@online_computers
+
+        with_scope(:find => {:conditions => conditions}) do
+          super
+        end
+      end
+
+      def online_computers
+        @@online_computers
+      end
+
+      def find_options_for_tag_counts(*args)
+        conditions = [Array.new(@@online_computers.size, "computer_name = ?").join(" OR ")] + @@online_computers
+        options = super
+        options[:conditions] = merge_conditions(options[:conditions], conditions)
+        options
       end
     RUBY
-    base.extend(ClassMethods)
-  end
-
-  module ClassMethods
-    hostname = `hostname`.chomp
-    @@online_computers = []
-
-    def find(*args)
-      conditions = [Array.new(@@online_computers.size, "computer_name = ?").join(" OR ")] + @@online_computers
-
-      with_scope(:find => {:conditions => conditions}) do
-        __find(*args)
-      end
-    end
   end
 end

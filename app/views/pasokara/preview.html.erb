@@ -1,0 +1,6 @@
+<% cache do -%>
+    <embed src='/swfplayer/player-viral.swf' height='360' width='480' allowscriptaccess='always' allowfullscreen='true' flashvars='file=<%= u(url_for(:controller => "pasokara", :action => "movie", :id => @pasokara.id) + @extname) %>&level=0&skin=%2Fswfplayer%2Fsnel.swf&image=<%= u(url_for(:controller => "pasokara", :action => "thumb", :id => @pasokara.id) + ".jpg") %>&dock=false&bandwidth=5000&plugins=viral-2d'/>
+  <!-- END OF THE PLAYER EMBEDDING -->
+<% end -%>
+<br />
+<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :controller => 'dir', :action => 'index') %>

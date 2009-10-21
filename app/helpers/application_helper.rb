@@ -18,6 +18,7 @@ module ApplicationHelper
       image_tag("icon/music_48x48.png", :size => @icon_size, :class => "pasokara_icon") +
       link_to(h(pasokara.name), {:controller => 'pasokara', :action => 'queue', :id => pasokara.id}) +
       link_to_remote("[詳細]", :url => {:controller => "pasokara", :action => "show", :id => pasokara.id}, :html => {:href => url_for(:controller => "pasokara", :action => "show", :id => pasokara.id), :class => "show_info", :id => "show-info-#{pasokara.id}"}) +
+      link_to("[プレビュー]", {:controller => "pasokara", :action => "preview", :id => pasokara.id}, :class => "fancygroup2 preview_link") +
       link_to_remote(image_tag("icon/star_off_48.png", :size => @icon_size), :confirm => "#{pasokara.name}をお気に入りに追加しますか？", :url => {:controller => "favorite", :action => "add", :id => pasokara.id}, :html => {:href => url_for(:controller => "favorite", :action => "add", :id => pasokara.id), :class => "add_favorite"})
     end
   end

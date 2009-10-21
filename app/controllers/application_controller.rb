@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
       options = {:limit => tag_limit, :order => "count desc, tags.name asc"}
       @header_tags = PasokaraFile.tag_counts(options)
       @tag_search_url_builder = Proc.new {|t|
-        "/tag_search/#{CGI.escape(t.name)}"
+        "/tag_search/#{ERB::Util.u(t.name)}"
       }
     end
     true
