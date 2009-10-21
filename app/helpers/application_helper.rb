@@ -150,4 +150,7 @@ module ApplicationHelper
     end
   end
 
+  def embed_player(pasokara, extname)
+    "<embed id='player' name='player' src='/swfplayer/player-viral.swf' height='360' width='480' allowscriptaccess='always' allowfullscreen='true' flashvars='file=#{u(url_for(:controller => "pasokara", :action => "movie", :id => pasokara.id) + extname)}&level=0&skin=%2Fswfplayer%2Fsnel.swf&image=#{u(url_for(:controller => "pasokara", :action => "thumb", :id => pasokara.id) + ".jpg")}&title=#{u pasokara.name}&autostart=true&dock=false&bandwidth=5000&plugins=viral-2d'/>"
+  end
 end
