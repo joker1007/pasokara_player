@@ -23,6 +23,18 @@ class PasokaraFile < ActiveRecord::Base
     "\"#{MPC_PATH}\" \"#{fullpath_win}\" /close"
   end
 
+  def fullpath
+    if WIN32
+      self["fullpath"].gsub(/\//, "\\").tosjis
+    end
+  end
+
+  def thumb_file
+    if WIN32
+      self["thumb_file"].gsub(/\//, "\\").tosjis
+    end
+  end
+
   def fullpath_win
     fullpath.gsub(/\//, "\\").tosjis
   end

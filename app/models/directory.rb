@@ -11,6 +11,12 @@ class Directory < ActiveRecord::Base
     (directories + pasokara_files)
   end
 
+  def fullpath
+    if WIN32
+      self["fullpath"].gsub(/\//, "\\").tosjis
+    end
+  end
+
   def fullpath_win
     fullpath.gsub(/\//, "\\").tosjis
   end

@@ -4,7 +4,14 @@ require 'cgi'
 require 'nkf'
 require 'digest/md5'
 
-$KCODE = 's'
+
+WIN32 = RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/ ? true : false
+
+if WIN32
+  $KCODE = 's'
+else
+  $KCODE = 'u'
+end
 
 if ARGV[0] == "-d"
   DEBUG = true
@@ -22,7 +29,14 @@ class DatabaseStructer
 	puts "ディレクトリリスト読み込み\n"
     @pasokara_dirs = File.open(File.join(File.dirname(__FILE__), "pasokara_dir_setting.txt")) {|file|
       file.readlines
-    }.map {|line| line.chomp}
+    }.map {|line|
+      path = line.chomp.gsub(/\\/, "/")
+      if WIN32
+        path.tosjis
+      else
+        path.toutf8
+      end
+    }
 	@hostname = `hostname`.chomp
   end
 
@@ -34,8 +48,6 @@ class DatabaseStructer
 
   def crowl_dir(dir, rootdir, higher_directory_id = nil)
 	puts "#{dir}の読み込み開始\n"
-    dir = dir.tosjis
-    rootdir = rootdir.tosjis
 
 
     begin
