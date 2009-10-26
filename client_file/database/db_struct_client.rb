@@ -4,7 +4,22 @@ require 'cgi'
 require 'nkf'
 require 'digest/md5'
 
-$KCODE = 's'
+
+WIN32 = RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/ ? true : false
+
+if WIN32
+  $KCODE = 's'
+else
+  $KCODE = 'u'
+end
+
+if ARGV[0] == "-d"
+  DEBUG = true
+  ARGV.shift
+else
+  DEBUG = false
+end
+
 
 class DatabaseStructer
 
@@ -14,7 +29,14 @@ class DatabaseStructer
 	puts "ディレクトリリスト読み込み\n"
     @pasokara_dirs = File.open(File.join(File.dirname(__FILE__), "pasokara_dir_setting.txt")) {|file|
       file.readlines
-    }.map {|line| line.chomp}
+    }.map {|line|
+      path = line.chomp.gsub(/\\/, "/")
+      if WIN32
+        path.tosjis
+      else
+        path.toutf8
+      end
+    }
 	@hostname = `hostname`.chomp
   end
 
@@ -26,8 +48,6 @@ class DatabaseStructer
 
   def crowl_dir(dir, rootdir, higher_directory_id = nil)
 	puts "#{dir}の読み込み開始\n"
-    dir = dir.tosjis
-    rootdir = rootdir.tosjis
 
 
     begin
@@ -35,13 +55,15 @@ class DatabaseStructer
       open_dir.entries.each do |entity|
         next if entity =~ /^\./
         entity_fullpath = File.join(dir, entity)
-
-		puts "#{entity_fullpath}\n"
+		
+		puts entity_fullpath
 
         if File.directory?(entity_fullpath)
 		  attributes = {:name => entity.toutf8, :fullpath => dir.toutf8 + "/" + entity.toutf8, :rootpath => rootdir.toutf8, :directory_id => higher_directory_id, :computer_name => @hostname}
-		  puts "Attr: "
-		  puts attributes.inspect
+          if DEBUG
+            puts "Attr: "
+            puts attributes.inspect
+          end
           dir_id = @remote_controller.create_directory(attributes)
           crowl_dir(entity_fullpath, rootdir, dir_id)
         elsif File.extname(entity) =~ /(mpg|avi|flv|ogm|mkv|mp4|wmv|swf)/i
@@ -51,10 +73,12 @@ class DatabaseStructer
           attributes.merge!(nico_check_info(entity_fullpath))
           attributes.merge!(nico_check_comment(entity_fullpath))
           attributes.merge!(nico_check_thumb(entity_fullpath))
-		  puts "Attr: "
-		  puts attributes.inspect
-		  puts "Tags: "
-		  puts tags.inspect
+          if DEBUG
+		    puts "Attr: "
+		    puts attributes.inspect
+		    puts "Tags: "
+		    puts tags.inspect
+          end
           pasokara_file_id = @remote_controller.create_pasokara_file(attributes, tags)
         end
       end

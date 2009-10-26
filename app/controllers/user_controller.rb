@@ -4,6 +4,26 @@ class UserController < ApplicationController
 
   def switch
     @users = User.find(:all)
+    if request.xhr?
+      render :layout => false
+    end
+  end
+
+  def new
+    @user = User.new
+    if request.xhr?
+      render :layout => false
+    end
+  end
+
+  def create
+    @user = User.new(params[:user])
+    if @user.save
+      flash[:notice] = "#{@user.name}を作成しました"
+      redirect_to root_path
+    else
+      render :action => "new"
+    end
   end
 
   def login

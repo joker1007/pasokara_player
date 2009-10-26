@@ -2,3 +2,5 @@
 /config/database.yml
 /config/pasokara_dir_setting
 /config/pp_setting.rb
+/client_file/database/pasokara_dir_setting.txt
+/client_file/player/pasokara_player_setting.txt

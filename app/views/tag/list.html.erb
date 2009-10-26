@@ -1,8 +1,13 @@
 <%# encoding: utf-8 %>
-<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :controller => 'dir', :action => 'index') %><br />
+<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", root_path) %><br />
 <h1><%= image_tag("icon/search.png", :class => "parent_dir", :size => "32x32") %>タグ一覧</h1>
+<% form_remote_tag :url => url_for(:controller => "tag", :action => "search"), :html => {:action => url_for(:controller => "tag", :action => "search")} do %>
+  <label for="tag">タグを検索する: </label>
+  <%= text_field_tag "tag", "", :size => 16 %>
+  <%= submit_tag "検索" %>
+<% end %>
 <% cache(:action => "list", :page => params[:page]) do -%>
-  <ul>
+  <ul id="entity_list" class="autopagerize_page_element">
     <% @tags.each do |tag| %>
       <%= entity_li(tag) %>
     <% end %>
@@ -10,4 +15,4 @@
   <%= will_paginate(@tags) %>
 <% end -%>
 <br />
-<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :action => 'index') %>
+<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", root_path) %>

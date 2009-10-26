@@ -2,8 +2,8 @@
 require 'kconv'
 
 class PasokaraFile < ActiveRecord::Base
-  include OnlineFind
   acts_as_taggable_on :tags
+  include OnlineFind
 
   belongs_to :directory
   has_many :users, :through => :favorites
@@ -21,6 +21,18 @@ class PasokaraFile < ActiveRecord::Base
   def play_cmd
     PasokaraNotifier.instance.play_notify(name)
     "\"#{MPC_PATH}\" \"#{fullpath_win}\" /close"
+  end
+
+  def fullpath
+    if WIN32
+      self["fullpath"].gsub(/\//, "\\").tosjis
+    end
+  end
+
+  def thumb_file
+    if WIN32
+      self["thumb_file"].gsub(/\//, "\\").tosjis
+    end
   end
 
   def fullpath_win

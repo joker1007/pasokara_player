@@ -4,7 +4,7 @@
 <% cache(:action => "index", :page => params[:page]) do -%>
   <% @grouping.each do |rootpath, dirs| %>
     <h2><%= h rootpath %></h2>
-    <ul>
+    <ul class="autopagerize_page_element">
       <% dirs.each do |entity| %>
         <%= entity_li(entity) %>
       <% end %>

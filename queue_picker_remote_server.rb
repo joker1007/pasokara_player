@@ -7,6 +7,13 @@ require 'kconv'
 require 'drb/drb'
 require 'config/environment.rb'
 
+if ARGV[0] == "-d"
+  DEBUG = true
+  ARGV.shift
+else
+  DEBUG = false
+end
+
 AR_ENV = ARGV[1] ? ARGV[1] : "development"
 
 db_setting = YAML.load_file("config/database.yml")
@@ -67,7 +74,7 @@ class QueuePickerServer
       
       directory = Directory.new(attributes)
       if directory.save
-        puts directory.inspect
+        print_process directory
         return directory.id
       else
         return nil
@@ -119,12 +126,12 @@ class QueuePickerServer
 
         if changed
           already_record.save
-          puts already_record.inspect
+          print_process already_record
           return already_record.id
         end
       else
         if pasokara_file.save
-          puts pasokara_file.inspect
+          print_process pasokara_file
           return pasokara_file.id
         else
           return nil
@@ -133,6 +140,15 @@ class QueuePickerServer
     rescue ActiveRecord::ActiveRecordError
       p $@
       raise "ARError"
+    end
+  end
+
+  private
+  def print_process(record)
+    if DEBUG
+      puts record.inspect
+    else
+      puts "#{record.class}: #{record.id}"
     end
   end
 

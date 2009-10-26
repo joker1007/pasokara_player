@@ -17,7 +17,9 @@ module ApplicationHelper
     content_tag(:li, :class=> "dir") do
       image_tag("icon/music_48x48.png", :size => @icon_size, :class => "pasokara_icon") +
       link_to(h(pasokara.name), {:controller => 'pasokara', :action => 'queue', :id => pasokara.id}) +
-      link_to_remote(image_tag("icon/star_off_48.png", :size => @icon_size), :url => {:controller => "favorite", :action => "add", :id => pasokara.id}, :html => {:href => url_for(:controller => "favorite", :action => "add", :id => pasokara.id), :class => "add_favorite"})
+      link_to_remote("[詳細]", :url => {:controller => "pasokara", :action => "show", :id => pasokara.id}, :html => {:href => url_for(:controller => "pasokara", :action => "show", :id => pasokara.id), :class => "show_info", :id => "show-info-#{pasokara.id}"}) +
+      link_to("[プレビュー]", {:controller => "pasokara", :action => "preview", :id => pasokara.id}, :class => "fancygroup2 preview_link") +
+      link_to_remote(image_tag("icon/star_off_48.png", :size => @icon_size), :confirm => "#{pasokara.name}をお気に入りに追加しますか？", :url => {:controller => "favorite", :action => "add", :id => pasokara.id}, :html => {:href => url_for(:controller => "favorite", :action => "add", :id => pasokara.id), :class => "add_favorite"})
     end
   end
 
@@ -29,13 +31,34 @@ module ApplicationHelper
     end
   end
 
+  def info_box(entity)
+    %Q{
+      <div id="info-box-#{entity.id}" class="info_box">
+        <h3>タグ</h3>
+        #{tag_list(entity)}
+        #{info_list(entity)}
+      </div>
+    }
+  end
 
+  def info_list(entity)
+    %Q{
+      <div id="info-list-#{entity.id}" class="info_list">
+        <h3>動画情報</h3>
+        <div class="thumb">#{image_tag(url_for(:controller => "pasokara", :action => "thumb", :id => entity.id), :size => "160x120")}</div>
+        <div class="nico_info"><span class="info_key">ニコニコID:</span><span class="info_value">#{link_to(entity.nico_name, "http://www.nicovideo.jp/watch/" + entity.nico_name) if entity.nico_name}</span></div>
+        <div class="nico_info"><span class="info_key">投稿日時:</span><span class="info_value">#{h entity.nico_post}</span></div>
+        <div class="nico_info"><span class="info_key">再生数:</span><span class="info_value">#{number_with_delimiter(entity.nico_view_counter)}</span></div>
+        <div class="nico_info"><span class="info_key">コメント数:</span><span class="info_value">#{number_with_delimiter(entity.nico_comment_num)}</span></div>
+        <div class="nico_info"><span class="info_key">マイリスト数:</span><span class="info_value">#{number_with_delimiter(entity.nico_mylist_counter)}</span></div>
+      </div>
+    }
+  end
 
   def tag_box(entity)
     %Q{
       <div id="tag-box-#{entity.id}" class="tag_box">
         <h3>タグ</h3>
-        <div class="nico_info"><span>#{entity.nico_name}</span></div>
         #{tag_list(entity)}
       </div>
     }
@@ -45,7 +68,7 @@ module ApplicationHelper
     content_tag("div", {:id => "tag-list-#{entity.id}", :class => "tag_list"}) do
       entity.tag_list.inject("") do |str, p_tag|
         str << content_tag("span", {:class => "tag"}) do
-          "<a href=\"/tag_search/#{CGI.escape(p_tag)}\">#{h p_tag}</a>"
+          "<a href=\"/tag_search/#{u p_tag}\">#{h p_tag}</a>"
         end
         str
       end +
@@ -127,4 +150,7 @@ module ApplicationHelper
     end
   end
 
+  def embed_player(pasokara, extname)
+    "<embed id='player' name='player' src='/swfplayer/player-viral.swf' height='360' width='480' allowscriptaccess='always' allowfullscreen='true' flashvars='file=#{u(url_for(:controller => "pasokara", :action => "movie", :id => pasokara.id) + extname)}&level=0&skin=%2Fswfplayer%2Fsnel.swf&image=#{u(url_for(:controller => "pasokara", :action => "thumb", :id => pasokara.id) + ".jpg")}&title=#{u pasokara.name}&autostart=true&dock=false&bandwidth=5000&plugins=viral-2d'/>"
+  end
 end

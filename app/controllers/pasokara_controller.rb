@@ -11,6 +11,53 @@ class PasokaraController < ApplicationController
     redirect_to root_path
   end
 
+  def show
+    @pasokara = PasokaraFile.find(params[:id])
+    if request.xhr?
+      render :update do |page|
+        page.insert_html :after, "tag-list-#{params[:id]}", info_list(@pasokara)
+        page.replace "show-info-#{params[:id]}", ""
+      end
+    else
+      respond_to do |format|
+        format.html
+        format.xml { render :xml => @pasokara.to_xml }
+        format.json { render :json => @pasokara.to_json }
+      end
+    end
+  end
+
+  def thumb
+    @pasokara = PasokaraFile.find(params[:id])
+    thumb_file = @pasokara.thumb_file.gsub(/\//, "\\").tosjis
+    if File.exist?(thumb_file)
+      send_file(thumb_file, :filename => "#{params[:id]}.jpg", :disposition => "inline", :type => "image/jpeg")
+    else
+      send_file("#{RAILS_ROOT}/public/images/noimg-1_3.gif", :disposition => "inline", :type => "image/gif")
+    end
+  end
+
+  def movie
+    @pasokara = PasokaraFile.find(params[:id])
+    movie_file = @pasokara.fullpath_win
+    extname = File.extname(movie_file)
+    if extname =~ /mp4|flv/
+      send_file(movie_file, :filename => "#{params[:id]}#{extname}")
+    else
+      render :text => "Not Flash Movie", :status => 404
+    end
+  end
+
+  def preview
+    @pasokara = PasokaraFile.find(params[:id])
+    @extname = File.extname(@pasokara.fullpath_win)
+    if @extname =~ /mp4|flv/
+      render :layout => false if request.xhr?
+    else
+      render :text => "Not Flash Movie"
+    end
+  end
+
   def search
     @query = params[:query].respond_to?(:force_encoding) ? params[:query].force_encoding(Encoding::UTF_8) : params[:query]
     unless fragment_exist?(:query => @query, :page => params[:page])
@@ -111,7 +158,7 @@ class PasokaraController < ApplicationController
     unless fragment_exist?(@tag_list_cache_key)
       @header_tags = PasokaraFile.related_tags(@tag_words, tag_limit)
       @tag_search_url_builder = Proc.new {|t|
-        "/pasokara/append_search_tag?tag=#{CGI.escape(@query)}&append=#{t.name}"
+        "/pasokara/append_search_tag?tag=#{ERB::Util.u(@query)}&append=#{t.name}"
       }
     end
   end

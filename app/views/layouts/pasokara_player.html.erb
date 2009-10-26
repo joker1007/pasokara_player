@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <meta name="viewport" content="width=device-width; initial-scale=1.0;">
+  <meta name="viewport" content="width=480, initial-scale=0.667">
 
   <title>Pasokara Player</title>
   <%= stylesheet_link_tag 'scaffold' %>
@@ -18,7 +18,7 @@
     j$ = jQuery;
 
     j$(document).ready(function() {
-        j$("a.fancygroup").fancybox({
+        j$("a.user_link").fancybox({
           'zoomSpeedIn': 300,
           'zoomSpeedOut': 300,
           'frameWidth': 250,
@@ -26,15 +26,23 @@
           'centerOnScroll': false,
         });
 
+        j$("a.preview_link").fancybox({
+          'zoomSpeedIn': 300,
+          'zoomSpeedOut': 300,
+          'frameWidth': 490,
+          'frameHeight': 400,
+          'hideOnContentClick': false,
+          'centerOnScroll': false,
+        });
     }); 
   </script>
 </head>
 <body>
-  <div id="user_info"><%= content_tag(:span, "現在のログインユーザー: " + @user.name, :class => "login_user") if session[:current_user] %><a class="fancygroup" href="/user/switch">ユーザー切り替え</a></div>
+  <div id="user_info"><%= content_tag(:span, "現在のログインユーザー: " + @user.name, :class => "login_user") + "<br />" if session[:current_user] %><a class="user_link" href="/user/switch">ユーザー切り替え</a> : <a class="user_link" href="/user/new">ユーザー作成</a></div>
 
   <br />
 <% if flash[:notice] -%>
-  <span class="notification"><%= flash[:notice] %></span>
+  <div class="notification"><%= flash[:notice] %></div>
 <% end -%>
 
 <%= yield %>

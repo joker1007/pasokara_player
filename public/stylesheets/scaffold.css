@@ -2,25 +2,15 @@ body { background-color: #fff; color: #333; }
 
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size:   16px;
-  line-height: 20px;
+  font-size:   14px;
+  line-height: 16px;
 }
 
-div#user_info {
-  float: right;
-  font-size: 12px;
-  line-height: 14px;
+h3 {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
-span.notification {
-  border: 2px solid #32CD32;
-  background-color: #ADFF2F;
-  margin-top: 10px;
-  padding-top: 4px;
-  padding-left: 3px;
-  padding-right: 3px;
-  padding-bottom: 4px;
-}
 
 ul {
   padding-left: 3px;
@@ -32,8 +22,40 @@ li {
   border: 1px solid #000; 
 }
 
+div#user_info {
+  float: right;
+  font-size: 12px;
+  line-height: 16px;
+}
+.user_link { margin-bottom: 20px; }
+
+.notification {
+  border: 2px solid #32CD32;
+  background-color: #ADFF2F;
+  margin-top: 20px;
+  padding-top: 4px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-bottom: 4px;
+}
+
 li.user_list {
-  margin-left: 30px;
+  margin-left: 0px;
+  margin-right: 30px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  padding-top: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 10px;
+  border: 2px solid #483D8B;
+  background-color: #ADD8E6;
+  list-style: none;
+}
+
+li.computer_list {
+  max-width: 400px;
+  margin-left: 0px;
   margin-right: 30px;
   margin-bottom: 0px;
   margin-top: 0px;
@@ -45,33 +67,54 @@ li.user_list {
   background-color: #ADD8E6;
 }
 
+li.computer_list span {
+  float: right;
+}
+
 li.dir {
   background-color: #B0E0E6;
-  max-width: 800px;
   list-style: none;
 }
 
 li.pasokara {
   background-color: #AFFFD4;
-  max-width: 800px;
   list-style: none;
 }
 
-div.tag_box {
+
+div.nico_info {
+  margin-bottom: 4px;
+  margin-left: 4px;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+div.thumb {
+  margin-right: 10px;
+  float: right;
+}
+div.thumb:after {
+  content: ".";  /* 新しい要素を作る */
+  display: block;  /* ブロックレベル要素に */
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+
+span.info_key {
+  margin-right: 10px;
+}
+
+.tag_box, .info_box {
   border: 1px solid #000;
   margin-top: 2px;
   margin-bottom: 40px;
   padding: 0px 4px 4px 4px;
-  max-width: 800px;
 }
 
-h3 {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-div.tag_list {
-  margin-bottom: 4px;
+div.tag_list, div.info_list {
+  margin-bottom: 40px;
+  margin-left: 4px;
 }
 
 div.all_tag_list {
@@ -85,6 +128,8 @@ span.login_user {
 }
 
 span.tag {
+  font-size: 12px;
+  line-height: 14px;
   margin-right: 10px;
   line-height: 40px;
   white-space: nowrap;
@@ -119,6 +164,8 @@ a:visited { color: #666; }
 a:hover { color: #fff; background-color:#000; }
 a.tag_list_link { color: red; }
 a.tag_edit_link { color: red; }
+a.show_info { color: red; margin-left: 10px; }
+a.preview_link { color: green; margin-left: 10px; }
 
 a.queue_remove {
   float: right;
@@ -127,8 +174,8 @@ a.queue_remove {
 }
 
 a.add_favorite {
-  float: right;
-  margin-right: 20px;
+/*  float: right; */
+  margin-left: 20px;
   vertical-align: middle;
 }
 

@@ -3,7 +3,7 @@
 <h1><%= image_tag("icon/elastic_movie.png", :class => "parent_dir", :size => "32x32") %><%= h @dir.name %></h1>
 <%= render 'layouts/search_header' %>
 <% cache(:action => "show", :page => params[:page]) do -%>
-  <ul>
+  <ul id="entity_list" class="autopagerize_page_element">
     <% @entities.each do |entity| %>
       <% cache("pasokara_li_#{entity.id}") do %>
         <%= entity_li(entity) %>
