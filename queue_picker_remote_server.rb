@@ -56,9 +56,9 @@ class QueuePickerServer
       queue = QueuedFile.deq
       if queue
         pasokara = queue.pasokara_file
-        puts pasokara.fullpath_win + "\n"
+        puts pasokara.fullpath + "\n"
         PasokaraNotifier.instance.play_notify(pasokara.name)
-        return pasokara.fullpath_win
+        return pasokara.fullpath
       end
       return nil
     rescue ActiveRecord::ActiveRecordError

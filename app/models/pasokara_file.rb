@@ -14,29 +14,31 @@ class PasokaraFile < ActiveRecord::Base
   def play
     sleep PRE_SLEEP
     PasokaraNotifier.instance.play_notify(name)
-    system(MPC_PATH, fullpath_win, "/close")
-    #system(NICOPLAY_PATH + " \"#{fullpath_win}\"")
+    system(MPC_PATH, fullpath, "/close")
+    #system(NICOPLAY_PATH + " \"#{fullpath}\"")
   end
 
   def play_cmd
     PasokaraNotifier.instance.play_notify(name)
-    "\"#{MPC_PATH}\" \"#{fullpath_win}\" /close"
+    "\"#{MPC_PATH}\" \"#{fullpath}\" /close"
   end
 
   def fullpath
-    if WIN32
-      self["fullpath"].gsub(/\//, "\\").tosjis
+    if ::WIN32
+      self["fullpath"].tosjis.gsub(/\//, "\\")
+    else
+      self["fullpath"]
     end
   end
 
   def thumb_file
-    if WIN32
-      self["thumb_file"].gsub(/\//, "\\").tosjis
+    if ::WIN32
+      self["thumb_file"].tosjis.gsub(/\//, "\\")
     end
   end
 
   def fullpath_win
-    fullpath.gsub(/\//, "\\").tosjis
+    fullpath
   end
 
   def self.related_tags(tags, limit = 30)
@@ -47,11 +49,11 @@ class PasokaraFile < ActiveRecord::Base
 
   def write_out_tag
     
-    unless File.exist?(fullpath_win)
+    unless File.exist?(fullpath)
       return false
     end
 
-    tag_file = directory.fullpath_win + "/" + File.basename(name.tosjis, ".*") + ".txt"
+    tag_file = directory.fullpath + "/" + File.basename(name.tosjis, ".*") + ".txt"
     buff = ""
 
     buff += "[tags]\n"
@@ -74,7 +76,7 @@ class PasokaraFile < ActiveRecord::Base
     tag_mode = false
     tags = []
 
-    info_file = fullpath_win.gsub(/\.[a-zA-Z0-9]+$/, ".txt")
+    info_file = fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".txt")
     if File.exist?(info_file)
       File.open(info_file) {|file|
         file.binmode
@@ -105,7 +107,7 @@ class PasokaraFile < ActiveRecord::Base
     info = ""
     info_key = ""
 
-    info_file = fullpath_win.gsub(/\.[a-zA-Z0-9]+$/, ".txt")
+    info_file = fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".txt")
     if File.exist?(info_file)
       File.open(info_file) {|file|
         file.binmode
@@ -130,14 +132,14 @@ class PasokaraFile < ActiveRecord::Base
   end
 
   def nico_check_thumb
-    thumb = fullpath_win.gsub(/\.[a-zA-Z0-9]+$/, ".jpg")
+    thumb = fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".jpg")
     if File.exist?(thumb)
       thumb_file = thumb.toutf8
     end
   end
 
   def nico_check_comment
-    comment = fullpath_win.gsub(/\.[a-zA-Z0-9]+$/, ".xml")
+    comment = fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".xml")
     if File.exist?(comment)
       comment_file = comment.toutf8
     end
