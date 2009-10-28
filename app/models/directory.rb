@@ -14,8 +14,6 @@ class Directory < ActiveRecord::Base
   def fullpath
     if WIN32
       self["fullpath"].tosjis.gsub(/\//, "\\")
-    else
-      self["fullpath"]
     end
   end
 
