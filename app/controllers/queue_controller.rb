@@ -20,7 +20,7 @@ class QueueController < ApplicationController
     end
 
     @pasokara = @queue.pasokara_file
-    @extname = File.extname(@pasokara.fullpath_win)
+    @extname = File.extname(@pasokara.fullpath)
     if @extname =~ /mp4|flv/
       render :layout => false if request.xhr?
     else
