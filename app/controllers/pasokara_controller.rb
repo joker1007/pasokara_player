@@ -158,7 +158,7 @@ class PasokaraController < ApplicationController
     unless fragment_exist?(@tag_list_cache_key)
       @header_tags = PasokaraFile.related_tags(@tag_words, tag_limit)
       @tag_search_url_builder = Proc.new {|t|
-        "/pasokara/append_search_tag?tag=#{ERB::Util.u(@query)}&append=#{t.name}"
+        "/pasokara/append_search_tag?tag=#{ERB::Util.u(@query)}&append=#{ERB::Util.u(t.name)}"
       }
     end
   end
