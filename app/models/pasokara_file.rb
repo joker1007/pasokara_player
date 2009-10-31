@@ -6,10 +6,11 @@ class PasokaraFile < ActiveRecord::Base
   include OnlineFind
 
   belongs_to :directory
+  belongs_to :computer, :include => true
   has_many :users, :through => :favorites
 
-  validates_uniqueness_of :fullpath, :scope => [:computer_name]
-  validates_uniqueness_of :md5_hash, :scope => [:computer_name]
+  validates_uniqueness_of :fullpath, :scope => [:computer_id]
+  validates_uniqueness_of :md5_hash, :scope => [:computer_id]
 
   def play
     sleep PRE_SLEEP

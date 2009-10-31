@@ -5,11 +5,11 @@ class DirController < ApplicationController
 
   def index
     unless fragment_exist?(:action => "index", :page => params[:page])
-      @top_dirs = Directory.paginate(:all, :conditions => ["directory_id is null"], :order => "rootpath, name", :page => params[:page], :per_page => 50)
+      @top_dirs = Directory.paginate(:all, :conditions => ["directory_id is null"], :order => "computer_id, name", :page => params[:page], :per_page => 50)
       @grouping = {}
       @top_dirs.each do |dir|
-        @grouping[dir.rootpath] ||= []
-        @grouping[dir.rootpath] << dir
+        @grouping[dir.computer.mount_path] ||= []
+        @grouping[dir.computer.mount_path] << dir
       end
     end
   end

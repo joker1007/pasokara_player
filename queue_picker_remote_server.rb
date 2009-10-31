@@ -26,15 +26,6 @@ end
 ActiveRecord::Base.establish_connection(db_setting[AR_ENV])
 
 class QueuePickerServer
-  attr_reader :online_computers
-
-  def initialize
-    @online_computers = []
-  end
-
-  def add_online_computer(computer_name)
-    @online_computers << computer_name
-  end
   
   def get_play_cmd
     begin
@@ -67,9 +58,27 @@ class QueuePickerServer
     end
   end
 
+  def create_computer(attributes = {})
+    begin
+      already_record = Computer.find_by_name(attributes[:name])
+      return already_record.id if already_record
+      
+      computer = Computer.new(attributes)
+      if computer.save
+        print_process computer
+        return computer.id
+      else
+        return nil
+      end
+    rescue ActiveRecord::ActiveRecordError
+      p $@
+      raise "ARError"
+    end
+  end
+
   def create_directory(attributes = {})
     begin
-      already_record = Directory.find_by_fullpath_and_computer_name(attributes[:fullpath], attributes[:computer_name])
+      already_record = Directory.find_by_fullpath_and_computer_id(attributes[:fullpath], attributes[:computer_id])
       return already_record.id if already_record
       
       directory = Directory.new(attributes)
@@ -87,7 +96,7 @@ class QueuePickerServer
 
   def create_pasokara_file(attributes = {}, tags = [])
     begin
-      already_record = PasokaraFile.find_by_md5_hash_and_computer_name(attributes[:md5_hash], attributes[:computer_name])
+      already_record = PasokaraFile.find_by_md5_hash_and_computer_id(attributes[:md5_hash], attributes[:computer_id])
       pasokara_file = PasokaraFile.new(attributes)
       pasokara_file.tag_list.add tags
       if already_record

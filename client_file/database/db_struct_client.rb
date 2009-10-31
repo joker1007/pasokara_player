@@ -23,30 +23,29 @@ end
 
 class DatabaseStructer
 
-  def initialize
+  def initialize(hostname = nil)
 	puts "キューピッカーサーバーに接続\n"
     @remote_controller = DRbObject.new_with_uri("druby://" + ARGV[0]) #キューピッカーサーバーに接続
 	puts "ディレクトリリスト読み込み\n"
-    @pasokara_dirs = File.open(File.join(File.dirname(__FILE__), "pasokara_dir_setting.txt")) {|file|
+    @pasokara_dir = File.open(File.join(File.dirname(__FILE__), "pasokara_dir_setting.txt")) {|file|
       file.readlines
     }.map {|line|
-      path = line.chomp.gsub(/\\/, "/")
+      path = line.chomp.gsub(/\\/, "/").gsub(/\/$/, "")
       if WIN32
         path.tosjis
       else
         path.toutf8
       end
-    }
-	@hostname = `hostname`.chomp
+    }[0]
+	@hostname = hostname || `hostname`.chomp
+    @computer_id = @remote_controller.create_computer({:name => @hostname, :mount_path => @pasokara_dir.toutf8, :remote_path => @pasokara_dir.toutf8})
   end
 
   def struct
-    @pasokara_dirs.each do |dir|
-      crowl_dir(dir, dir, nil)
-    end
+    crowl_dir(@pasokara_dir, @pasokara_dir, @computer_id, nil)
   end
 
-  def crowl_dir(dir, rootdir, higher_directory_id = nil)
+  def crowl_dir(dir, rootdir, computer_id, higher_directory_id = nil)
 	puts "#{dir}の読み込み開始\n"
 
 
@@ -57,18 +56,22 @@ class DatabaseStructer
         entity_fullpath = File.join(dir, entity)
 		
 		puts entity_fullpath
+        
+        name = entity.toutf8
+        fullpath = dir.toutf8 + "/" + entity.toutf8
+        relative_path = fullpath.gsub(/#{rootdir.toutf8 + "\/"}/, "")
 
         if File.directory?(entity_fullpath)
-		  attributes = {:name => entity.toutf8, :fullpath => dir.toutf8 + "/" + entity.toutf8, :rootpath => rootdir.toutf8, :directory_id => higher_directory_id, :computer_name => @hostname}
+		  attributes = {:name => name, :fullpath => fullpath, :relative_path => relative_path, :directory_id => higher_directory_id, :computer_id => computer_id}
           if DEBUG
             puts "Attr: "
             puts attributes.inspect
           end
           dir_id = @remote_controller.create_directory(attributes)
-          crowl_dir(entity_fullpath, rootdir, dir_id)
+          crowl_dir(entity_fullpath, rootdir, computer_id, dir_id)
         elsif File.extname(entity) =~ /(mpg|avi|flv|ogm|mkv|mp4|wmv|swf)/i
           md5_hash = File.open(entity_fullpath) {|file| file.binmode; head = file.read(300*1024); Digest::MD5.hexdigest(head)}
-          attributes = {:name => entity.toutf8, :fullpath => dir.toutf8 + "/" + entity.toutf8, :rootpath => rootdir.toutf8, :directory_id => higher_directory_id, :computer_name => @hostname, :md5_hash => md5_hash}
+          attributes = {:name => name, :fullpath => fullpath, :relative_path => relative_path, :directory_id => higher_directory_id, :computer_id => computer_id, :md5_hash => md5_hash}
           tags = nico_check_tag(entity_fullpath)
           attributes.merge!(nico_check_info(entity_fullpath))
           attributes.merge!(nico_check_comment(entity_fullpath))
