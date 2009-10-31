@@ -2,22 +2,36 @@ class ComputerController < ApplicationController
   layout "pasokara_player"
 
   def list
-    @computers = Directory.__find(:all, :select => "computer_name", :group => "computer_name")
+    @computers = Computer.find(:all)
+  end
+
+  def edit
+    @computer = Computer.find(params[:id])
+  end
+
+  def update
+    @computer = Computer.find(params[:id])
+    if @computer.update_attributes(params[:computer])
+      flash[:notice] = "#{@computer.name}が変更されました"
+      redirect_to :action => "list"
+    else
+      render :action => "edit"
+    end
   end
 
   def view_on
-    computer = params[:name]
-    Directory.online_computers << computer
-    PasokaraFile.online_computers << computer
-    flash[:notice] = "#{computer}の表示をオンにしました"
+    @computer = Computer.find(params[:id])
+    @computer.online = true
+    @computer.save
+    flash[:notice] = "#{@computer.name}の表示をオンにしました"
     redirect_to root_path
   end
 
   def view_off
-    computer = params[:name]
-    Directory.online_computers << computer
-    PasokaraFile.online_computers << computer
-    flash[:notice] = "#{computer}の表示をオフにしました"
+    @computer = Computer.find(params[:id])
+    @computer.online = false
+    @computer.save
+    flash[:notice] = "#{@computer.name}の表示をオフにしました"
     redirect_to root_path
   end
 
