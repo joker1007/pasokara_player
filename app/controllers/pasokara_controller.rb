@@ -39,7 +39,7 @@ class PasokaraController < ApplicationController
 
   def movie
     @pasokara = PasokaraFile.find(params[:id])
-    movie_file = @pasokara.fullpath
+    movie_file = @pasokara.fullpath_of_computer
     extname = File.extname(movie_file)
     if extname =~ /mp4|flv/
       send_file(movie_file, :filename => "#{params[:id]}#{extname}")
@@ -50,12 +50,7 @@ class PasokaraController < ApplicationController
 
   def preview
     @pasokara = PasokaraFile.find(params[:id])
-    @extname = File.extname(@pasokara.fullpath)
-    if @extname =~ /mp4|flv/
-      render :layout => false if request.xhr?
-    else
-      render :text => "Not Flash Movie"
-    end
+    render :layout => false
   end
 
   def search

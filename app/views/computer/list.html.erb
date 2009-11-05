@@ -2,7 +2,9 @@
 <ol>
 <% @computers.each do |computer| %>
 
-  <li class="computer_list"><%= computer.name %><span><%= link_to("ON", {:controller => "computer", :action => "view_on", :id => computer.id}) %> : <%= link_to("OFF", {:controller => "computer", :action => "view_off", :id => computer.id}) %></span></li>
+  <li class="computer_list"><%= computer.name %><span><%= link_to("ON", {:controller => "computer", :action => "view_on", :id => computer.id}) %> : <%= link_to("OFF", {:controller => "computer", :action => "view_off", :id => computer.id}) %> <%= link_to("編集", {:controller => "computer", :action => "edit", :id => computer.id}) %></span></li>
 
 <% end %>
 </ol>
+<br />
+<%= link_to("Go to Top Page", root_path) %>

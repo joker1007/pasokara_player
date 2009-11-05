@@ -1,0 +1,8 @@
+<h3><%= h @computer.name %></h3>
+<% form_for @computer, :url => {:action => "update", :id => @computer.id} do |f| %>
+  Mount Path: <%= f.text_field :mount_path %><br />
+  Remote Path: <%= f.text_field :remote_path %><br />
+  <%= submit_tag "Update" %>
+<% end %>
+<br />
+<%= link_to("Go to Computer List", :action => "list") %>
