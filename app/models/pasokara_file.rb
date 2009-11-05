@@ -28,7 +28,7 @@ class PasokaraFile < ActiveRecord::Base
     if ::WIN32
       self["fullpath"].tosjis.gsub(/\//, "\\")
     else
-      self["fullpath"].gsub(/\343\200\234/, "`")
+      self["fullpath"].gsub(/\343\200\234/, "ï½ž")
     end
   end
 
@@ -36,7 +36,7 @@ class PasokaraFile < ActiveRecord::Base
     if ::WIN32
       (computer.mount_path + "/" + self["relative_path"]).tosjis.gsub(/\//, "\\")
     else
-      (computer.mount_path +  "/" + self["relative_path"]).gsub(/\343\200\234/, "`")
+      (computer.mount_path +  "/" + self["relative_path"]).gsub(/\343\200\234/, "ï½ž")
     end
   end
 
