@@ -50,7 +50,7 @@ class PasokaraController < ApplicationController
 
   def preview
     @pasokara = PasokaraFile.find(params[:id])
-    render :layout => false if request.xhr?
+    render :layout => false
   end
 
   def search
