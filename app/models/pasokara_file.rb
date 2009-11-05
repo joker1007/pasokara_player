@@ -51,6 +51,10 @@ class PasokaraFile < ActiveRecord::Base
     "/pasokara/movie/#{id}#{extname}"
   end
 
+  def preview_path
+    computer.remote_path + "/pasokara/preview/#{id}"
+  end
+
   def fullpath_win
     fullpath
   end
