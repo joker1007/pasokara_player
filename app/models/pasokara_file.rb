@@ -32,10 +32,23 @@ class PasokaraFile < ActiveRecord::Base
     end
   end
 
+  def fullpath_of_computer
+    if ::WIN32
+      (computer.mount_path + "/" + self["relative_path"]).tosjis.gsub(/\//, "\\")
+    else
+      (computer.mount_path +  "/" + self["relative_path"])
+    end
+  end
+
   def thumb_file
     if ::WIN32
       self["thumb_file"].tosjis.gsub(/\//, "\\")
     end
+  end
+
+  def movie_path
+    extname = File.extname(fullpath)
+    "/pasokara/movie/#{id}#{extname}"
   end
 
   def fullpath_win

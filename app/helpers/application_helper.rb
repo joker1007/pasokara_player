@@ -18,7 +18,7 @@ module ApplicationHelper
       image_tag("icon/music_48x48.png", :size => @icon_size, :class => "pasokara_icon") +
       link_to(h(pasokara.name), {:controller => 'pasokara', :action => 'queue', :id => pasokara.id}) +
       link_to_remote("[詳細]", :url => {:controller => "pasokara", :action => "show", :id => pasokara.id}, :html => {:href => url_for(:controller => "pasokara", :action => "show", :id => pasokara.id), :class => "show_info", :id => "show-info-#{pasokara.id}"}) +
-      link_to("[プレビュー]", {:controller => "pasokara", :action => "preview", :id => pasokara.id}, :class => "fancygroup2 preview_link") +
+      link_to("[プレビュー]", "http://www.ngmen.com" + url_for({:controller => "pasokara", :action => "preview", :id => pasokara.id}), :class => "fancygroup2 preview_link") +
       link_to_remote(image_tag("icon/star_off_48.png", :size => @icon_size), :confirm => "#{pasokara.name}をお気に入りに追加しますか？", :url => {:controller => "favorite", :action => "add", :id => pasokara.id}, :html => {:href => url_for(:controller => "favorite", :action => "add", :id => pasokara.id), :class => "add_favorite"})
     end
   end
@@ -150,7 +150,7 @@ module ApplicationHelper
     end
   end
 
-  def embed_player(pasokara, extname)
-    "<embed id='player' name='player' src='/swfplayer/player-viral.swf' height='360' width='480' allowscriptaccess='always' allowfullscreen='true' flashvars='file=#{u(url_for(:controller => "pasokara", :action => "movie", :id => pasokara.id) + extname)}&level=0&skin=%2Fswfplayer%2Fsnel.swf&image=#{u(url_for(:controller => "pasokara", :action => "thumb", :id => pasokara.id) + ".jpg")}&title=#{u pasokara.name}&autostart=true&dock=false&bandwidth=5000&plugins=viral-2d'/>"
+  def embed_player(pasokara)
+    "<embed id='player' name='player' src='/swfplayer/player-viral.swf' height='360' width='480' allowscriptaccess='always' allowfullscreen='true' flashvars='file=#{u pasokara.movie_path}&level=0&skin=%2Fswfplayer%2Fsnel.swf&image=#{u(url_for(:controller => "pasokara", :action => "thumb", :id => pasokara.id) + ".jpg")}&title=#{u pasokara.name}&autostart=true&dock=false&bandwidth=5000&plugins=viral-2d'/>"
   end
 end
