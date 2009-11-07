@@ -30,7 +30,7 @@
   </script>
 </head>
 <body>
-  <div id="user_info"><%= content_tag(:span, "現在のログインユーザー: " + @user.name, :class => "login_user") + "<br />" if session[:current_user] %><a class="user_link" href="/user/switch">ユーザー切り替え</a> : <a class="user_link" href="/user/new">ユーザー作成</a></div>
+  <div id="user_info"><div class="clearfix"><%= content_tag(:span, "現在のログインユーザー: " + @user.name, :class => "login_user") if session[:current_user] %><a class="user_link" href="/user/switch">ユーザー切り替え</a> : <a class="user_link" href="/user/new">ユーザー作成</a></div></div>
 
   <br />
 <% if flash[:notice] -%>
