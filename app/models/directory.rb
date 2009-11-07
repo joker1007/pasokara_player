@@ -20,8 +20,4 @@ class Directory < ActiveRecord::Base
     end
   end
 
-  def fullpath_win
-    fullpath
-  end
-
 end

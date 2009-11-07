@@ -55,10 +55,6 @@ class PasokaraFile < ActiveRecord::Base
     computer.remote_path + "/pasokara/preview/#{id}"
   end
 
-  def fullpath_win
-    fullpath
-  end
-
   def self.related_tags(tags, limit = 30)
     tagged = self.tagged_with(tags, :on => :tags, :match_all => true, :order => "name").find(:all)
     conditions = "taggings.taggable_id IN (" + tagged.map {|p| p.id}.join(",") + ")"
