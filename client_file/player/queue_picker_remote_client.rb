@@ -13,7 +13,6 @@ class QueuePickerClient
 
   def initialize
     @remote_queue_picker = DRbObject.new_with_uri("druby://" + ARGV[0]) #キューピッカーサーバーに接続
-	@remote_queue_picker.add_online_computer(`hostname`.chomp)
     @player_thread = nil
     @playing = false
 	
