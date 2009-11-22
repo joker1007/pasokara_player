@@ -13,6 +13,16 @@ namespace :pasokara do
       p.write_out_tag
     end
   end
+
+  desc 'no file directory delete'
+  task :delete_dir do
+    Directory.find(:all).each do |d|
+      if d.pasokara_files.empty? && d.directories.empty?
+        d.destroy
+        puts "#{d.id} is deleted"
+      end
+    end
+  end
 end
 
 namespace :queue do

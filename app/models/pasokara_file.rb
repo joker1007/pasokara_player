@@ -1,5 +1,6 @@
 # _*_ coding: utf-8 _*_
 require 'kconv'
+require 'nkf'
 
 class PasokaraFile < ActiveRecord::Base
   acts_as_taggable_on :tags
@@ -26,7 +27,7 @@ class PasokaraFile < ActiveRecord::Base
 
   def fullpath
     if ::WIN32
-      self["fullpath"].tosjis.gsub(/\//, "\\")
+      NKF.nkf("-Ws --cp932", self["fullpath"]).gsub(/\//, "\\")
     else
       self["fullpath"].gsub(/\343\200\234/, "～")
     end
@@ -34,7 +35,7 @@ class PasokaraFile < ActiveRecord::Base
 
   def fullpath_of_computer
     if ::WIN32
-      (computer.mount_path + "/" + self["relative_path"]).tosjis.gsub(/\//, "\\")
+      NKF.nkf("-Ws --cp932", (computer.mount_path + "/" + self["relative_path"])).gsub(/\//, "\\")
     else
       (computer.mount_path +  "/" + self["relative_path"]).gsub(/\343\200\234/, "～")
     end
@@ -42,7 +43,9 @@ class PasokaraFile < ActiveRecord::Base
 
   def thumb_file
     if ::WIN32
-      self["thumb_file"].tosjis.gsub(/\//, "\\")
+      if self["thumb_file"]
+        NKF.nkf("-Ws --cp932", self["thumb_file"]).gsub(/\//, "\\")
+      end
     end
   end
 
@@ -67,7 +70,7 @@ class PasokaraFile < ActiveRecord::Base
       return false
     end
 
-    tag_file = directory.fullpath + "/" + File.basename(name.tosjis, ".*") + ".txt"
+    tag_file = directory.fullpath + "/" + File.basename(NKF.nkf("-Ws --cp932", name), ".*") + ".txt"
     buff = ""
 
     buff += "[tags]\n"
