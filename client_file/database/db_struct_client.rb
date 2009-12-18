@@ -38,7 +38,17 @@ class DatabaseStructer
       end
     }[0]
 	@hostname = hostname || `hostname`.chomp
-    @computer_id = @remote_controller.create_computer({:name => @hostname, :mount_path => @pasokara_dir.toutf8, :remote_path => @pasokara_dir.toutf8})
+	computer_list = @remote_controller.get_computer_list
+	computer_list.each do |c_list|
+	  puts "#{c_list[:id]}: #{c_list[:name]}\n"
+	end
+	STDOUT.write "Select Computer: "
+	select_id = STDIN.gets.to_i
+	if select_id > 0
+	  @computer_id = select_id
+	else
+	  @computer_id = @remote_controller.create_computer({:name => @hostname, :mount_path => @pasokara_dir.toutf8, :remote_path => @pasokara_dir.toutf8})
+	end
   end
 
   def struct
@@ -57,9 +67,9 @@ class DatabaseStructer
 		
 		puts entity_fullpath
         
-        name = entity.toutf8
-        fullpath = dir.toutf8 + "/" + entity.toutf8
-        relative_path = fullpath.gsub(/#{rootdir.toutf8 + "\/"}/, "")
+        name = NKF.nkf("-Sw --cp932", entity)
+        fullpath = NKF.nkf("-Sw --cp932", dir) + "/" + NKF.nkf("-Sw --cp932", entity)
+        relative_path = fullpath.gsub(/#{NKF.nkf("-Sw --cp932", rootdir) + "\/"}/, "")
 
         if File.directory?(entity_fullpath)
 		  attributes = {:name => name, :fullpath => fullpath, :relative_path => relative_path, :directory_id => higher_directory_id, :computer_id => computer_id}
@@ -152,7 +162,7 @@ class DatabaseStructer
   def nico_check_comment(fullpath)
     comment = fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".xml")
     if File.exist?(comment)
-      {:comment_file => comment.toutf8}
+      {:comment_file => NKF.nkf("-Sw --cp932", comment)}
     else
       {}
     end
@@ -161,7 +171,7 @@ class DatabaseStructer
   def nico_check_thumb(fullpath)
     thumb = fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".jpg")
     if File.exist?(thumb)
-      {:thumb_file => thumb.toutf8}
+      {:thumb_file => NKF.nkf("-Sw --cp932", thumb)}
     else
       {}
     end

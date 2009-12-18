@@ -29,7 +29,7 @@ class PasokaraController < ApplicationController
 
   def thumb
     @pasokara = PasokaraFile.find(params[:id])
-    thumb_file = @pasokara.thumb_file.gsub(/\//, "\\").tosjis
+    thumb_file = @pasokara.thumb_file
     if File.exist?(thumb_file)
       send_file(thumb_file, :filename => "#{params[:id]}.jpg", :disposition => "inline", :type => "image/jpeg")
     else

@@ -76,12 +76,27 @@ class QueuePickerServer
     end
   end
 
+  def get_computer_list
+    computers = Computer.find(:all)
+    computers.map {|c|
+      {:id => c.id, :name => c.name}
+    }
+  end
+
   def create_directory(attributes = {})
     begin
       already_record = Directory.find_by_fullpath_and_computer_id(attributes[:fullpath], attributes[:computer_id])
-      return already_record.id if already_record
-      
       directory = Directory.new(attributes)
+
+      if already_record
+        if already_record.directory_id != directory.directory_id
+          already_record.directory_id = directory.directory_id
+          already_record.save
+        end
+
+        return already_record.id
+      end
+      
       if directory.save
         print_process directory
         return directory.id
@@ -102,6 +117,36 @@ class QueuePickerServer
       if already_record
 
         changed = false
+
+        if already_record.name != pasokara_file.name
+          already_record.name = pasokara_file.name
+          changed = true
+        end
+
+        if already_record["fullpath"] != pasokara_file["fullpath"]
+          already_record["fullpath"] = pasokara_file["fullpath"]
+          changed = true
+        end
+
+        if already_record.relative_path != pasokara_file.relative_path
+          already_record.relative_path = pasokara_file.relative_path
+          changed = true
+        end
+
+        if already_record.comment_file != pasokara_file.comment_file
+          already_record.comment_file = pasokara_file.comment_file
+          changed = true
+        end
+
+        if already_record["thumb_file"] != pasokara_file["thumb_file"]
+          already_record["thumb_file"] = pasokara_file["thumb_file"]
+          changed = true
+        end
+
+        if already_record.directory_id != pasokara_file.directory_id
+          already_record.directory_id = pasokara_file.directory_id
+          changed = true
+        end
 
         if already_record.tag_list.empty? and !pasokara_file.tag_list.empty?
           already_record.tag_list.add pasokara_file.tag_list
