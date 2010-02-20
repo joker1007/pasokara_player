@@ -8,6 +8,7 @@ class CreateComputers < ActiveRecord::Migration
       t.timestamps
     end
     add_index :computers, :online
+    add_index :computers, :name, :unique => true
   end
 
   def self.down
