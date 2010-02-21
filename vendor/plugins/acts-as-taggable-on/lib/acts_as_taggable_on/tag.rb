@@ -1,4 +1,5 @@
 class Tag < ActiveRecord::Base
+  external_encoding "UTF-8" if self.respond_to?(:external_encoding)
   has_many :taggings
   
   validates_presence_of :name

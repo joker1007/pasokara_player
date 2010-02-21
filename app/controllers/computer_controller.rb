@@ -1,3 +1,4 @@
+# _*_ coding: utf-8 _*_
 class ComputerController < ApplicationController
   layout "pasokara_player"
 

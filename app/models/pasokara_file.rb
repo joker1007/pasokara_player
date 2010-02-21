@@ -3,6 +3,7 @@ require 'kconv'
 require 'nkf'
 
 class PasokaraFile < ActiveRecord::Base
+  external_encoding "UTF-8" if self.respond_to?(:external_encoding)
   acts_as_taggable_on :tags
   include OnlineFind
 
