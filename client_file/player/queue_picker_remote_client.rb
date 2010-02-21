@@ -1,38 +1,48 @@
 require 'rubygems'
 require 'drb/drb'
-require 'win32/process'
 
-$KCODE = 's'
 
-include Windows::Synchronize
-include Windows::Process
-include Windows::Handle
+WIN32 = RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/ ? true : false
+
+if WIN32
+  $KCODE = 's'
+else
+  $KCODE = 'u'
+end
 
 class QueuePickerClient
+  if WIN32
+    require 'windows_player'
+    include Win::Player
+  else
+    require 'linux_player'
+    include Linux::Player
+  end
+
   attr_accessor :playing
 
   def initialize
     @remote_queue_picker = DRbObject.new_with_uri("druby://" + ARGV[0]) #キューピッカーサーバーに接続
     @player_thread = nil
     @playing = false
-	
-	player_setting = File.open(File.join(File.dirname(__FILE__), "pasokara_player_setting.txt")) {|file| file.gets.chop}
+
+    player_setting = File.open(File.join(File.dirname(__FILE__), "pasokara_player_setting.txt")) {|file| file.gets.chop}
     player_setting.gsub!(/%f/, '#{@file_path}')
     player_setting.gsub!(/\\/, "\\\\\\")
     player_setting.gsub!(/\"/, '\"')
   # 再生コマンド定義。再生対象ファイルのパスは@file_pathで参照できる
-	self.class.class_eval <<-RUBY
-		def play_cmd
-			"#{player_setting}"
-		end
-	RUBY
+    self.class.class_eval <<-RUBY
+      def play_cmd
+        "#{player_setting}"
+      end
+    RUBY
   end
 
   def play_loop
     while true
       # 再生中はキューの取得を行わない
       unless @playing
-        @file_path = @remote_queue_picker.get_file_path
+        @file_path = WIN32 ? @remote_queue_picker.get_file_path : @remote_queue_picker.get_file_path(true)
 
         # キューが取得できたら再生処理へ
         if @file_path
@@ -45,15 +55,10 @@ class QueuePickerClient
             @player_thread = Thread.new do
               puts "PlayerThread start"
               @playing = true
-              puts "Play Start" + Thread.current.inspect
+              puts "Play Start : " + Thread.current.inspect
               puts play_cmd
-              pi = Process.create("app_name" => play_cmd)
-              handle = OpenProcess(PROCESS_ALL_ACCESS, 0, pi.process_id)
-              until WaitForSingleObject(handle, 0) == WAIT_OBJECT_0
-                sleep 1
-              end
-              CloseHandle(handle)
-              puts "Play End" + Thread.current.inspect
+              launch_player(play_cmd)
+              puts "Play End : " + Thread.current.inspect
               @playing = false
               @player_thread = nil
               puts "PlayerThread end"
@@ -87,5 +92,5 @@ Thread.new do
 end
 
 DRb.start_service("druby://localhost:12346", client)
-puts "キューピッカークライアント起動"
+puts "Start Queue Picker Client"
 sleep

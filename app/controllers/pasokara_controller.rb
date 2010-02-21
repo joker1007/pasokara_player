@@ -50,7 +50,13 @@ class PasokaraController < ApplicationController
 
   def preview
     @pasokara = PasokaraFile.find(params[:id])
-    render :layout => false
+    movie_file = @pasokara.fullpath_of_computer
+    extname = File.extname(movie_file)
+    if extname =~ /mp4|flv/
+      render :layout => false
+    else
+      render :text => "Not Flash Movie", :status => 404
+    end
   end
 
   def search

@@ -25,25 +25,27 @@ class PasokaraFile < ActiveRecord::Base
     "\"#{MPC_PATH}\" \"#{fullpath}\" /close"
   end
 
-  def fullpath
-    if ::WIN32
-      NKF.nkf("-Ws --cp932", self["fullpath"]).gsub(/\//, "\\")
-    else
+  def fullpath(utf8 = false)
+    if utf8
       self["fullpath"].gsub(/\343\200\234/, "～")
-    end
-  end
-
-  def fullpath_of_computer
-    if ::WIN32
-      NKF.nkf("-Ws --cp932", (computer.mount_path + "/" + self["relative_path"])).gsub(/\//, "\\")
     else
-      (computer.mount_path +  "/" + self["relative_path"]).gsub(/\343\200\234/, "～")
+      NKF.nkf("-Ws --cp932", self["fullpath"]).gsub(/\//, "\\")
     end
   end
 
-  def thumb_file
-    if ::WIN32
-      if self["thumb_file"]
+  def fullpath_of_computer(utf8 = false)
+    if utf8
+      (computer.mount_path +  "/" + self["relative_path"]).gsub(/\343\200\234/, "～")
+    else
+      NKF.nkf("-Ws --cp932", (computer.mount_path + "/" + self["relative_path"])).gsub(/\//, "\\")
+    end
+  end
+
+  def thumb_file(utf8 = false)
+    if self["thumb_file"]
+      if utf8
+        self["thumb_file"].gsub(/\343\200\234/, "～")
+      else
         NKF.nkf("-Ws --cp932", self["thumb_file"]).gsub(/\//, "\\")
       end
     end

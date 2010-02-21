@@ -26,30 +26,15 @@ end
 ActiveRecord::Base.establish_connection(db_setting[AR_ENV])
 
 class QueuePickerServer
-  
-  def get_play_cmd
-    begin
-      queue = QueuedFile.deq
-      if queue
-        pasokara = queue.pasokara_file
-        puts pasokara.play_cmd + "\n"
-        return pasokara.play_cmd
-      end
-      return nil
-    rescue ActiveRecord::ActiveRecordError
-      puts $@
-      return nil
-    end
-  end
 
-  def get_file_path
+  def get_file_path(utf8 = false)
     begin
       queue = QueuedFile.deq
       if queue
         pasokara = queue.pasokara_file
         puts pasokara.fullpath + "\n"
         PasokaraNotifier.instance.play_notify(pasokara.name)
-        return pasokara.fullpath
+        return pasokara.fullpath(utf8)
       end
       return nil
     rescue ActiveRecord::ActiveRecordError
