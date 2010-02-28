@@ -64,5 +64,41 @@ module NicoParser
       info_set
     end
 
+    def self.info_str(info_set = {}, tags = [])
+      result = ""
+      if info_set[:nico_name]
+        result += "[name]\n"
+        result += info_set[:nico_name] + "\n"
+        result += "\n"
+      end
+      if info_set[:nico_post]
+        result += "[post]\n"
+        result += info_set[:nico_post].strftime("%Y/%m/%d %H:%M:%S") + "\n"
+        result += "\n"
+      end
+      unless tags.empty?
+        result += "[tags]\n"
+        tags.each do |tag|
+          result += tag + "\n"
+        end
+        result += "\n"
+      end
+      if info_set[:nico_view_counter]
+        result += "[view_counter]\n"
+        result += info_set[:nico_view_counter].to_s + "\n"
+        result += "\n"
+      end
+      if info_set[:nico_comment_num]
+        result += "[comment_num]\n"
+        result += info_set[:nico_comment_num].to_s + "\n"
+        result += "\n"
+      end
+      if info_set[:nico_mylist_counter]
+        result += "[mylist_counter]\n"
+        result += info_set[:nico_mylist_counter].to_s + "\n"
+        result += "\n"
+      end
+      NKF.nkf("-W8 -w16L", result)
+    end
   end
 end

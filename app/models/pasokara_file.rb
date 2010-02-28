@@ -27,7 +27,7 @@ class PasokaraFile < ActiveRecord::Base
     "\"#{MPC_PATH}\" \"#{fullpath}\" /close"
   end
 
-  def fullpath(utf8 = false)
+  def fullpath(utf8 = true)
     return nil if self["fullpath"].nil?
 
     if utf8
@@ -37,7 +37,7 @@ class PasokaraFile < ActiveRecord::Base
     end
   end
 
-  def fullpath_of_computer(utf8 = false)
+  def fullpath_of_computer(utf8 = true)
     return nil if self["fullpath"].nil?
 
     if utf8
@@ -47,7 +47,17 @@ class PasokaraFile < ActiveRecord::Base
     end
   end
 
-  def thumb_file(utf8 = false)
+  def relative_path(utf8 = true)
+    return nil if self["relative_path"].nil?
+
+    if utf8
+      self["relative_path"].gsub(/\343\200\234/, "～")
+    else
+      NKF.nkf("-Ws --cp932", self["relative_path"]).gsub(/\//, "\\")
+    end
+  end
+
+  def thumb_file(utf8 = true)
     return nil if self["thumb_file"].nil?
 
     if self["thumb_file"]
@@ -65,7 +75,7 @@ class PasokaraFile < ActiveRecord::Base
   end
 
   def preview_path
-    computer.remote_path + "/pasokara/preview/#{id}"
+    computer.remote_path.chomp("/") + "/pasokara/preview/#{id}"
   end
 
   def self.related_tags(tags, limit = 30)
@@ -74,28 +84,14 @@ class PasokaraFile < ActiveRecord::Base
     self.tag_counts(:conditions => conditions, :limit => limit, :order => "count desc, tags.name asc")
   end
 
-  def write_out_tag
-    
-    unless File.exist?(fullpath)
-      return false
-    end
+  def write_out_info
+    info_set = {:nico_name => nico_name, :nico_post => nico_post, :nico_view_counter => nico_view_counter, :nico_comment_num => nico_comment_num, :nico_mylist_counter => nico_mylist_counter}
+    tags = tag_list
+    info_str = NicoParser::NicoPlayerParser.info_str(info_set, tags)
 
-    tag_file = directory.fullpath + "/" + File.basename(NKF.nkf("-Ws --cp932", name), ".*") + ".txt"
-    buff = ""
-
-    buff += "[tags]\n"
-    tag_list.each do |tag|
-      buff += tag + "\n"
-    end
-    
-    begin
-      File.open(tag_file, "w") {|file|
-        file.binmode
-        file.write NKF.nkf("-W8 -w16L", buff)
-      }
-      return true
-    rescue Exception
-      return false
+    info_file = fullpath.gsub(/\.[0-9a-zA-Z]+$/, ".txt")
+    unless File.exist?(info_file)
+      File.open(info_file, "w") {|file| file.write info_str}
     end
   end
 

@@ -1,7 +1,20 @@
+vocalodb:
+  id: 1
+  name: "ボカロカラオケDB"
+  
+ruka:
+  id: 2
+  name: "巡音ルカ"
+
 beatmario:
   id: 320
-  name: ビートまりお
+  name: "ビートまりお"
 
 amane:
   id: 318
-  name: あまね
+  name: "あまね"
+
+cool_and_create_tag:
+  id: 321
+  name: "COOL&CREATE"
+

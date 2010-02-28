@@ -10,7 +10,7 @@ esp_raging:
   relative_path: "COOL&CREATE/COOL&CREATE - ESP RAGING [myu314 remix].avi"
   thumb_file: "L:/pasokara/COOL&CREATE/COOL&CREATE - ESP RAGING [myu314 remix].jpg"
   md5_hash: "927c1d8f95b97329f33f903f9e1f6fc5"
-  computer_id: "1"
+  computer_id: 1
 
 siawase_gyaku:
   id: 8362
@@ -20,7 +20,25 @@ siawase_gyaku:
   created_at: 2009-10-12 16:49:27
   updated_at: 2009-11-28 11:29:00
   relative_path: "COOL&CREATE/【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv"
-  thumb_file: "L:/pasokara/COOL&CREATE/【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv"
+  thumb_file: "L:/pasokara/COOL&CREATE/【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.jpg"
   md5_hash: "1386b49d7fb897823a21b8ec9a9b48fd"
-  computer_id: "1"
+  computer_id: 1
   
+just_be_friends:
+  id: 9118
+  name: "【ニコカラ】Just Be Friends halyosy ver. 歌入り(sm7601746).mp4"
+  fullpath: "L:/pasokara/0.ニコカラ未整理/【ニコカラ】Just Be Friends halyosy ver. 歌入り/【ニコカラ】Just Be Friends halyosy ver. 歌入り(sm7601746).mp4"
+  directory_id: 17002
+  created_at: 2009-10-12 16:52:00
+  updated_at: 2009-11-22 10:02:56
+  relative_path: "0.ニコカラ未整理/【ニコカラ】Just Be Friends halyosy ver. 歌入り/【ニコカラ】Just Be Friends halyosy ver. 歌入り(sm7601746).mp4"
+  comment_file: "L:/pasokara/0.ニコカラ未整理/【ニコカラ】Just Be Friends halyosy ver. 歌入り/【ニコカラ】Just Be Friends halyosy ver. 歌入り(sm7601746).xml"
+  thumb_file: "L:/pasokara/0.ニコカラ未整理/【ニコカラ】Just Be Friends halyosy ver. 歌入り/【ニコカラ】Just Be Friends halyosy ver. 歌入り(sm7601746).jpg"
+  md5_hash: "74f5e368d467842895ae3cb38bbac478"
+  nico_name: "sm7601746"
+  nico_post: 2009-07-11 06:06:12
+  nico_view_counter: 3795
+  nico_comment_num: 36
+  nico_mylist_counter: 132
+  computer_id: 1
+

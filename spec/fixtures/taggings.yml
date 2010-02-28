@@ -10,10 +10,51 @@ beatmario_siawase:
 
 amane_esp:
   id: 2
-  tag_id: 320
+  tag_id: 318
   taggable_id: 8340
   tagger_id: NULL
   tagger_type: NULL
   taggable_type: PasokaraFile
   context: tags
   created_at: 2009-10-12 14:49:25
+
+cc_siawase:
+  id: 3
+  tag_id: 321
+  taggable_id: 8362
+  tagger_id: NULL
+  tagger_type: NULL
+  taggable_type: PasokaraFile
+  context: tags
+  created_at: 2009-10-12 14:49:25
+
+cc_esp:
+  id: 4
+  tag_id: 321
+  taggable_id: 8340
+  tagger_id: NULL
+  tagger_type: NULL
+  taggable_type: PasokaraFile
+  context: tags
+  created_at: 2009-10-12 14:49:25
+
+vocalo_just:
+  id: 5
+  tag_id: 1
+  taggable_id: 9118
+  tagger_id: NULL
+  tagger_type: NULL
+  taggable_type: PasokaraFile
+  context: tags
+  created_at: 2009-10-12 14:49:25
+
+ruka_just:
+  id: 6
+  tag_id: 2
+  taggable_id: 9118
+  tagger_id: NULL
+  tagger_type: NULL
+  taggable_type: PasokaraFile
+  context: tags
+  created_at: 2009-10-12 14:49:25
+

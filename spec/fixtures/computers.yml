@@ -3,7 +3,7 @@
 phoenixEee2:
   id: 1
   name: "phoenixEee2"
-  mount_path: "L:\\pasokara"
-  remote_path: "http://pasokara.ngmen.com/"
+  mount_path: "L:/pasokara"
+  remote_path: "http://pasokara.example.com/"
   online: 1
 
