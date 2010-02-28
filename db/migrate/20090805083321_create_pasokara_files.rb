@@ -10,7 +10,7 @@ class CreatePasokaraFiles < ActiveRecord::Migration
       t.string :thumb_file
       t.string :md5_hash, :null => false
       t.string :nico_name
-      t.string :nico_post
+      t.timestamp :nico_post
       t.integer :nico_view_counter
       t.integer :nico_comment_num
       t.integer :nico_mylist_counter
