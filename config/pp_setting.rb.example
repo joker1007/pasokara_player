@@ -1,11 +1,6 @@
-PASOKARA_DIRS = [
-"Directory path",
-]
 PRE_SLEEP = 5
-LOCAL_COMPUTER_NAME = "local"
 MPC_PATH = 'c:\mpc.exe'
 NICOPLAY_PATH = 'c:\uwsc.exe'
-WIN32 = RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/ ? true : false
 TWEET = true
 TWITTER_CONSUMER_KEY = "consumer_key"
 TWITTER_CONSUMER_SECRET = "consumer_secret"
