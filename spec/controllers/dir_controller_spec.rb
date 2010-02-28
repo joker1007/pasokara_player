@@ -1,7 +1,8 @@
+# _*_ coding: utf-8 _*_
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe DirController do
-  fixtures :directories, :pasokara_files
+  fixtures :directories, :pasokara_files, :computers
 
   #Delete these examples and add some real ones
   it "should use DirController" do
@@ -19,7 +20,7 @@ describe DirController do
     end
 
     it "トップレベルのディレクトリをすべてロードしていること" do
-      assigns[:top_dirs].length.should == 1
+      assigns[:top_dirs].length.should == 2
     end
 
     it "dir/indexを描画すること" do
@@ -29,7 +30,7 @@ describe DirController do
 
   describe "GET 'show'" do
     before do
-      get 'show', :id => directories(:cool_and_create).id
+      get 'show', :id => directories(:cool_and_create_dir).id
     end
 
     it "should be successful" do
@@ -37,7 +38,7 @@ describe DirController do
     end
 
     it "指定したIDのディレクトリがロードされていること" do
-      assigns[:dir].should == directories(:cool_and_create)
+      assigns[:dir].should == directories(:cool_and_create_dir)
     end
 
     it "dir/showを描画すること" do

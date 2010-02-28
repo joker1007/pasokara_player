@@ -1,0 +1,19 @@
+beatmario_siawase:
+  id: 1
+  tag_id: 320
+  taggable_id: 8362
+  tagger_id: NULL
+  tagger_type: NULL
+  taggable_type: PasokaraFile
+  context: tags
+  created_at: 2009-10-12 14:49:25
+
+amane_esp:
+  id: 2
+  tag_id: 320
+  taggable_id: 8340
+  tagger_id: NULL
+  tagger_type: NULL
+  taggable_type: PasokaraFile
+  context: tags
+  created_at: 2009-10-12 14:49:25
