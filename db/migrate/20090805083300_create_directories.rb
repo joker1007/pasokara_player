@@ -5,8 +5,12 @@ class CreateDirectories < ActiveRecord::Migration
       t.string :fullpath, :null => false
       t.integer :directory_id
       t.timestamps
+      t.string :relative_path, :null => false
+      t.integer :computer_id
     end
+    add_index :directories, [:fullpath, :computer_id], :unique => true
     add_index :directories, :directory_id
+    add_index :directories, :computer_id
   end
 
   def self.down

@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20100220065930) do
     t.datetime "updated_at"
   end
 
+  add_index "computers", ["name"], :name => "index_computers_on_name", :unique => true
   add_index "computers", ["online"], :name => "index_computers_on_online"
 
   create_table "directories", :force => true do |t|
@@ -48,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20100220065930) do
     t.integer  "directory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "relative_path"
+    t.string   "relative_path", :null => false
     t.integer  "computer_id"
   end
 
@@ -71,7 +72,7 @@ ActiveRecord::Schema.define(:version => 20100220065930) do
     t.integer  "directory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "relative_path"
+    t.string   "relative_path",                       :null => false
     t.string   "comment_file"
     t.string   "thumb_file"
     t.string   "md5_hash",            :default => "", :null => false
