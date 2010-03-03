@@ -8,7 +8,7 @@ class CreatePasokaraFiles < ActiveRecord::Migration
       t.string :relative_path, :null => false
       t.string :comment_file
       t.string :thumb_file
-      t.string :md5_hash, :null => false
+      t.column :md5_hash, :"CHAR(32)", :null => false
       t.string :nico_name
       t.timestamp :nico_post
       t.integer :nico_view_counter
