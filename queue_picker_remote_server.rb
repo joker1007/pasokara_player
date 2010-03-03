@@ -43,6 +43,21 @@ class QueuePickerServer
     end
   end
 
+  def get_latest_queue(utf8 = false)
+    begin
+      queue = QueuedFile.find(:first, :order => "id desc")
+      if queue
+        pasokara = queue.pasokara_file
+        puts pasokara.fullpath + "\n"
+        return {:id => queue.id, :fullpath => pasokara.fullpath(utf8)}
+      end
+      return nil
+    rescue ActiveRecord::ActiveRecordError
+      puts $@
+      return nil
+    end
+  end
+
   def create_computer(attributes = {})
     begin
       already_record = Computer.find_by_name(attributes[:name])

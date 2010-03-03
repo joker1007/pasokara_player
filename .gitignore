@@ -5,3 +5,4 @@ client_file/database/pasokara_dir_setting.txt
 client_file/player/pasokara_player_setting.txt
 Capfile
 config/deploy.rb
+client_file/player/notifier/twitter.yml
