@@ -15,6 +15,14 @@ class PasokaraFile < ActiveRecord::Base
   validates_uniqueness_of :fullpath, :scope => [:computer_id]
   validates_uniqueness_of :md5_hash, :scope => [:computer_id]
 
+  SORT_OPTIONS = [
+    ["名前順", "name"],
+    ["再生順", "play_count"],
+    ["マイリス順", "mylist_count"],
+    ["投稿順", "post"],
+    ["DB追加順", "created"],
+  ]
+
   def play
     sleep PRE_SLEEP
     PasokaraNotifier.instance.play_notify(name)
