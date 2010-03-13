@@ -5,7 +5,13 @@ class PasokaraController < ApplicationController
   before_filter :related_tag_load, :only => [:tag_search]
 
   def queue
-    @pasokara = PasokaraFile.find(params[:id])
+    if params[:id] =~ /^\d+$/
+      @pasokara = PasokaraFile.find(params[:id])
+    elsif params[:id] =~ /sm\d+/
+      @pasokara = PasokaraFile.find_by_nico_name(params[:id])
+    else
+      render :text => "パラメーターが不正です。", :status => 404 and return
+    end
     QueuedFile.enq @pasokara
     flash[:notice] = "#{@pasokara.name} の予約が完了しました"
     redirect_to root_path
