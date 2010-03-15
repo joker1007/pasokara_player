@@ -168,9 +168,9 @@ describe PasokaraFile do
     tags = PasokaraFile.related_tags("COOL&CREATE")
     tags[0].name.should == "COOL&CREATE"
     tags[0].count.should == 2
-    tags[1].name.should == "あまね"
-    tags[1].count.should == 1
-    tags[2].name.should == "ビートまりお"
+    tags[1].name.should == "ニコカラ"
+    tags[1].count.should == 2
+    tags[2].name.should == "あまね"
     tags[2].count.should == 1
   end
 
@@ -190,6 +190,7 @@ sm7601746
 [tags]
 ボカロカラオケDB
 巡音ルカ
+ニコカラ
 
 [view_counter]
 3795

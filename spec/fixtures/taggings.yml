@@ -58,3 +58,33 @@ ruka_just:
   context: tags
   created_at: 2009-10-12 14:49:25
 
+nicokara_esp:
+  id: 7
+  tag_id: 3
+  taggable_id: 8340
+  tagger_id: NULL
+  tagger_type: NULL
+  taggable_type: PasokaraFile
+  context: tags
+  created_at: 2009-10-12 14:49:25
+
+nicokara_siawase:
+  id: 8
+  tag_id: 3
+  taggable_id: 8362
+  tagger_id: NULL
+  tagger_type: NULL
+  taggable_type: PasokaraFile
+  context: tags
+  created_at: 2009-10-12 14:49:25
+
+nicokara_just:
+  id: 9
+  tag_id: 3
+  taggable_id: 9118
+  tagger_id: NULL
+  tagger_type: NULL
+  taggable_type: PasokaraFile
+  context: tags
+  created_at: 2009-10-12 14:49:25
+

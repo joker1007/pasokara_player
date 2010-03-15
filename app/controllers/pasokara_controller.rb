@@ -73,7 +73,22 @@ class PasokaraController < ApplicationController
       conditions[0] = conditions[0][0..-6]
       @pasokaras = PasokaraFile.find(:all, :conditions => conditions, :order => "name")
       @pasokaras += PasokaraFile.tagged_with(query_words, :on => :tags, :match_all => true, :order => "name")
-      @pasokaras.sort! {|a, b| a.name <=> b.name }
+
+      case params[:sort]
+      when "view_count"
+        @pasokaras.sort! {|a, b| b.nico_view_counter <=> a.nico_view_counter }
+      when "view_count_r"
+        @pasokaras.sort! {|a, b| a.nico_view_counter <=> b.nico_view_counter }
+      when "post_new"
+        @pasokaras.sort! {|a, b| b.nico_post <=> a.nico_post }
+      when "post_old"
+        @pasokaras.sort! {|a, b| a.nico_post <=> b.nico_post }
+      when "mylist_count"
+        @pasokaras.sort! {|a, b| b.nico_mylist_counter <=> a.nico_mylist_counter }
+      else
+        @pasokaras.sort! {|a, b| a.name <=> b.name }
+      end
+
       @pasokaras.uniq!
       @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => 50)
     end
@@ -93,7 +108,21 @@ class PasokaraController < ApplicationController
     end
 
     unless fragment_exist?(:query => @query, :page => params[:page])
-      @pasokaras = PasokaraFile.tagged_with(@tag_words, :on => :tags, :match_all => true, :order => "name").find(:all).paginate(:page => params[:page], :per_page => 50)
+      find_options = {:on => :tags, :match_all => true, :order => "name"}
+      case params[:sort]
+      when "view_count"
+        find_options.merge!({:order => "nico_view_counter desc, name asc"})
+      when "view_count_r"
+        find_options.merge!({:order => "nico_view_counter asc, name asc"})
+      when "post_new"
+        find_options.merge!({:order => "nico_post desc, name asc"})
+      when "post_old"
+        find_options.merge!({:order => "nico_post asc, name asc"})
+      when "mylist_count"
+        find_options.merge!({:order => "nico_mylist_counter desc, name asc"})
+      end
+
+      @pasokaras = PasokaraFile.tagged_with(@tag_words, find_options).find(:all).paginate(:page => params[:page], :per_page => 50)
       
     end
     render :action => 'search'

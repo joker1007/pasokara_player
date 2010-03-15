@@ -5,6 +5,10 @@ vocalodb:
 ruka:
   id: 2
   name: "巡音ルカ"
+  
+nicokara:
+  id: 3
+  name: "ニコカラ"
 
 beatmario:
   id: 320

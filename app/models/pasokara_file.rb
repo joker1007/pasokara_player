@@ -17,10 +17,11 @@ class PasokaraFile < ActiveRecord::Base
 
   SORT_OPTIONS = [
     ["名前順", "name"],
-    ["再生順", "play_count"],
-    ["マイリス順", "mylist_count"],
-    ["投稿順", "post"],
-    ["DB追加順", "created"],
+    ["再生が多い順", "view_count"],
+    ["再生が少い順", "view_count_r"],
+    ["投稿が新しい順", "post_new"],
+    ["投稿が古い順", "post_new"],
+    ["マイリスが多い順", "mylist_count"],
   ]
 
   def play
