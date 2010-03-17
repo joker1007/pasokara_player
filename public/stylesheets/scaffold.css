@@ -94,8 +94,8 @@ div.thumb {
   float: right;
 }
 .clearfix:after {
-  content: ".";  /* 新しい要素を作る */
-  display: block;  /* ブロックレベル要素に */
+  content: ".";
+  display: block;
   clear: both;
   height: 0.1px;
   font-size: 0.1em;
@@ -123,6 +123,10 @@ div.all_tag_list {
   margin: 10px;
   padding: 5px;
   border: 1px solid #000;
+}
+
+#tag_scope {
+  margin-bottom: 4em;
 }
 
 span.login_user {

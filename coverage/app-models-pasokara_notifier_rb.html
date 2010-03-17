@@ -1,0 +1,477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>app/models/pasokara_notifier.rb</title>
+    <link href="screen.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="print.css" media="print" rel="stylesheet" type="text/css" />
+    
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <script type="text/javascript" src="rcov.js"></script>
+  </head>
+  <body>
+    <h1>Pasokara Player C0 Coverage Information - RCov</h1>
+    <h2>app/models/pasokara_notifier.rb</h2>
+
+    
+
+    <div class="report_table_wrapper">
+      <table class='report' id='report_table'>
+        <thead>
+          <tr>
+            <th class="left_align">Name</th>
+            <th class="right_align">Total Lines</th>
+            <th class="right_align">Lines of Code</th>
+            <th class="left_align">Total Coverage</th>
+            <th class="left_align">Code Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="left_align"><a href="app-models-pasokara_notifier_rb.html">app/models/pasokara_notifier.rb</a></td>
+            <td class='right_align'><tt>69</tt></td>
+            <td class='right_align'><tt>62</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>53.62%</tt></div>
+          <div class="percent_graph">
+            <div class="covered" style="width:54px"></div>
+            <div class="uncovered" style="width:46px"></div>
+          </div></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>50.00%</tt></div>
+          <div class="percent_graph">
+            <div class="covered" style="width:50px"></div>
+            <div class="uncovered" style="width:50px"></div>
+          </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <h3>Key</h3>
+    
+    <div class="key"><pre><span class='marked'>Code reported as executed by Ruby looks like this...</span><span class='marked1'>and this: this line is also marked as covered.</span><span class='inferred'>Lines considered as run by rcov, but not reported by Ruby, look like this,</span><span class='inferred1'>and this: these lines were inferred by rcov (using simple heuristics).</span><span class='uncovered'>Finally, here's a line marked as not executed.</span></pre></div>
+
+    <h3>Coverage Details</h3>
+
+    <table class="details">
+      <tbody>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line1">1</a> # _*_ coding: utf-8 _*_</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line2">2</a> require &quot;ruby_gntp&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line3">3</a> require &quot;twitter&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line4">4</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line5">5</a> class PasokaraNotifier</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line6">6</a>   include Singleton</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line7">7</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line8">8</a>   def initialize</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line9">9</a>     begin</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line10">10</a>       @@growl = GNTP.new(&quot;Ruby/GNTP Pasokara Player&quot;)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line11">11</a>       @@growl.register({</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line12">12</a>         :notifications =&gt; [</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line13">13</a>           {</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line14">14</a>             :name =&gt; &quot;Queue&quot;,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line15">15</a>             :enabled =&gt; true,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line16">16</a>           },</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line17">17</a>           {</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line18">18</a>             :name =&gt; &quot;Play&quot;,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line19">19</a>             :enabled =&gt; true,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line20">20</a>           },</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line21">21</a>         ]</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line22">22</a>       })</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line23">23</a>     rescue Exception</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line24">24</a>       @@growl = nil</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line25">25</a>       puts &quot;NoGrowl&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line26">26</a>     end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line27">27</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line28">28</a>     begin</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line29">29</a>       oauth = ::Twitter::OAuth.new(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line30">30</a>       oauth.authorize_from_access(TWITTER_AUTH_KEY, TWITTER_AUTH_SECRET)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line31">31</a>       @@twitter = ::Twitter::Base.new(oauth)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line32">32</a>     rescue Exception</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line33">33</a>       @@twitter = nil</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line34">34</a>       puts &quot;Tweet Failed.&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line35">35</a>     end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line36">36</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line37">37</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line38">38</a>   def play_notify(name)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line39">39</a>     begin</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line40">40</a>       if @@growl</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line41">41</a>         @@growl.notify({</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line42">42</a>           :name =&gt; &quot;Play&quot;,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line43">43</a>           :title =&gt; &quot;#{name}&quot;,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line44">44</a>           :text =&gt; &quot;#{name}を再生します&quot;,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line45">45</a>         })</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line46">46</a>       end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line47">47</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line48">48</a>       if TWEET and @@twitter</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line49">49</a>         @@twitter.update(&quot;歌ってるなう::#{File.basename(name, &quot;.*&quot;)}&quot;)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line50">50</a>       end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line51">51</a>     rescue Exception</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line52">52</a>       puts &quot;Notify Failed&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line53">53</a>     end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line54">54</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line55">55</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line56">56</a>   def queue_notify(name)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line57">57</a>     begin</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line58">58</a>       if @@growl</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line59">59</a>         @@growl.notify({</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line60">60</a>           :name =&gt; &quot;Queue&quot;,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line61">61</a>           :title =&gt; &quot;#{name}&quot;,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line62">62</a>           :text =&gt; &quot;#{name}を予約しました&quot;,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line63">63</a>         })</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line64">64</a>       end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line65">65</a>     rescue Exception</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line66">66</a>       puts &quot;Notify Failed&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line67">67</a>     end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line68">68</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line69">69</a> end</pre></td>
+          </tr>
+        
+      </tbody>
+    </table>
+
+    <p>Generated on Tue Mar 16 00:56:35 +0900 2010 with <a href="http://github.com/relevance/rcov">rcov 0.9.8</a></p>
+
+  </body>
+</html>

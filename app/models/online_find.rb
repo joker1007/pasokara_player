@@ -5,8 +5,18 @@ module OnlineFind
   def self.included(base)
     base.instance_eval <<-RUBY
       alias :__find :find
+      alias :__union :union
 
       def find(*args)
+        online_computers_id = Computer.find_all_by_online(true).map {|comp| comp.id}
+        conditions = [Array.new(online_computers_id.size, "computer_id = ?").join(" OR ")] + online_computers_id
+
+        with_scope(:find => {:conditions => conditions}) do
+          super
+        end
+      end
+
+      def union(*args)
         online_computers_id = Computer.find_all_by_online(true).map {|comp| comp.id}
         conditions = [Array.new(online_computers_id.size, "computer_id = ?").join(" OR ")] + online_computers_id
 

@@ -71,25 +71,23 @@ class PasokaraController < ApplicationController
       query_words = @query.split(/[\s　]/)
       conditions = query_words.inject([""]) {|cond_arr, query| cond_arr[0] += "name LIKE ? AND "; cond_arr << "%#{query}%"}
       conditions[0] = conditions[0][0..-6]
-      @pasokaras = PasokaraFile.find(:all, :conditions => conditions, :order => "name")
-      @pasokaras += PasokaraFile.tagged_with(query_words, :on => :tags, :match_all => true, :order => "name")
 
+      order = {:order => "name asc"}
       case params[:sort]
       when "view_count"
-        @pasokaras.sort! {|a, b| b.nico_view_counter <=> a.nico_view_counter }
+        order.merge!({:order => "nico_view_counter desc, name asc"})
       when "view_count_r"
-        @pasokaras.sort! {|a, b| a.nico_view_counter <=> b.nico_view_counter }
+        order.merge!({:order => "nico_view_counter asc, name asc"})
       when "post_new"
-        @pasokaras.sort! {|a, b| b.nico_post <=> a.nico_post }
+        order.merge!({:order => "nico_post desc, name asc"})
       when "post_old"
-        @pasokaras.sort! {|a, b| a.nico_post <=> b.nico_post }
+        order.merge!({:order => "nico_post asc, name asc"})
       when "mylist_count"
-        @pasokaras.sort! {|a, b| b.nico_mylist_counter <=> a.nico_mylist_counter }
-      else
-        @pasokaras.sort! {|a, b| a.name <=> b.name }
+        order.merge!({:order => "nico_mylist_counter desc, name asc"})
       end
 
-      @pasokaras.uniq!
+      @pasokaras = PasokaraFile.union([{:conditions => conditions}, PasokaraFile.find_options_for_find_tagged_with(query_words, :on => :tags, :match_all => true, :order => "name")], order)
+
       @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => 50)
     end
   end
@@ -107,7 +105,7 @@ class PasokaraController < ApplicationController
       end
     end
 
-    unless fragment_exist?(:query => @query, :page => params[:page])
+    unless fragment_exist?(:query => @query, :page => params[:page], :sort => params[:sort])
       find_options = {:on => :tags, :match_all => true, :order => "name"}
       case params[:sort]
       when "view_count"
