@@ -11,6 +11,7 @@ class PasokaraFile < ActiveRecord::Base
   belongs_to :directory
   belongs_to :computer, :include => true
   has_many :users, :through => :favorites
+  has_many :sing_logs
 
   validates_uniqueness_of :fullpath, :scope => [:computer_id]
   validates_uniqueness_of :md5_hash, :scope => [:computer_id]

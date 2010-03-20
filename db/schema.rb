@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100220065930) do
+ActiveRecord::Schema.define(:version => 20100320030150) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -67,15 +67,15 @@ ActiveRecord::Schema.define(:version => 20100220065930) do
   add_index "favorites", ["user_id", "pasokara_file_id"], :name => "index_favorites_on_user_id_and_pasokara_file_id"
 
   create_table "pasokara_files", :force => true do |t|
-    t.string   "name",                                :null => false
-    t.string   "fullpath",                            :null => false
+    t.string   "name",                              :null => false
+    t.string   "fullpath",                          :null => false
     t.integer  "directory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "relative_path",                       :null => false
+    t.string   "relative_path",                     :null => false
     t.string   "comment_file"
     t.string   "thumb_file"
-    t.string   "md5_hash",            :default => "", :null => false
+    t.string   "md5_hash",            :limit => 32, :null => false
     t.string   "nico_name"
     t.datetime "nico_post"
     t.integer  "nico_view_counter"
@@ -99,6 +99,16 @@ ActiveRecord::Schema.define(:version => 20100220065930) do
   end
 
   add_index "queued_files", ["pasokara_file_id"], :name => "index_queued_files_on_pasokara_file_id"
+
+  create_table "sing_logs", :force => true do |t|
+    t.integer  "pasokara_file_id", :null => false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sing_logs", ["pasokara_file_id"], :name => "index_sing_logs_on_pasokara_file_id"
+  add_index "sing_logs", ["user_id"], :name => "index_sing_logs_on_user_id"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
