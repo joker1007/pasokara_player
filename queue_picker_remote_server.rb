@@ -27,14 +27,25 @@ ActiveRecord::Base.establish_connection(db_setting[AR_ENV])
 
 class QueuePickerServer
 
-  def get_file_path(utf8 = false)
+  def get_file_path(utf8 = false, base_dir = nil)
     begin
       queue = QueuedFile.deq
       if queue
         pasokara = queue.pasokara_file
         puts pasokara.fullpath + "\n"
+
+        # base_dirが与えられていれば、そのディレクトリを基準にしたフルパスを返す
+        # 無ければ、レコードに登録されているフルパスを返す
+        if base_dir && utf8
+          return_path = base_dir + "/" + pasokara.relative_path
+        elsif base_dir
+          return_path = base_dir + "\\" + pasokara.relative_path(utf8)
+        else utf8
+          return_path = pasokara.fullpath(utf8)
+        end
+
         PasokaraNotifier.instance.play_notify(pasokara.name)
-        return pasokara.fullpath(utf8)
+        return return_path
       end
       return nil
     rescue ActiveRecord::ActiveRecordError
@@ -49,7 +60,7 @@ class QueuePickerServer
       if queue
         pasokara = queue.pasokara_file
         puts pasokara.fullpath + "\n"
-        return {:id => queue.id, :fullpath => pasokara.fullpath(utf8)}
+        return {:id => queue.id, :name => pasokara.name(utf8)}
       end
       return nil
     rescue ActiveRecord::ActiveRecordError
@@ -208,6 +219,13 @@ class QueuePickerServer
 
 end
 
-puts "�L���[�s�b�J�[�T�[�o�[�N��"
+WIN32 = RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/ ? true : false
+
+start_message = "キューピッカーサーバー起動"
+if WIN32
+  start_message = NKF.nkf("-W -s --cp932", start_message)
+end
+
+puts start_message
 DRb.start_service("druby://" + ARGV[0], QueuePickerServer.new)
 DRb.thread.join

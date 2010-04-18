@@ -106,6 +106,15 @@ describe PasokaraFile do
     same_pasokara_same_computer.should have(1).errors_on(:md5_hash)
   end
 
+  it "name(), name(true)がUTF-8を返すこと" do
+    @siawase_gyaku.name.should == "【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv"
+    @siawase_gyaku.name(true).should == "【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv"
+  end
+
+  it "name(false)がCP932を返すこと" do
+    @siawase_gyaku.name(false).should == NKF.nkf("-W -s --cp932", "【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv")
+  end
+
   it "movie_pathが適切なファイルパスを返すこと" do
     @esp_raging.movie_path.should == "/pasokara/movie/8340.avi"
     @siawase_gyaku.movie_path.should == "/pasokara/movie/8362.flv"

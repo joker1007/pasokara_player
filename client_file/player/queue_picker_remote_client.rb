@@ -28,6 +28,7 @@ class QueuePickerClient
     @player_thread = nil
     @playing = false
     @current_queue_id = nil
+    @base_dir = ARGV[1]
 
     player_setting = File.open(File.join(File.dirname(__FILE__), "pasokara_player_setting.txt")) {|file| file.gets.chop}
     player_setting.gsub!(/%f/, '#{@file_path}')
@@ -51,14 +52,14 @@ class QueuePickerClient
         latest_queue = WIN32 ? @remote_queue_picker.get_latest_queue(false) : @remote_queue_picker.get_latest_queue(true)
         if !latest_queue.nil? && @current_queue_id != latest_queue[:id]
           @current_queue_id = latest_queue[:id]
-          @latest_queue_name = File.basename(latest_queue[:fullpath])
+          @latest_queue_name = File.basename(latest_queue[:name])
           queue_notify
         end
 
 
         # 再生中はキューの取得を行わない
         unless @playing
-          @file_path = WIN32 ? @remote_queue_picker.get_file_path(false) : @remote_queue_picker.get_file_path(true)
+          @file_path = WIN32 ? @remote_queue_picker.get_file_path(false, @base_dir) : @remote_queue_picker.get_file_path(true, @base_dir)
 
           # キューが取得できたら再生処理へ
           if @file_path

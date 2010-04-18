@@ -37,6 +37,14 @@ class PasokaraFile < ActiveRecord::Base
     "\"#{MPC_PATH}\" \"#{fullpath}\" /close"
   end
 
+  def name(utf8 = true)
+    if utf8
+      self["name"]
+    else
+      NKF.nkf("-W -s --cp932", self["name"])
+    end
+  end
+
   def fullpath(utf8 = true)
     return nil if self["fullpath"].nil?
 
