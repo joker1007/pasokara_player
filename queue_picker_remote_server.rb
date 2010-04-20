@@ -54,6 +54,8 @@ class QueuePickerServer
     end
   end
 
+  # 最後に登録されたキューを返す。
+  # キュー追加のチェック用
   def get_latest_queue(utf8 = false)
     begin
       queue = QueuedFile.find(:first, :order => "id desc")

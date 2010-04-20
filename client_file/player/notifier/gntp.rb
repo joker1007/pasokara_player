@@ -1,4 +1,4 @@
-# _*_ coding: Windows-31J _*_
+# _*_ coding: utf-8 _*_
 require "ruby_gntp"
 require "singleton"
 

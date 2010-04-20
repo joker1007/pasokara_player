@@ -1,11 +1,11 @@
-# _*_ coding: Windows-31J _*_
+# _*_ coding: utf-8 _*_
 require "twitter"
 require "yaml"
 require "singleton"
 
 
 module Notifier
-    class Twitter
+  class Twitter
     include Singleton
 
     def initialize
@@ -26,7 +26,7 @@ module Notifier
 
     def play_notify(name)
       begin
-        @@twitter.update(WIN32 ? NKF.nkf("-S -w --cp932", "âÃÇ¡ÇƒÇÈÇ»Ç§::#{File.basename(name, ".*")}") : "âÃÇ¡ÇƒÇÈÇ»Ç§::#{File.basename(name, ".*")}")
+        @@twitter.update("Ê≠å„Å£„Å¶„Çã„Å™„ÅÜ::" + WIN32 ? NKF.nkf("-S -w --cp932", File.basename(name, ".*")) : File.basename(name, ".*"))
       rescue Exception
         puts "Notify Failed"
       end

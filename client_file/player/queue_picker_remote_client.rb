@@ -1,3 +1,4 @@
+# _*_ coding: utf-8 _*_
 require 'rubygems'
 require 'drb/drb'
 require File.join(File.dirname(__FILE__), "notifier/gntp.rb")
@@ -24,7 +25,7 @@ class QueuePickerClient
   attr_accessor :playing
 
   def initialize
-    @remote_queue_picker = DRbObject.new_with_uri("druby://" + ARGV[0]) #ƒLƒ…[ƒsƒbƒJ[ƒT[ƒo[‚ÉÚ‘±
+    @remote_queue_picker = DRbObject.new_with_uri("druby://" + ARGV[0]) #ã‚­ãƒ¥ãƒ¼ãƒ”ãƒƒã‚«ãƒ¼ã‚µãƒ¼ãƒãƒ¼ã«æ¥ç¶š
     @player_thread = nil
     @playing = false
     @current_queue_id = nil
@@ -34,7 +35,7 @@ class QueuePickerClient
     player_setting.gsub!(/%f/, '#{@file_path}')
     player_setting.gsub!(/\\/, "\\\\\\")
     player_setting.gsub!(/\"/, '\"')
-  # Ä¶ƒRƒ}ƒ“ƒh’è‹`BÄ¶‘ÎÛƒtƒ@ƒCƒ‹‚ÌƒpƒX‚Í@file_path‚ÅQÆ‚Å‚«‚é
+  # å†ç”Ÿã‚³ãƒãƒ³ãƒ‰å®šç¾©ã€‚å†ç”Ÿå¯¾è±¡ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã¯@file_pathã§å‚ç…§ã§ãã‚‹
     self.class.class_eval <<-RUBY
       def play_cmd
         "#{player_setting}"
@@ -46,9 +47,9 @@ class QueuePickerClient
     while true
       begin
 
-        # ID‚ª‚à‚Á‚Æ‚à‘å‚«‚¢ƒLƒ…[‚ÌID‚ÆAƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒX‚ğæ“¾‚µA
-        # •Û‚µ‚Ä‚¢‚éID‚Æˆá‚¤’l‚ª“¾‚ç‚ê‚½‚çAƒLƒ…[‚ª’Ç‰Á‚³‚ê‚½‚Æ”»’f‚·‚éB
-        # ƒLƒ…[‚ª’Ç‰Á‚³‚ê‚½AŒ»İ‚ÌƒLƒ…[ID‚ğXV‚µA’Ê’mƒƒ\ƒbƒh‚ğŒÄ‚Ô
+        # IDãŒã‚‚ã£ã¨ã‚‚å¤§ãã„ã‚­ãƒ¥ãƒ¼ã®IDã¨ã€ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’å–å¾—ã—ã€
+        # ä¿æŒã—ã¦ã„ã‚‹IDã¨é•ã†å€¤ãŒå¾—ã‚‰ã‚ŒãŸã‚‰ã€ã‚­ãƒ¥ãƒ¼ãŒè¿½åŠ ã•ã‚ŒãŸã¨åˆ¤æ–­ã™ã‚‹ã€‚
+        # ã‚­ãƒ¥ãƒ¼ãŒè¿½åŠ ã•ã‚ŒãŸæ™‚ã€ç¾åœ¨ã®ã‚­ãƒ¥ãƒ¼IDã‚’æ›´æ–°ã—ã€é€šçŸ¥ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã¶
         latest_queue = WIN32 ? @remote_queue_picker.get_latest_queue(false) : @remote_queue_picker.get_latest_queue(true)
         if !latest_queue.nil? && @current_queue_id != latest_queue[:id]
           @current_queue_id = latest_queue[:id]
@@ -57,19 +58,19 @@ class QueuePickerClient
         end
 
 
-        # Ä¶’†‚ÍƒLƒ…[‚Ìæ“¾‚ğs‚í‚È‚¢
+        # å†ç”Ÿä¸­ã¯ã‚­ãƒ¥ãƒ¼ã®å–å¾—ã‚’è¡Œã‚ãªã„
         unless @playing
           @file_path = WIN32 ? @remote_queue_picker.get_file_path(false, @base_dir) : @remote_queue_picker.get_file_path(true, @base_dir)
 
-          # ƒLƒ…[‚ªæ“¾‚Å‚«‚½‚çÄ¶ˆ—‚Ö
+          # ã‚­ãƒ¥ãƒ¼ãŒå–å¾—ã§ããŸã‚‰å†ç”Ÿå‡¦ç†ã¸
           if @file_path
             sleep 3
             @file_name = File.basename(@file_path)
 
-            # ƒvƒŒ[ƒ„[‚ÌƒvƒƒZƒX‚ª–¢‚¾‹N“®‚µ‚Ä‚¢‚È‚¢ê‡A
-            # ƒXƒŒƒbƒh‚ğ¶¬‚µ‚ÄA‚»‚±‚©‚çƒvƒŒ[ƒ„[ƒvƒƒZƒX‚ğ‹N“®‚·‚éB
-            # ƒvƒŒ[ƒ„[ƒvƒƒZƒX‚Ì€ŠˆŠÄ‹‚ğs‚¢AI—¹‚ğŠm”F‚µ‚½‚çA
-            # Ä¶ƒtƒ‰ƒO‚ğƒIƒt‚É‚µ‚ÄAƒXƒŒƒbƒh•Û•Ï”‚ğƒNƒŠƒA‚·‚éB
+            # ãƒ—ãƒ¬ãƒ¼ãƒ¤ãƒ¼ã®ãƒ—ãƒ­ã‚»ã‚¹ãŒæœªã èµ·å‹•ã—ã¦ã„ãªã„å ´åˆã€
+            # ã‚¹ãƒ¬ãƒƒãƒ‰ã‚’ç”Ÿæˆã—ã¦ã€ãã“ã‹ã‚‰ãƒ—ãƒ¬ãƒ¼ãƒ¤ãƒ¼ãƒ—ãƒ­ã‚»ã‚¹ã‚’èµ·å‹•ã™ã‚‹ã€‚
+            # ãƒ—ãƒ¬ãƒ¼ãƒ¤ãƒ¼ãƒ—ãƒ­ã‚»ã‚¹ã®æ­»æ´»ç›£è¦–ã‚’è¡Œã„ã€çµ‚äº†ã‚’ç¢ºèªã—ãŸã‚‰ã€
+            # å†ç”Ÿãƒ•ãƒ©ã‚°ã‚’ã‚ªãƒ•ã«ã—ã¦ã€ã‚¹ãƒ¬ãƒƒãƒ‰ä¿æŒå¤‰æ•°ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹ã€‚
             unless @player_thread
               @player_thread = Thread.new do
                 puts "PlayerThread start"
@@ -77,10 +78,10 @@ class QueuePickerClient
                 play_end
                 puts "PlayerThread end"
               end
-            # ƒvƒŒ[ƒ„[ƒvƒƒZƒX‚ªŠù‚É‹N“®‚µ‚Ä‚¢‚éê‡ == ŠO•”‚©‚ç‚Ì’Ê’m‚Å
-            # Ä¶ƒtƒ‰ƒO‚ªƒIƒt‚É‚³‚ê‚½ê‡AÄ¶ƒRƒ}ƒ“ƒhÀsŒã‚·‚®‚ÉƒXƒŒƒbƒh‚ÍI—¹‚·‚éB
-            # Ä¶ƒtƒ‰ƒO‚ğƒIƒ“‚É‚·‚é‚ªA‚±‚ÌƒXƒŒƒbƒh“à‚Å‚ÍƒIƒt‚É‚µ‚È‚¢B
-            # ƒvƒŒ[ƒ„[I—¹AƒvƒƒZƒX‹N“®ƒXƒŒƒbƒh‚ªI—¹‚ğŒŸ’n‚µAÄ¶ƒtƒ‰ƒO‚ğƒIƒt‚É‚·‚éB
+            # ãƒ—ãƒ¬ãƒ¼ãƒ¤ãƒ¼ãƒ—ãƒ­ã‚»ã‚¹ãŒæ—¢ã«èµ·å‹•ã—ã¦ã„ã‚‹å ´åˆ == å¤–éƒ¨ã‹ã‚‰ã®é€šçŸ¥ã§
+            # å†ç”Ÿãƒ•ãƒ©ã‚°ãŒã‚ªãƒ•ã«ã•ã‚ŒãŸå ´åˆã€å†ç”Ÿã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œå¾Œã™ãã«ã‚¹ãƒ¬ãƒƒãƒ‰ã¯çµ‚äº†ã™ã‚‹ã€‚
+            # å†ç”Ÿãƒ•ãƒ©ã‚°ã‚’ã‚ªãƒ³ã«ã™ã‚‹ãŒã€ã“ã®ã‚¹ãƒ¬ãƒƒãƒ‰å†…ã§ã¯ã‚ªãƒ•ã«ã—ãªã„ã€‚
+            # ãƒ—ãƒ¬ãƒ¼ãƒ¤ãƒ¼çµ‚äº†æ™‚ã€ãƒ—ãƒ­ã‚»ã‚¹èµ·å‹•ã‚¹ãƒ¬ãƒƒãƒ‰ãŒçµ‚äº†ã‚’æ¤œåœ°ã—ã€å†ç”Ÿãƒ•ãƒ©ã‚°ã‚’ã‚ªãƒ•ã«ã™ã‚‹ã€‚
             else
               Thread.new do
                 @playing = true
