@@ -81,6 +81,12 @@ li.pasokara {
   list-style: none;
 }
 
+li.queue {
+  padding-right: 10px;
+  background-color: #BDFF7F;
+  list-style: none;
+}
+
 
 div.nico_info {
   margin-bottom: 4px;
@@ -160,6 +166,7 @@ img.parent_dir {
 img.entity_icon {
   margin-left: 4px;
   margin-right: 6px;
+  vertical-align: middle;
 }
 
 a img {

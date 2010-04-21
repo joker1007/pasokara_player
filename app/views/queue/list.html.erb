@@ -1,5 +1,5 @@
 
-<%= periodically_call_remote(:url => {:action => "list"}, :frequency => 30) %>
+<%= periodically_call_remote(:url => {:action => "list"}, :frequency => 15) %>
 
 <h1>queue list</h1>
 <%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :controller => 'dir', :action => 'index') %><br /><br />
@@ -10,7 +10,7 @@
   <ol>
   <% @queue_list.each do |queue| %>
 
-    <li><%= image_tag("icon/music_48x48.png", :size => "24x24", :class=> "entity_icon") %><%= queue.pasokara_file.name %><%= link_to("取消", {:action => "remove", :id => queue}, :class => "queue_remove clearfix") %></li>
+    <li class="queue"><%= image_tag("icon/music_48x48.png", :size => "24x24", :class=> "entity_icon") %><%= queue.pasokara_file.name %><%= link_to("取消", {:action => "remove", :id => queue}, :class => "queue_remove clearfix") %></li>
 
   <% end %>
   </ol>

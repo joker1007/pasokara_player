@@ -4,7 +4,7 @@
   <ol>
   <% @queue_list.each do |queue| %>
 
-    <li><%= image_tag("icon/music_48x48.png", :size => "24x24", :class=> "entity_icon") %><%= queue.pasokara_file.name %><%= link_to("取消", {:action => "remove", :id => queue}, :class => "queue_remove clearfix") %></li>
+    <li class="queue"><%= image_tag("icon/music_48x48.png", :size => "24x24", :class=> "entity_icon") %><%= queue.pasokara_file.name %><%= link_to("取消", {:action => "remove", :id => queue}, :class => "queue_remove clearfix") %></li>
 
   <% end %>
   </ol>

@@ -1,0 +1,15 @@
+<h1>歌ログ</h1>
+<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :controller => 'dir', :action => 'index') %><br /><br />
+<div id="sing_log_table">
+<% if @sing_logs.empty? %>
+  Empty
+<% else %>
+  <ol>
+  <% @sing_logs.each do |sing_log| %>
+
+    <li class="queue"><%= image_tag("icon/music_48x48.png", :size => "24x24", :class=> "entity_icon") %><%= sing_log.pasokara_file.name %><span class="clearfix" style="float: right"><%= h(sing_log.user) + " | " if sing_log.user %><%= sing_log.created_at.strftime("%Y/%m/%d %H:%M") %></span></li>
+
+  <% end %>
+  </ol>
+<% end %>
+</div>

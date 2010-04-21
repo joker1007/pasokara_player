@@ -8,14 +8,14 @@ module ApplicationHelper
 
   def directory_li(directory)
     content_tag(:li, :class=> "dir") do
-      image_tag("icon/elastic_movie.png", :size => @icon_size, :class => "directory_icon") +
+      image_tag("icon/elastic_movie.png", :size => @icon_size, :class => "entity_icon") +
       link_to(h(directory.name), {:controller => "dir", :action => "show", :id => directory.id})
     end
   end
 
   def pasokara_file_li(pasokara)
     content_tag(:li, :class=> "dir") do
-      image_tag("icon/music_48x48.png", :size => @icon_size, :class => "pasokara_icon") +
+      image_tag("icon/music_48x48.png", :size => @icon_size, :class => "entity_icon") +
       link_to(h(pasokara.name), {:controller => 'pasokara', :action => 'queue', :id => pasokara.id}) +
       link_to_remote("[詳細]", :url => {:controller => "pasokara", :action => "show", :id => pasokara.id}, :html => {:href => url_for(:controller => "pasokara", :action => "show", :id => pasokara.id), :class => "show_info", :id => "show-info-#{pasokara.id}"}) +
       link_to("[プレビュー]", pasokara.preview_path, :class => "preview_link", :target => "_blank") +
