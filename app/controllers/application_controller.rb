@@ -32,4 +32,22 @@ class ApplicationController < ActionController::Base
   def icon_size
     @icon_size = request.mobile? ? "12x12" : "24x24"
   end
+
+  def order_options
+    order = {:order => "name asc"}
+    case params[:sort]
+    when "view_count"
+      order.merge!({:order => "nico_view_counter desc, name asc"})
+    when "view_count_r"
+      order.merge!({:order => "nico_view_counter asc, name asc"})
+    when "post_new"
+      order.merge!({:order => "nico_post desc, created_at desc, name asc"})
+    when "post_old"
+      order.merge!({:order => "nico_post asc, created_at asc, name asc"})
+    when "mylist_count"
+      order.merge!({:order => "nico_mylist_counter desc, name asc"})
+    end
+
+    order
+  end
 end

@@ -72,19 +72,7 @@ class PasokaraController < ApplicationController
       conditions = query_words.inject([""]) {|cond_arr, query| cond_arr[0] += "name LIKE ? AND "; cond_arr << "%#{query}%"}
       conditions[0] = conditions[0][0..-6]
 
-      order = {:order => "name asc"}
-      case params[:sort]
-      when "view_count"
-        order.merge!({:order => "nico_view_counter desc, name asc"})
-      when "view_count_r"
-        order.merge!({:order => "nico_view_counter asc, name asc"})
-      when "post_new"
-        order.merge!({:order => "nico_post desc, name asc"})
-      when "post_old"
-        order.merge!({:order => "nico_post asc, name asc"})
-      when "mylist_count"
-        order.merge!({:order => "nico_mylist_counter desc, name asc"})
-      end
+      order = order_options
 
       @pasokaras = PasokaraFile.union([{:conditions => conditions}, PasokaraFile.find_options_for_find_tagged_with(query_words, :on => :tags, :match_all => true, :order => "name")], order)
 
@@ -107,18 +95,10 @@ class PasokaraController < ApplicationController
 
     unless fragment_exist?(:query => @query, :page => params[:page], :sort => params[:sort])
       find_options = {:on => :tags, :match_all => true, :order => "name"}
-      case params[:sort]
-      when "view_count"
-        find_options.merge!({:order => "nico_view_counter desc, name asc"})
-      when "view_count_r"
-        find_options.merge!({:order => "nico_view_counter asc, name asc"})
-      when "post_new"
-        find_options.merge!({:order => "nico_post desc, name asc"})
-      when "post_old"
-        find_options.merge!({:order => "nico_post asc, name asc"})
-      when "mylist_count"
-        find_options.merge!({:order => "nico_mylist_counter desc, name asc"})
-      end
+
+      order = order_options
+
+      find_options.merge!(order)
 
       @pasokaras = PasokaraFile.tagged_with(@tag_words, find_options).find(:all).paginate(:page => params[:page], :per_page => 50)
       

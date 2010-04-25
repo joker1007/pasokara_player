@@ -41,6 +41,12 @@ class FavoriteController < ApplicationController
   end
 
   def list
-    @pasokaras = @user.pasokara_files.paginate(:page => params[:page], :per_page => 50)
+    options = {:page => params[:page], :per_page => 50}
+
+    order = order_options
+
+    options.merge!(order)
+
+    @pasokaras = @user.pasokara_files.paginate(options)
   end
 end
