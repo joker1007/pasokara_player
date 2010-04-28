@@ -14,6 +14,8 @@ ActionController::Routing::Routes.draw do |map|
   map.tag_form_open 'tag_form_open/:id', :controller => 'pasokara', :action => 'open_tag_form'
   map.tag_form_close 'tag_form_close/:id', :controller => 'pasokara', :action => 'close_tag_form'
   map.all_tag 'all_tag', :controller => 'pasokara', :action => 'all_tag'
+  map.last_queue 'queue/last.:format', :controller => 'queue', :action => 'last'
+  map.dequeue 'queue/deque.:format', :controller => 'queue', :action => 'deque'
 
   # This route can be invoked with purchase_url(:id => product.id)
 

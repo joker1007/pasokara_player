@@ -34,14 +34,31 @@ class QueueController < ApplicationController
     redirect_to :action => 'list'
   end
 
+  def last
+    @queue = QueuedFile.find(:first, :order => "id desc")
+
+    if @queue
+      respond_to do |format|
+        format.xml  { render :xml => @queue.pasokara_file.to_xml }
+        format.json { render :json => @queue.pasokara_file.to_json }
+      end
+    else
+      render :text => "No Queue", :status => 404
+    end
+  end
+
   def deque
     @queue = QueuedFile.find(:first)
     if @queue
       @queue.destroy
-    end
 
-    respond_to do |format|
-      format.html
+      respond_to do |format|
+        format.html
+        format.xml { render :xml => @queue.pasokara_file.to_xml }
+        format.json { render :json => @queue.pasokara_file.to_json }
+      end
+    else
+      render :text => "No Queue", :status => 404
     end
   end
 
