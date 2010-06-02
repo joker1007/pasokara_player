@@ -4,6 +4,7 @@ require 'cgi'
 require 'nkf'
 require 'digest/md5'
 require './nico_parser/nico_player_parser'
+require './nico_parser/api_xml_parser'
 
 
 WIN32 = RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/ ? true : false
@@ -83,8 +84,10 @@ class DatabaseStructer
         elsif File.extname(entity) =~ /(mpg|avi|flv|ogm|mkv|mp4|wmv|swf)/i
           md5_hash = File.open(entity_fullpath) {|file| file.binmode; head = file.read(300*1024); Digest::MD5.hexdigest(head)}
           attributes = {:name => name, :fullpath => fullpath, :relative_path => relative_path, :directory_id => higher_directory_id, :computer_id => computer_id, :md5_hash => md5_hash}
-          tags = NicoParser::NicoPlayerParser.parse_tag(entity_fullpath.gsub(/\.[0-9a-zA-Z]+$/, ".txt"))
-          attributes.merge!(NicoParser::NicoPlayerParser.parse_info(entity_fullpath.gsub(/\.[0-9a-zA-Z]+$/, ".txt")))
+          info_file, parser = check_info_file(entity_fullpath)
+
+          tags = parser.parse_tag(info_file)
+          attributes.merge!(parser.parse_info(info_file))
           attributes.merge!(nico_check_comment(entity_fullpath))
           attributes.merge!(nico_check_thumb(entity_fullpath))
           if DEBUG
@@ -102,6 +105,17 @@ class DatabaseStructer
   end
 
   private
+
+  def check_info_file(fullpath)
+    api_xml_file = fullpath.gsub(/\.[0-9a-zA-Z]+$/, "_info.xml")
+    nico_player_info_file = fullpath.gsub(/\.[0-9a-zA-Z]+$/, ".txt")
+
+    if File.exists?(api_xml_file)
+      [api_xml_file, NicoParser::ApiXmlParser.new]
+    else
+      [nico_player_info_file, NicoParser::NicoPlayerParser.new]
+    end
+  end
 
   def nico_check_comment(fullpath)
     comment = fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".xml")
