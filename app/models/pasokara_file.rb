@@ -97,9 +97,16 @@ class PasokaraFile < ActiveRecord::Base
   end
 
   def self.related_tags(tags, limit = 30)
-    tagged = self.tagged_with(tags, :on => :tags, :match_all => true, :order => "name").find(:all)
-    conditions = "taggings.taggable_id IN (" + tagged.map {|p| p.id}.join(",") + ")"
-    self.tag_counts(:conditions => conditions, :limit => limit, :order => "count desc, tags.name asc")
+
+    conditions = tags.map {|tag| "a.name = '#{tag}'"}.join(" OR ")
+      
+    sql = "select d.id, d.name, COUNT(d.id) as count from (select a.id as id_1, a.name as name_1, b.tag_id, b.taggable_id from tags a inner join taggings b on a.id = b.tag_id where #{conditions} group by b.taggable_id having count(b.taggable_id) = #{tags.size}) t
+inner join taggings c on t.taggable_id = c.taggable_id
+inner join tags d on c.tag_id = d.id
+group by t.id_1, d.id
+order by count desc
+limit #{limit}"
+    Tag.find_by_sql(sql)
   end
 
   def write_out_info
