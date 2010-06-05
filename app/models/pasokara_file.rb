@@ -6,7 +6,6 @@ require 'nico_parser/nico_player_parser'
 class PasokaraFile < ActiveRecord::Base
   external_encoding "UTF-8" if self.respond_to?(:external_encoding)
   acts_as_taggable_on :tags
-  include OnlineFind
 
   belongs_to :directory
   belongs_to :computer, :include => true

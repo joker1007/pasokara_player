@@ -12,7 +12,7 @@ class PasokaraController < ApplicationController
     else
       render :text => "パラメーターが不正です。", :status => 404 and return
     end
-    QueuedFile.enq @pasokara
+    QueuedFile.enq @pasokara, session[:current_user]
     flash[:notice] = "#{@pasokara.name} の予約が完了しました"
     redirect_to root_path
   end
@@ -167,7 +167,7 @@ class PasokaraController < ApplicationController
     @query = params[:tag].respond_to?(:force_encoding) ? params[:tag].force_encoding(Encoding::UTF_8) : params[:tag]
     @tag_words = @query.split("+")
 
-    tag_limit = request.mobile? ? 10 : 30
+    tag_limit = request.mobile? ? 10 : 50
     @tag_list_cache_key = "#{@query}_related_tags_#{tag_limit}"
     unless fragment_exist?(@tag_list_cache_key)
       @header_tags = PasokaraFile.related_tags(@tag_words, tag_limit)

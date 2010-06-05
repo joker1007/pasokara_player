@@ -17,8 +17,9 @@ ul {
 }
 
 li {
-  margin-top: 8px;
-  margin-bottom: 4px;
+  margin-top: 6px;
+  margin-bottom: 3px;
+  max-width: 1200px;
   border: 1px solid #000; 
 }
 
@@ -87,6 +88,15 @@ li.queue {
   list-style: none;
 }
 
+div.entity_box {
+  width: 300px;
+  max-height: 300px;
+  height: auto;
+  font-size: 12px;
+  display: inline-table;
+  overflow: auto;
+  margin: 0 0 0 0;
+}
 
 div.nico_info {
   margin-bottom: 4px;
@@ -96,7 +106,7 @@ div.nico_info {
 }
 
 div.thumb {
-  margin-right: 10px;
+  margin-right: 4px;
   float: right;
 }
 .clearfix:after {
@@ -115,8 +125,8 @@ span.info_key {
 
 .tag_box, .info_box {
   border: 1px solid #000;
-  margin-top: 2px;
-  margin-bottom: 40px;
+  margin-top: 0px;
+  margin-bottom: 15px;
   padding: 0px 4px 4px 4px;
 }
 
@@ -129,6 +139,7 @@ div.all_tag_list {
   margin: 10px;
   padding: 5px;
   border: 1px solid #000;
+  max-width: 1200px;
 }
 
 #tag_scope {
@@ -142,10 +153,8 @@ span.login_user {
 
 span.tag {
   font-size: 12px;
-  line-height: 14px;
-  margin-right: 10px;
-  line-height: 40px;
-  white-space: nowrap;
+  margin-right: 6px;
+  line-height: 28px;
 }
 
 span.tag img {

@@ -1,6 +1,5 @@
 # _*_ coding: utf-8 _*_
 class Directory < ActiveRecord::Base
-  include OnlineFind
   external_encoding "UTF-8" if self.respond_to?(:external_encoding)
   has_many :directories, :order => 'name'
   has_many :pasokara_files, :order => 'name'

@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   protected
   def top_tag_load
-    tag_limit = request.mobile? ? 10 : 30
+    tag_limit = request.mobile? ? 10 : 50
     @tag_list_cache_key = "top_tags_#{tag_limit}"
     unless fragment_exist?(@tag_list_cache_key)
       options = {:limit => tag_limit, :order => "count desc, tags.name asc"}

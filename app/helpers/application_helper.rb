@@ -48,7 +48,7 @@ module ApplicationHelper
         <div class="thumb clearfix">#{image_tag(url_for(:controller => "pasokara", :action => "thumb", :id => entity.id), :size => "160x120")}</div>
         <div class="nico_info clearfix">
           <span class="info_key">ニコニコID:</span><span class="info_value">#{link_to(entity.nico_name, "http://www.nicovideo.jp/watch/" + entity.nico_name) if entity.nico_name}</span><br />
-          <span class="info_key">投稿日時:</span><span class="info_value">#{h entity.nico_post}</span><br />
+          <span class="info_key">投稿日時:</span><span class="info_value">#{h entity.nico_post.strftime("%Y/%m/%d")}</span><br />
           <span class="info_key">再生数:</span><span class="info_value">#{number_with_delimiter(entity.nico_view_counter)}</span><br />
           <span class="info_key">コメント数:</span><span class="info_value">#{number_with_delimiter(entity.nico_comment_num)}</span><br />
           <span class="info_key">マイリスト数:</span><span class="info_value">#{number_with_delimiter(entity.nico_mylist_counter)}</span><br />

@@ -174,7 +174,7 @@ describe PasokaraFile do
   end
 
   it "related_tagsが適切に関係するタグを返すこと" do
-    tags = PasokaraFile.related_tags("COOL&CREATE")
+    tags = PasokaraFile.related_tags(["COOL&CREATE"])
     tags[0].name.should == "COOL&CREATE"
     tags[0].count.should == 2
     tags[1].name.should == "ニコカラ"

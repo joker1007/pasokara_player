@@ -14,8 +14,10 @@
   <ul id="entity_list" class="autopagerize_page_element">
     <% @pasokaras.each do |pasokara| %>
       <% cache("pasokara_li_#{pasokara.id}") do %>
+        <div id="entity_box_<%= "#{pasokara.id}" %>" class="entity_box">
         <%= entity_li(pasokara) %>
         <%= tag_box(pasokara) %>
+      </div>
       <% end %>
     <% end %>
   </ul>

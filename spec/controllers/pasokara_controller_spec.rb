@@ -2,7 +2,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe PasokaraController do
-  fixtures :directories, :pasokara_files, :computers, :tags, :taggings
+  fixtures :directories, :pasokara_files, :computers, :tags, :taggings, :users
+
+  before do
+    @esp_raging = pasokara_files(:esp_raging)
+    @just_be_friends = pasokara_files(:just_be_friends)
+  end
 
   #Delete this example and add some real ones
   it "should use PasokaraController" do
@@ -11,6 +16,27 @@ describe PasokaraController do
 
   describe "GET '/pasokara/queue/8340'" do
     before do
+      PasokaraFile.should_receive(:find).with("8340").and_return(@esp_raging)
+      get 'queue', :id => "8340"
+    end
+
+    it "リクエストが成功しリダイレクトされること" do
+      response.should be_redirect
+    end
+
+    it "COOL&CREATE - ESP RAGING [myu314 remix].aviのデータが読み込まれること" do
+      assigns[:pasokara].id.should == 8340
+    end
+
+    it "dir/indexにリダイレクトされること" do
+      response.should redirect_to("/")
+    end
+  end
+  
+  describe "GET '/pasokara/queue/8340' user_id = 1" do
+    before do
+      session[:current_user] = 1
+      QueuedFile.should_receive(:enq).with(@esp_raging, 1)
       get 'queue', :id => "8340"
     end
 
@@ -29,6 +55,7 @@ describe PasokaraController do
   
   describe "GET '/pasokara/queue/sm7601746'" do
     before do
+      PasokaraFile.should_receive(:find_by_nico_name).with("sm7601746").and_return(@just_be_friends)
       get 'queue', :id => "sm7601746"
     end
 

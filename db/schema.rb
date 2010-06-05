@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100320030150) do
+ActiveRecord::Schema.define(:version => 20100605184541) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20100320030150) do
     t.integer  "pasokara_file_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "queued_files", ["pasokara_file_id"], :name => "index_queued_files_on_pasokara_file_id"
