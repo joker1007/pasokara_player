@@ -113,11 +113,7 @@ module Util
 
           puts entity_fullpath
           
-          if WIN32
-            name = NKF.nkf("-Sw --cp932", entity)
-          else
-            name = entity
-          end
+          name = entity
 
           if File.directory?(entity_fullpath)
             attributes = {:name => name, :directory_id => higher_directory_id}
@@ -175,7 +171,7 @@ module Util
     def nico_check_thumb(fullpath)
       thumb = fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".jpg")
       if File.exist?(thumb)
-        data = File.open(thumb, "wb") {|f| f.read}
+        data = File.open(thumb, "rb") {|f| f.read}
       else
         nil
       end

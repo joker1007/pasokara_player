@@ -1,7 +1,7 @@
 module NicoParser
-  module NicoPlayerParser
+  class NicoPlayerParser
 
-    def self.parse_tag(info_file)
+    def parse_tag(info_file)
       tag_mode = false
       tags = []
 
@@ -29,7 +29,7 @@ module NicoParser
       end
     end
 
-    def self.parse_info(info_file)
+    def parse_info(info_file)
       parse_mode = false
       info_set = {}
       info_key = ""
@@ -64,7 +64,7 @@ module NicoParser
       info_set
     end
 
-    def self.info_str(info_set = {}, tags = [])
+    def info_str(info_set = {}, tags = [])
       result = ""
       if info_set[:nico_name]
         result += "[name]\n"
