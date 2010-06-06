@@ -46,7 +46,6 @@ module ApplicationHelper
     %Q{
       <div id="info-list-#{entity.id}" class="info_list">
         <h3>動画情報</h3>
-        <div class="thumb clearfix">#{image_tag(url_for(:controller => "pasokara", :action => "thumb", :id => entity.id), :size => "160x120")}</div>
         <div class="nico_info clearfix">
           <span class="info_key">ニコニコID:</span><span class="info_value">#{link_to(entity.nico_name, "http://www.nicovideo.jp/watch/" + entity.nico_name) if entity.nico_name}</span><br />
           <span class="info_key">投稿日:</span><span class="info_value">#{h entity.nico_post.strftime("%Y/%m/%d")}</span><br />
@@ -61,6 +60,7 @@ module ApplicationHelper
   def tag_box(entity)
     %Q{
       <div id="tag-box-#{entity.id}" class="tag_box">
+        <div class="thumb clearfix">#{image_tag(url_for(:controller => "pasokara", :action => "thumb", :id => entity.id), :size => "160x120")}</div>
         <h3>タグ</h3>
         #{tag_list(entity)}
       </div>

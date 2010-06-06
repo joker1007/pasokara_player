@@ -60,7 +60,6 @@ class DatabaseStructer
   def crowl_dir(dir, rootdir, computer_id, higher_directory_id = nil)
     puts "#{dir}‚Ì“Ç‚Ýž‚ÝŠJŽn\n"
 
-
     begin
       open_dir = Dir.open(dir)
       open_dir.entries.each do |entity|
@@ -69,9 +68,15 @@ class DatabaseStructer
 
         puts entity_fullpath
         
-        name = NKF.nkf("-Sw --cp932", entity)
-        fullpath = NKF.nkf("-Sw --cp932", dir) + "/" + NKF.nkf("-Sw --cp932", entity)
-        relative_path = fullpath.gsub(/#{NKF.nkf("-Sw --cp932", rootdir) + "\/"}/, "")
+        if WIN32
+          name = NKF.nkf("-Sw --cp932", entity)
+          fullpath = WIN32 ? NKF.nkf("-Sw --cp932", dir) + "/" + name
+          relative_path = fullpath.gsub(/#{NKF.nkf("-Sw --cp932", rootdir) + "\/"}/, "")
+        else
+          name = entity
+          fullpath = dir + "/" + name
+          relative_path = fullpath.gsub(/#{rootdir + "\/"}/, "")
+        end
 
         if File.directory?(entity_fullpath)
           attributes = {:name => name, :fullpath => fullpath, :relative_path => relative_path, :directory_id => higher_directory_id, :computer_id => computer_id}
@@ -79,6 +84,7 @@ class DatabaseStructer
             puts "Attr: "
             puts attributes.inspect
           end
+
           dir_id = @remote_controller.create_directory(attributes)
           crowl_dir(entity_fullpath, rootdir, computer_id, dir_id)
         elsif File.extname(entity) =~ /(mpg|avi|flv|ogm|mkv|mp4|wmv|swf)/i
@@ -88,15 +94,20 @@ class DatabaseStructer
 
           tags = parser.parse_tag(info_file)
           attributes.merge!(parser.parse_info(info_file))
-          attributes.merge!(nico_check_comment(entity_fullpath))
-          attributes.merge!(nico_check_thumb(entity_fullpath))
+
           if DEBUG
             puts "Attr: "
             puts attributes.inspect
             puts "Tags: "
             puts tags.inspect
           end
+
           pasokara_file_id = @remote_controller.create_pasokara_file(attributes, tags)
+
+          thumb_data = nico_check_thumb(entity_fullpath)
+          if thumb_data
+            @remote_controller.create_thumbnail_record(pasokara_file_id, thumb_data)
+          end
         end
       end
     rescue Errno::ENOENT
@@ -129,9 +140,9 @@ class DatabaseStructer
   def nico_check_thumb(fullpath)
     thumb = fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".jpg")
     if File.exist?(thumb)
-      {:thumb_file => NKF.nkf("-Sw --cp932", thumb)}
+      data = File.open(thumb, "wb") {|f| f.read}
     else
-      {}
+      nil
     end
   end
 end

@@ -1,3 +1,4 @@
+MEMCACHE_SERVER = "localhost:11211"
 PRE_SLEEP = 5
 MPC_PATH = 'c:\mpc.exe'
 NICOPLAY_PATH = 'c:\uwsc.exe'

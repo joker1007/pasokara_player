@@ -34,10 +34,8 @@ class PasokaraController < ApplicationController
   end
 
   def thumb
-    @pasokara = PasokaraFile.find(params[:id])
-    thumb_file = @pasokara.thumb_file
-    if File.exist?(thumb_file)
-      send_file(thumb_file, :filename => "#{params[:id]}.jpg", :disposition => "inline", :type => "image/jpeg")
+    if data = CACHE[params[:id]]
+      send_data(data, :filename => "#{params[:id]}.jpg", :disposition => "inline", :type => "image/jpeg")
     else
       send_file("#{RAILS_ROOT}/public/images/noimg-1_3.gif", :disposition => "inline", :type => "image/gif")
     end

@@ -50,3 +50,7 @@ Erubis::Helpers::RailsHelper.engine_class = Erubis::FastEruby
 #Erubis::Helpers::RailsHelper.preprocessing = true
 
 require File.join(File.dirname(__FILE__), 'pp_setting')
+
+require 'memcache'
+memcache_option = {:namespace => "thumbnail", :timeout => 3}
+CACHE = MemCache.new(MEMCACHE_SERVER, memcache_option)

@@ -1,10 +1,11 @@
 require 'rubygems'
-require 'activerecord'
+require 'active_record'
 require 'ruby_gntp'
 require 'twitter'
 require 'yaml'
 require 'kconv'
 require 'drb/drb'
+require 'memcache'
 require 'config/environment.rb'
 
 if ARGV[0] == "-d"
@@ -26,6 +27,11 @@ end
 ActiveRecord::Base.establish_connection(db_setting[AR_ENV])
 
 class QueuePickerServer
+  begin
+    @@cache = MemCache.new("localhost:11211", {:namespace => "thumbnail", :timeout => 3})
+  rescue Exception
+    @@cache = nil
+  end
 
   def get_file_path(utf8 = false, base_dir = nil)
     begin
@@ -207,6 +213,13 @@ class QueuePickerServer
     rescue ActiveRecord::ActiveRecordError
       p $@
       raise "ARError"
+    end
+  end
+
+  def create_thumbnail_record(id, thumb_data)
+    key = id.to_s
+    unless @@cache[key]
+      @@cache[key] = thumb_data
     end
   end
 
