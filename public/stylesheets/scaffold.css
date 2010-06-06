@@ -17,9 +17,9 @@ ul {
 }
 
 li {
-  margin-top: 6px;
+  margin-top: 4px;
   margin-bottom: 3px;
-  max-width: 1200px;
+  max-width: 1240px;
   border: 1px solid #000; 
 }
 
@@ -89,7 +89,7 @@ li.queue {
 }
 
 div.entity_box {
-  width: 300px;
+  width: 310px;
   max-height: 300px;
   height: auto;
   font-size: 12px;
@@ -127,7 +127,7 @@ span.info_key {
   border: 1px solid #000;
   margin-top: 0px;
   margin-bottom: 15px;
-  padding: 0px 4px 4px 4px;
+  padding: 0px 2px 2px 2px;
 }
 
 div.tag_list, div.info_list {
@@ -139,7 +139,7 @@ div.all_tag_list {
   margin: 10px;
   padding: 5px;
   border: 1px solid #000;
-  max-width: 1200px;
+  max-width: 1240px;
 }
 
 #tag_scope {
@@ -189,6 +189,7 @@ a.tag_list_link { color: red; }
 a.tag_edit_link { color: red; }
 a.show_info { color: red; margin-left: 10px; }
 a.preview_link { color: green; margin-left: 10px; }
+a.related_search_link { color: #D2691E; margin-left: 10px; }
 
 a.queue_remove {
   float: right;

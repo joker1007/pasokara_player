@@ -106,6 +106,12 @@ class PasokaraController < ApplicationController
     render :action => 'search'
   end
 
+  def related_search
+    @query = params[:id].respond_to?(:force_encoding) ? params[:id].force_encoding(Encoding::UTF_8) : params[:id]
+    @pasokaras = PasokaraFile.related_files(@query.to_i, 30).paginate(:page => params[:page], :per_page => 30)
+    render :action => 'search'
+  end
+
   def append_search_tag
     tag = params[:tag].split(/\+|\s/).push(params[:append]).join("+")
     redirect_to :action => "tag_search", :tag => tag

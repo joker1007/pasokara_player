@@ -24,6 +24,18 @@ class PasokaraFile < ActiveRecord::Base
     ["マイリスが多い順", "mylist_count"],
   ]
 
+  def self.related_files(id, limit = 10)
+    sql = <<SQL
+select c.*, COUNT(b.taggable_id) as count from (select * from taggings a where a.taggable_id = #{id}) t
+inner join taggings b on t.tag_id = b.tag_id
+inner join pasokara_files c on b.taggable_id = c.id
+group by t.taggable_id, b.taggable_id
+order by count desc
+limit #{limit};
+SQL
+    PasokaraFile.find_by_sql(sql)
+  end
+
   def play
     sleep PRE_SLEEP
     PasokaraNotifier.instance.play_notify(name)
