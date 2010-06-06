@@ -6,8 +6,7 @@ class Directory < ActiveRecord::Base
   belongs_to :directory
   belongs_to :computer
 
-  validates_uniqueness_of :fullpath, :scope => [:computer_id]
-  validates_presence_of :name, :fullpath, :relative_path
+  validates_presence_of :name
 
   def entities
     (directories + pasokara_files)

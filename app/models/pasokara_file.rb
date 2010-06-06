@@ -115,7 +115,7 @@ SQL
 inner join taggings c on t.taggable_id = c.taggable_id
 inner join tags d on c.tag_id = d.id
 group by t.id_1, d.id
-order by count desc
+order by count desc, d.name asc
 limit #{limit}"
     Tag.find_by_sql(sql)
   end
