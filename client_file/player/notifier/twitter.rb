@@ -26,7 +26,7 @@ module Notifier
 
     def play_notify(name)
       begin
-        @@twitter.update("歌ってるなう::" + WIN32 ? NKF.nkf("-S -w --cp932", File.basename(name, ".*")) : File.basename(name, ".*"))
+        @@twitter.update("歌ってるなう: " + File.basename(name, ".*"))
       rescue Exception
         puts "Notify Failed"
       end

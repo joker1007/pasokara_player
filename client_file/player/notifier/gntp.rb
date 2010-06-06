@@ -32,7 +32,7 @@ module Notifier
         if @@growl
           @@growl.notify({
             :name => "Play",
-            :title => WIN32 ? NKF.nkf("-S -w --cp932", "#{name}") : "#{name}",
+            :title => name,
             :duration => 4,
             :text => "Playing"
           })
@@ -47,7 +47,7 @@ module Notifier
         if @@growl
           @@growl.notify({
             :name => "Queue",
-            :title => WIN32 ? NKF.nkf("-S -w --cp932", "#{name}") : "#{name}",
+            :title => name,
             :duration => 4,
             :text => "Queueing",
           })

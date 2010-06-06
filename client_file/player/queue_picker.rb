@@ -125,13 +125,7 @@ class QueuePicker
 
           # キューが取得できたら再生処理へ
           if queue
-            if WIN32
-              relative_path = NKF.nkf("-Ws --cp932", queue.relative_path.gsub(/\//, "\\"))
-              @file_path = File.join(@base_dir, relative_path)
-            else
-              relative_path = queue.relative_path.gsub(/\343\200\234/, "～")
-              @file_path = File.join(@base_dir, relative_path)
-            end
+            @file_path = @db.get_first_value("select filepath from path_table where hash = \"#{queue.md5_hash}\"")
 
             sleep 3
             @file_name = File.basename(queue.name)
@@ -222,6 +216,6 @@ class QueuePicker
 
 end
 
-client = QueuePickerClient.new
+client = QueuePicker.new
 puts "Start Queue Picker Client"
 client.play_loop
