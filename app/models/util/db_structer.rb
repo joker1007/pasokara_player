@@ -78,9 +78,9 @@ module Util
 
           if changed
             already_record.save
-            print_process already_record
-            return already_record.id
+            #print_process already_record
           end
+          return already_record.id
         else
           if pasokara_file.save
             print_process pasokara_file
@@ -98,6 +98,7 @@ module Util
     def create_thumbnail_record(id, thumb_data, force = false)
       key = id.to_s
       if force or CACHE[key].nil?
+        puts "load thumb"
         CACHE[key] = thumb_data
       end
     end
@@ -111,8 +112,6 @@ module Util
           next if entity =~ /^\./
           entity_fullpath = File.join(dir, entity)
 
-          puts entity_fullpath
-          
           name = entity
 
           if File.directory?(entity_fullpath)

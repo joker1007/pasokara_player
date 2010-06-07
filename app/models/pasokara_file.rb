@@ -12,8 +12,7 @@ class PasokaraFile < ActiveRecord::Base
   has_many :users, :through => :favorites
   has_many :sing_logs
 
-  validates_uniqueness_of :fullpath, :scope => [:computer_id]
-  validates_uniqueness_of :md5_hash, :scope => [:computer_id]
+  validates_uniqueness_of :md5_hash
 
   SORT_OPTIONS = [
     ["名前順", "name"],
