@@ -8,8 +8,8 @@ class DirController < ApplicationController
       @top_dirs = Directory.paginate(:all, :conditions => ["directory_id is null"], :order => "computer_id, name", :page => params[:page], :per_page => 50)
       @grouping = {}
       @top_dirs.each do |dir|
-        @grouping[dir.computer.mount_path] ||= []
-        @grouping[dir.computer.mount_path] << dir
+        @grouping["Root"] ||= []
+        @grouping["Root"] << dir
       end
     end
   end
