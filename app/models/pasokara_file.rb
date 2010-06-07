@@ -104,7 +104,7 @@ SQL
   end
 
   def preview_path
-    computer.remote_path.chomp("/") + "/pasokara/preview/#{id}"
+    "/pasokara/preview/#{id}"
   end
 
   def self.related_tags(tags, limit = 30)
