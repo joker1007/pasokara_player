@@ -95,14 +95,14 @@ module Util
       end
     end
 
-    def create_thumbnail_record(id, thumb_data)
+    def create_thumbnail_record(id, thumb_data, force = false)
       key = id.to_s
-      unless CACHE[key]
+      if force or CACHE[key].nil?
         CACHE[key] = thumb_data
       end
     end
 
-    def crowl_dir(dir, higher_directory_id = nil)
+    def crowl_dir(dir, higher_directory_id = nil, force_thumbnail = false)
       puts "#{dir}の読み込み開始\n"
 
       begin
@@ -137,7 +137,7 @@ module Util
 
             thumb_data = nico_check_thumb(entity_fullpath)
             if thumb_data
-              create_thumbnail_record(pasokara_file_id, thumb_data)
+              create_thumbnail_record(pasokara_file_id, thumb_data, force_thumbnail)
             end
           end
         end
