@@ -85,8 +85,8 @@ describe PasokaraFile do
   end
 
   it "preview_pathが適切なファイルパスを返すこと" do
-    @esp_raging.preview_path.should == "http://pasokara.example.com/pasokara/preview/8340"
-    @siawase_gyaku.preview_path.should == "http://pasokara.example.com/pasokara/preview/8362"
+    @esp_raging.preview_path.should == "/pasokara/preview/8340"
+    @siawase_gyaku.preview_path.should == "/pasokara/preview/8362"
   end
 
   it "fullpath(true)がUTF-8の適切なフルパスを返すこと" do

@@ -48,9 +48,8 @@ class QueueController < ApplicationController
   end
 
   def deque
-    @queue = QueuedFile.find(:first)
+    @queue = QueuedFile.deq
     if @queue
-      @queue.destroy
 
       respond_to do |format|
         format.html

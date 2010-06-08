@@ -122,7 +122,7 @@ limit #{limit}"
   def write_out_info
     info_set = {:nico_name => nico_name, :nico_post => nico_post, :nico_view_counter => nico_view_counter, :nico_comment_num => nico_comment_num, :nico_mylist_counter => nico_mylist_counter}
     tags = tag_list
-    info_str = NicoParser::NicoPlayerParser.info_str(info_set, tags)
+    info_str = NicoParser::NicoPlayerParser.new.info_str(info_set, tags)
 
     info_file = fullpath.gsub(/\.[0-9a-zA-Z]+$/, ".txt")
     unless File.exist?(info_file)
@@ -132,13 +132,13 @@ limit #{limit}"
 
   def nico_check_tag
     info_file = pasokara_file.fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".txt")
-    tags = NicoParser::NicoPlayerParser.parse_tag(info_file)
+    tags = NicoParser::NicoPlayerParser.new.parse_tag(info_file)
     tag_list.add tags
   end
 
   def nico_check_info
     info_file = pasokara_file.fullpath.gsub(/\.[a-zA-Z0-9]+$/, ".txt")
-    info_set = NicoParser::NicoPlayerParser.parse_info(info_file)
+    info_set = NicoParser::NicoPlayerParser.new.parse_info(info_file)
     attributes = info_set
   end
 
