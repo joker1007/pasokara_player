@@ -7,7 +7,7 @@
   <ol>
   <% @sing_logs.each do |sing_log| %>
 
-    <li class="queue"><%= image_tag("icon/music_48x48.png", :size => "24x24", :class=> "entity_icon") %><%= sing_log.pasokara_file.name %><span class="clearfix" style="float: right"><%= h(sing_log.user) + " | " if sing_log.user %><%= sing_log.created_at.strftime("%Y/%m/%d %H:%M") %></span></li>
+    <li class="queue"><%= image_tag("icon/music_48x48.png", :size => "24x24", :class=> "entity_icon") %><%= sing_log.pasokara_file.name %><span class="clearfix" style="float: right"><%= h(sing_log.user.name) + " | " if sing_log.user %><%= sing_log.created_at.strftime("%Y/%m/%d %H:%M") %></span></li>
 
   <% end %>
   </ol>

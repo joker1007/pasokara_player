@@ -17,7 +17,13 @@ SQL
     DB = SQLite3::Database.new(DBNAME)
   end
 
-  def self.crowl_dir(dir)
+  def self.create_db(dir)
+    DB.transaction do |db|
+      self.crowl_dir(dir, db)
+    end
+  end
+
+  def self.crowl_dir(dir, db)
     begin
       open_dir = Dir.open(dir)
     rescue Errno::ENOENT
@@ -29,7 +35,7 @@ SQL
       next if entry =~ /^\./
       entry_fullpath = File.join(dir, entry)
       if File.directory?(entry_fullpath)
-        self.crowl_dir(entry_fullpath)
+        self.crowl_dir(entry_fullpath, db)
       elsif File.extname(entry) =~ /(mpg|avi|flv|ogm|mkv|mp4|wmv|swf)/i
         begin
           md5_hash = File.open(entry_fullpath) {|file| file.binmode; head = file.read(300*1024); Digest::MD5.hexdigest(head)}
@@ -38,13 +44,13 @@ SQL
           next
         end
         sql = <<SQL
-INSERT OR REPLACE INTO path_table VALUES(\"#{md5_hash}\", \"#{entry_fullpath}\")
+INSERT OR REPLACE INTO path_table VALUES(?, ?)
 SQL
         puts "#{md5_hash} => #{entry_fullpath}"
-        DB.execute(sql)
+        db.execute(sql, md5_hash, entry_fullpath)
       end
     end
   end
 end
 
-CreateHashDb.crowl_dir(ARGV[0])
+CreateHashDb.create_db(ARGV[0])

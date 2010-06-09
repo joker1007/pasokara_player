@@ -132,6 +132,7 @@ span.info_key {
   margin-top: 0px;
   margin-bottom: 15px;
   padding: 0px 2px 2px 2px;
+  max-width: 1240px;
   overflow: hidden;
 }
 
