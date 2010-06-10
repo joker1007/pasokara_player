@@ -28,17 +28,17 @@
         <tbody>
           <tr>
             <td class="left_align"><a href="app-models-pasokara_file_rb.html">app/models/pasokara_file.rb</a></td>
-            <td class='right_align'><tt>133</tt></td>
-            <td class='right_align'><tt>107</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>78.95%</tt></div>
+            <td class='right_align'><tt>159</tt></td>
+            <td class='right_align'><tt>129</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>72.96%</tt></div>
           <div class="percent_graph">
-            <div class="covered" style="width:79px"></div>
-            <div class="uncovered" style="width:21px"></div>
+            <div class="covered" style="width:73px"></div>
+            <div class="uncovered" style="width:27px"></div>
           </div></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>75.70%</tt></div>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>68.22%</tt></div>
           <div class="percent_graph">
-            <div class="covered" style="width:76px"></div>
-            <div class="uncovered" style="width:24px"></div>
+            <div class="covered" style="width:68px"></div>
+            <div class="uncovered" style="width:32px"></div>
           </div></td>
           </tr>
         </tbody>
@@ -104,32 +104,32 @@
         
           
           
-          <tr class="marked">
-            <td><pre><a name="line9">9</a>   include OnlineFind</pre></td>
-          </tr>
-        
-          
-          
           <tr class="inferred">
-            <td><pre><a name="line10">10</a> </pre></td>
+            <td><pre><a name="line9">9</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line11">11</a>   belongs_to :directory</pre></td>
+            <td><pre><a name="line10">10</a>   belongs_to :directory</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line12">12</a>   belongs_to :computer, :include =&gt; true</pre></td>
+            <td><pre><a name="line11">11</a>   belongs_to :computer, :include =&gt; true</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line13">13</a>   has_many :users, :through =&gt; :favorites</pre></td>
+            <td><pre><a name="line12">12</a>   has_many :users, :through =&gt; :favorites</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line13">13</a>   has_many :sing_logs</pre></td>
           </tr>
         
           
@@ -141,391 +141,391 @@
           
           
           <tr class="marked">
-            <td><pre><a name="line15">15</a>   validates_uniqueness_of :fullpath, :scope =&gt; [:computer_id]</pre></td>
+            <td><pre><a name="line15">15</a>   validates_uniqueness_of :md5_hash</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line16">16</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line16">16</a>   validates_uniqueness_of :md5_hash, :scope =&gt; [:computer_id]</pre></td>
+            <td><pre><a name="line17">17</a>   SORT_OPTIONS = [</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line17">17</a> </pre></td>
+            <td><pre><a name="line18">18</a>     [&quot;名前順&quot;, &quot;name&quot;],</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line19">19</a>     [&quot;再生が多い順&quot;, &quot;view_count&quot;],</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line20">20</a>     [&quot;再生が少い順&quot;, &quot;view_count_r&quot;],</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line21">21</a>     [&quot;投稿が新しい順&quot;, &quot;post_new&quot;],</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line22">22</a>     [&quot;投稿が古い順&quot;, &quot;post_old&quot;],</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line23">23</a>     [&quot;マイリスが多い順&quot;, &quot;mylist_count&quot;],</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line24">24</a>   ]</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line25">25</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line18">18</a>   SORT_OPTIONS = [</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line19">19</a>     [&quot;名前順&quot;, &quot;name&quot;],</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line20">20</a>     [&quot;再生が多い順&quot;, &quot;view_count&quot;],</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line21">21</a>     [&quot;再生が少い順&quot;, &quot;view_count_r&quot;],</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line22">22</a>     [&quot;投稿が新しい順&quot;, &quot;post_new&quot;],</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line23">23</a>     [&quot;投稿が古い順&quot;, &quot;post_new&quot;],</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line24">24</a>     [&quot;マイリスが多い順&quot;, &quot;mylist_count&quot;],</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line25">25</a>   ]</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line26">26</a> </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line27">27</a>   def play</pre></td>
+            <td><pre><a name="line26">26</a>   def self.related_files(id, limit = 10)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line28">28</a>     sleep PRE_SLEEP</pre></td>
+            <td><pre><a name="line27">27</a>     sql = &lt;&lt;SQL</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line29">29</a>     PasokaraNotifier.instance.play_notify(name)</pre></td>
+            <td><pre><a name="line28">28</a> select c.*, COUNT(b.taggable_id) as count from (select * from taggings a where a.taggable_id = #{id}) t</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line30">30</a>     system(MPC_PATH, fullpath, &quot;/close&quot;)</pre></td>
+            <td><pre><a name="line29">29</a> inner join taggings b on t.tag_id = b.tag_id</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line31">31</a>     #system(NICOPLAY_PATH + &quot; \&quot;#{fullpath}\&quot;&quot;)</pre></td>
+            <td><pre><a name="line30">30</a> inner join pasokara_files c on b.taggable_id = c.id</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line32">32</a>   end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line33">33</a> </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line34">34</a>   def play_cmd</pre></td>
+            <td><pre><a name="line31">31</a> group by t.taggable_id, b.taggable_id</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line35">35</a>     PasokaraNotifier.instance.play_notify(name)</pre></td>
+            <td><pre><a name="line32">32</a> order by count desc</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line36">36</a>     &quot;\&quot;#{MPC_PATH}\&quot; \&quot;#{fullpath}\&quot; /close&quot;</pre></td>
+            <td><pre><a name="line33">33</a> limit #{limit};</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line37">37</a>   end</pre></td>
+            <td><pre><a name="line34">34</a> SQL</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line35">35</a>     PasokaraFile.find_by_sql(sql)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line36">36</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line38">38</a> </pre></td>
+            <td><pre><a name="line37">37</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line39">39</a>   def fullpath(utf8 = true)</pre></td>
+            <td><pre><a name="line38">38</a>   def play</pre></td>
           </tr>
         
           
           
-          <tr class="marked">
-            <td><pre><a name="line40">40</a>     return nil if self[&quot;fullpath&quot;].nil?</pre></td>
+          <tr class="uncovered">
+            <td><pre><a name="line39">39</a>     sleep PRE_SLEEP</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line40">40</a>     PasokaraNotifier.instance.play_notify(name)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line41">41</a>     system(MPC_PATH, fullpath, &quot;/close&quot;)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line42">42</a>     #system(NICOPLAY_PATH + &quot; \&quot;#{fullpath}\&quot;&quot;)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line43">43</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line41">41</a> </pre></td>
+            <td><pre><a name="line44">44</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line42">42</a>     if utf8</pre></td>
+            <td><pre><a name="line45">45</a>   def play_cmd</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line46">46</a>     PasokaraNotifier.instance.play_notify(name)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line47">47</a>     &quot;\&quot;#{MPC_PATH}\&quot; \&quot;#{fullpath}\&quot; /close&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line48">48</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line49">49</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line43">43</a>       self[&quot;fullpath&quot;].gsub(/\343\200\234/, &quot;～&quot;)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line44">44</a>     else</pre></td>
+            <td><pre><a name="line50">50</a>   def name(utf8 = true)</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line45">45</a>       NKF.nkf(&quot;-Ws --cp932&quot;, self[&quot;fullpath&quot;]).gsub(/\//, &quot;\\&quot;)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line46">46</a>     end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line47">47</a>   end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line48">48</a> </pre></td>
+            <td><pre><a name="line51">51</a>     if utf8</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line49">49</a>   def fullpath_of_computer(utf8 = true)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line50">50</a>     return nil if self[&quot;fullpath&quot;].nil?</pre></td>
+            <td><pre><a name="line52">52</a>       self[&quot;name&quot;]</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line51">51</a> </pre></td>
+            <td><pre><a name="line53">53</a>     else</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line52">52</a>     if utf8</pre></td>
+            <td><pre><a name="line54">54</a>       NKF.nkf(&quot;-W -s --cp932&quot;, self[&quot;name&quot;])</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line55">55</a>     end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line56">56</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line57">57</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line53">53</a>       (computer.mount_path +  &quot;/&quot; + self[&quot;relative_path&quot;]).gsub(/\343\200\234/, &quot;～&quot;)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line54">54</a>     else</pre></td>
+            <td><pre><a name="line58">58</a>   def fullpath(utf8 = true)</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line55">55</a>       NKF.nkf(&quot;-Ws --cp932&quot;, (computer.mount_path + &quot;/&quot; + self[&quot;relative_path&quot;])).gsub(/\//, &quot;\\&quot;)</pre></td>
+            <td><pre><a name="line59">59</a>     return nil if self[&quot;fullpath&quot;].nil?</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line56">56</a>     end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line57">57</a>   end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line58">58</a> </pre></td>
+            <td><pre><a name="line60">60</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line59">59</a>   def relative_path(utf8 = true)</pre></td>
+            <td><pre><a name="line61">61</a>     if utf8</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line60">60</a>     return nil if self[&quot;relative_path&quot;].nil?</pre></td>
+            <td><pre><a name="line62">62</a>       self[&quot;fullpath&quot;].gsub(/\343\200\234/, &quot;～&quot;)</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line61">61</a> </pre></td>
+            <td><pre><a name="line63">63</a>     else</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line62">62</a>     if utf8</pre></td>
+            <td><pre><a name="line64">64</a>       NKF.nkf(&quot;-Ws --cp932&quot;, self[&quot;fullpath&quot;]).gsub(/\//, &quot;\\&quot;)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line65">65</a>     end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line66">66</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line67">67</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line63">63</a>       self[&quot;relative_path&quot;].gsub(/\343\200\234/, &quot;～&quot;)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line64">64</a>     else</pre></td>
+            <td><pre><a name="line68">68</a>   def fullpath_of_computer(utf8 = true)</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line65">65</a>       NKF.nkf(&quot;-Ws --cp932&quot;, self[&quot;relative_path&quot;]).gsub(/\//, &quot;\\&quot;)</pre></td>
+            <td><pre><a name="line69">69</a>     return nil if self[&quot;fullpath&quot;].nil?</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line66">66</a>     end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line67">67</a>   end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line68">68</a> </pre></td>
+            <td><pre><a name="line70">70</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line69">69</a>   def thumb_file(utf8 = true)</pre></td>
+            <td><pre><a name="line71">71</a>     if utf8</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line70">70</a>     return nil if self[&quot;thumb_file&quot;].nil?</pre></td>
+            <td><pre><a name="line72">72</a>       (computer.mount_path +  &quot;/&quot; + self[&quot;relative_path&quot;]).gsub(/\343\200\234/, &quot;～&quot;)</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line71">71</a> </pre></td>
+            <td><pre><a name="line73">73</a>     else</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line72">72</a>     if self[&quot;thumb_file&quot;]</pre></td>
+            <td><pre><a name="line74">74</a>       NKF.nkf(&quot;-Ws --cp932&quot;, (computer.mount_path + &quot;/&quot; + self[&quot;relative_path&quot;])).gsub(/\//, &quot;\\&quot;)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line75">75</a>     end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line76">76</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line77">77</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line73">73</a>       if utf8</pre></td>
+            <td><pre><a name="line78">78</a>   def relative_path(utf8 = true)</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line74">74</a>         self[&quot;thumb_file&quot;].gsub(/\343\200\234/, &quot;～&quot;)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line75">75</a>       else</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line76">76</a>         NKF.nkf(&quot;-Ws --cp932&quot;, self[&quot;thumb_file&quot;]).gsub(/\//, &quot;\\&quot;)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line77">77</a>       end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line78">78</a>     end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line79">79</a>   end</pre></td>
+            <td><pre><a name="line79">79</a>     return nil if self[&quot;relative_path&quot;].nil?</pre></td>
           </tr>
         
           
@@ -537,325 +537,481 @@
           
           
           <tr class="marked">
-            <td><pre><a name="line81">81</a>   def movie_path</pre></td>
+            <td><pre><a name="line81">81</a>     if utf8</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line82">82</a>     extname = File.extname(fullpath)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line83">83</a>     &quot;/pasokara/movie/#{id}#{extname}&quot;</pre></td>
+            <td><pre><a name="line82">82</a>       self[&quot;relative_path&quot;].gsub(/\343\200\234/, &quot;～&quot;)</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line84">84</a>   end</pre></td>
+            <td><pre><a name="line83">83</a>     else</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line84">84</a>       NKF.nkf(&quot;-Ws --cp932&quot;, self[&quot;relative_path&quot;]).gsub(/\//, &quot;\\&quot;)</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line85">85</a> </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line86">86</a>   def preview_path</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line87">87</a>     computer.remote_path.chomp(&quot;/&quot;) + &quot;/pasokara/preview/#{id}&quot;</pre></td>
+            <td><pre><a name="line85">85</a>     end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line88">88</a>   end</pre></td>
+            <td><pre><a name="line86">86</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line89">89</a> </pre></td>
+            <td><pre><a name="line87">87</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line90">90</a>   def self.related_tags(tags, limit = 30)</pre></td>
+            <td><pre><a name="line88">88</a>   def thumb_file(utf8 = true)</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line91">91</a>     tagged = self.tagged_with(tags, :on =&gt; :tags, :match_all =&gt; true, :order =&gt; &quot;name&quot;).find(:all)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line92">92</a>     conditions = &quot;taggings.taggable_id IN (&quot; + tagged.map {|p| p.id}.join(&quot;,&quot;) + &quot;)&quot;</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line93">93</a>     self.tag_counts(:conditions =&gt; conditions, :limit =&gt; limit, :order =&gt; &quot;count desc, tags.name asc&quot;)</pre></td>
+            <td><pre><a name="line89">89</a>     return nil if self[&quot;thumb_file&quot;].nil?</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line94">94</a>   end</pre></td>
+            <td><pre><a name="line90">90</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line91">91</a>     if self[&quot;thumb_file&quot;]</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line92">92</a>       if utf8</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line93">93</a>         self[&quot;thumb_file&quot;].gsub(/\343\200\234/, &quot;～&quot;)</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line95">95</a> </pre></td>
+            <td><pre><a name="line94">94</a>       else</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line96">96</a>   def write_out_info</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line97">97</a>     info_set = {:nico_name =&gt; nico_name, :nico_post =&gt; nico_post, :nico_view_counter =&gt; nico_view_counter, :nico_comment_num =&gt; nico_comment_num, :nico_mylist_counter =&gt; nico_mylist_counter}</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line98">98</a>     tags = tag_list</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line99">99</a>     info_str = NicoParser::NicoPlayerParser.info_str(info_set, tags)</pre></td>
+            <td><pre><a name="line95">95</a>         NKF.nkf(&quot;-Ws --cp932&quot;, self[&quot;thumb_file&quot;]).gsub(/\//, &quot;\\&quot;)</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line100">100</a> </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line101">101</a>     info_file = fullpath.gsub(/\.[0-9a-zA-Z]+$/, &quot;.txt&quot;)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line102">102</a>     unless File.exist?(info_file)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line103">103</a>       File.open(info_file, &quot;w&quot;) {|file| file.write info_str}</pre></td>
+            <td><pre><a name="line96">96</a>       end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line104">104</a>     end</pre></td>
+            <td><pre><a name="line97">97</a>     end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line105">105</a>   end</pre></td>
+            <td><pre><a name="line98">98</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line106">106</a> </pre></td>
+            <td><pre><a name="line99">99</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line107">107</a>   def nico_check_tag</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line108">108</a>     info_file = pasokara_file.fullpath.gsub(/\.[a-zA-Z0-9]+$/, &quot;.txt&quot;)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line109">109</a>     tags = NicoParser::NicoPlayerParser.parse_tag(info_file)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line110">110</a>     tag_list.add tags</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line111">111</a>   end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line112">112</a> </pre></td>
+            <td><pre><a name="line100">100</a>   def movie_path</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line113">113</a>   def nico_check_info</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line114">114</a>     info_file = pasokara_file.fullpath.gsub(/\.[a-zA-Z0-9]+$/, &quot;.txt&quot;)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line115">115</a>     info_set = NicoParser::NicoPlayerParser.parse_info(info_file)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line116">116</a>     attributes = info_set</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line117">117</a>   end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line118">118</a> </pre></td>
+            <td><pre><a name="line101">101</a>     extname = File.extname(fullpath)</pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line119">119</a>   def nico_check_thumb</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line120">120</a>     thumb = fullpath.gsub(/\.[a-zA-Z0-9]+$/, &quot;.jpg&quot;)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line121">121</a>     if File.exist?(thumb)</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line122">122</a>       thumb_file = thumb.toutf8</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line123">123</a>     end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line124">124</a>   end</pre></td>
+            <td><pre><a name="line102">102</a>     &quot;/pasokara/movie/#{id}#{extname}&quot;</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line125">125</a> </pre></td>
+            <td><pre><a name="line103">103</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line104">104</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line126">126</a>   def nico_check_comment</pre></td>
+            <td><pre><a name="line105">105</a>   def preview_path</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line106">106</a>     &quot;/pasokara/preview/#{id}&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line107">107</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line108">108</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line109">109</a>   def self.related_tags(tags, limit = 30)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line110">110</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line111">111</a>     conditions = tags.map {|tag| &quot;a.name = '#{tag}'&quot;}.join(&quot; OR &quot;)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line112">112</a>       </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line113">113</a>     sql = &quot;select d.id, d.name, COUNT(d.id) as count from (select a.id as id_1, a.name as name_1, b.tag_id, b.taggable_id from tags a inner join taggings b on a.id = b.tag_id where #{conditions} group by b.taggable_id having count(b.taggable_id) = #{tags.size}) t</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line127">127</a>     comment = fullpath.gsub(/\.[a-zA-Z0-9]+$/, &quot;.xml&quot;)</pre></td>
+            <td><pre><a name="line114">114</a> inner join taggings c on t.taggable_id = c.taggable_id</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line128">128</a>     if File.exist?(comment)</pre></td>
+            <td><pre><a name="line115">115</a> inner join tags d on c.tag_id = d.id</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line129">129</a>       comment_file = comment.toutf8</pre></td>
+            <td><pre><a name="line116">116</a> group by t.id_1, d.id</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
+            <td><pre><a name="line117">117</a> order by count desc, d.name asc</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line118">118</a> limit #{limit}&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line119">119</a>     Tag.find_by_sql(sql)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line120">120</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line121">121</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line122">122</a>   def write_out_info</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line123">123</a>     info_set = {:nico_name =&gt; nico_name, :nico_post =&gt; nico_post, :nico_view_counter =&gt; nico_view_counter, :nico_comment_num =&gt; nico_comment_num, :nico_mylist_counter =&gt; nico_mylist_counter}</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line124">124</a>     tags = tag_list</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line125">125</a>     info_str = NicoParser::NicoPlayerParser.new.info_str(info_set, tags)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line126">126</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line127">127</a>     info_file = fullpath.gsub(/\.[0-9a-zA-Z]+$/, &quot;.txt&quot;)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line128">128</a>     unless File.exist?(info_file)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line129">129</a>       File.open(info_file, &quot;w&quot;) {|file| file.write info_str}</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
             <td><pre><a name="line130">130</a>     end</pre></td>
           </tr>
         
           
           
-          <tr class="uncovered">
+          <tr class="inferred">
             <td><pre><a name="line131">131</a>   end</pre></td>
           </tr>
         
           
           
-          <tr class="uncovered">
+          <tr class="inferred">
             <td><pre><a name="line132">132</a> </pre></td>
           </tr>
         
           
           
+          <tr class="marked">
+            <td><pre><a name="line133">133</a>   def nico_check_tag</pre></td>
+          </tr>
+        
+          
+          
           <tr class="uncovered">
-            <td><pre><a name="line133">133</a> end</pre></td>
+            <td><pre><a name="line134">134</a>     info_file = pasokara_file.fullpath.gsub(/\.[a-zA-Z0-9]+$/, &quot;.txt&quot;)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line135">135</a>     tags = NicoParser::NicoPlayerParser.new.parse_tag(info_file)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line136">136</a>     tag_list.add tags</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line137">137</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line138">138</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line139">139</a>   def nico_check_info</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line140">140</a>     info_file = pasokara_file.fullpath.gsub(/\.[a-zA-Z0-9]+$/, &quot;.txt&quot;)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line141">141</a>     info_set = NicoParser::NicoPlayerParser.new.parse_info(info_file)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line142">142</a>     attributes = info_set</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line143">143</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line144">144</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line145">145</a>   def nico_check_thumb</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line146">146</a>     thumb = fullpath.gsub(/\.[a-zA-Z0-9]+$/, &quot;.jpg&quot;)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line147">147</a>     if File.exist?(thumb)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line148">148</a>       thumb_file = thumb.toutf8</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line149">149</a>     end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line150">150</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line151">151</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line152">152</a>   def nico_check_comment</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line153">153</a>     comment = fullpath.gsub(/\.[a-zA-Z0-9]+$/, &quot;.xml&quot;)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line154">154</a>     if File.exist?(comment)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line155">155</a>       comment_file = comment.toutf8</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line156">156</a>     end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line157">157</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line158">158</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line159">159</a> end</pre></td>
           </tr>
         
       </tbody>
     </table>
 
-    <p>Generated on Tue Mar 16 00:56:35 +0900 2010 with <a href="http://github.com/relevance/rcov">rcov 0.9.8</a></p>
+    <p>Generated on Fri Jun 11 01:28:52 +0900 2010 with <a href="http://github.com/relevance/rcov">rcov 0.9.8</a></p>
 
   </body>
 </html>

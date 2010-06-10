@@ -28,17 +28,17 @@
         <tbody>
           <tr>
             <td class="left_align"><a href="app-controllers-application_controller_rb.html">app/controllers/application_controller.rb</a></td>
-            <td class='right_align'><tt>35</tt></td>
-            <td class='right_align'><tt>24</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>91.43%</tt></div>
+            <td class='right_align'><tt>53</tt></td>
+            <td class='right_align'><tt>40</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>94.34%</tt></div>
           <div class="percent_graph">
-            <div class="covered" style="width:91px"></div>
-            <div class="uncovered" style="width:9px"></div>
+            <div class="covered" style="width:94px"></div>
+            <div class="uncovered" style="width:6px"></div>
           </div></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>87.50%</tt></div>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>92.50%</tt></div>
           <div class="percent_graph">
-            <div class="covered" style="width:88px"></div>
-            <div class="uncovered" style="width:12px"></div>
+            <div class="covered" style="width:93px"></div>
+            <div class="uncovered" style="width:7px"></div>
           </div></td>
           </tr>
         </tbody>
@@ -147,7 +147,7 @@
           
           
           <tr class="marked">
-            <td><pre><a name="line16">16</a>     tag_limit = request.mobile? ? 10 : 30</pre></td>
+            <td><pre><a name="line16">16</a>     tag_limit = request.mobile? ? 10 : 50</pre></td>
           </tr>
         
           
@@ -261,13 +261,121 @@
           
           
           <tr class="inferred">
-            <td><pre><a name="line35">35</a> end</pre></td>
+            <td><pre><a name="line35">35</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line36">36</a>   def order_options</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line37">37</a>     order = {:order =&gt; &quot;name asc&quot;}</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line38">38</a>     case params[:sort]</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line39">39</a>     when &quot;view_count&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line40">40</a>       order.merge!({:order =&gt; &quot;nico_view_counter desc, name asc&quot;})</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line41">41</a>     when &quot;view_count_r&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line42">42</a>       order.merge!({:order =&gt; &quot;nico_view_counter asc, name asc&quot;})</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line43">43</a>     when &quot;post_new&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line44">44</a>       order.merge!({:order =&gt; &quot;nico_post desc, created_at desc, name asc&quot;})</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line45">45</a>     when &quot;post_old&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line46">46</a>       order.merge!({:order =&gt; &quot;nico_post asc, created_at asc, name asc&quot;})</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line47">47</a>     when &quot;mylist_count&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line48">48</a>       order.merge!({:order =&gt; &quot;nico_mylist_counter desc, name asc&quot;})</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line49">49</a>     end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line50">50</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line51">51</a>     order</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line52">52</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line53">53</a> end</pre></td>
           </tr>
         
       </tbody>
     </table>
 
-    <p>Generated on Tue Mar 16 00:56:35 +0900 2010 with <a href="http://github.com/relevance/rcov">rcov 0.9.8</a></p>
+    <p>Generated on Fri Jun 11 01:28:52 +0900 2010 with <a href="http://github.com/relevance/rcov">rcov 0.9.8</a></p>
 
   </body>
 </html>

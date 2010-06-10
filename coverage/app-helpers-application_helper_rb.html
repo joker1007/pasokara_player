@@ -28,14 +28,14 @@
         <tbody>
           <tr>
             <td class="left_align"><a href="app-helpers-application_helper_rb.html">app/helpers/application_helper.rb</a></td>
-            <td class='right_align'><tt>158</tt></td>
-            <td class='right_align'><tt>137</tt></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>22.15%</tt></div>
+            <td class='right_align'><tt>159</tt></td>
+            <td class='right_align'><tt>138</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>22.01%</tt></div>
           <div class="percent_graph">
             <div class="covered" style="width:22px"></div>
             <div class="uncovered" style="width:78px"></div>
           </div></td>
-            <td class="left_align"><div class="percent_graph_legend"><tt class=''>12.41%</tt></div>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>12.32%</tt></div>
           <div class="percent_graph">
             <div class="covered" style="width:12px"></div>
             <div class="uncovered" style="width:88px"></div>
@@ -117,7 +117,7 @@
           
           
           <tr class="uncovered">
-            <td><pre><a name="line11">11</a>       image_tag(&quot;icon/elastic_movie.png&quot;, :size =&gt; @icon_size, :class =&gt; &quot;directory_icon&quot;) +</pre></td>
+            <td><pre><a name="line11">11</a>       image_tag(&quot;icon/elastic_movie.png&quot;, :size =&gt; @icon_size, :class =&gt; &quot;entity_icon&quot;) +</pre></td>
           </tr>
         
           
@@ -159,7 +159,7 @@
           
           
           <tr class="uncovered">
-            <td><pre><a name="line18">18</a>       image_tag(&quot;icon/music_48x48.png&quot;, :size =&gt; @icon_size, :class =&gt; &quot;pasokara_icon&quot;) +</pre></td>
+            <td><pre><a name="line18">18</a>       image_tag(&quot;icon/music_48x48.png&quot;, :size =&gt; @icon_size, :class =&gt; &quot;entity_icon&quot;) +</pre></td>
           </tr>
         
           
@@ -183,163 +183,163 @@
           
           
           <tr class="uncovered">
-            <td><pre><a name="line22">22</a>       link_to_remote(image_tag(&quot;icon/star_off_48.png&quot;, :size =&gt; @icon_size), :confirm =&gt; &quot;#{pasokara.name}をお気に入りに追加しますか？&quot;, :url =&gt; {:controller =&gt; &quot;favorite&quot;, :action =&gt; &quot;add&quot;, :id =&gt; pasokara.id}, :html =&gt; {:href =&gt; url_for(:controller =&gt; &quot;favorite&quot;, :action =&gt; &quot;add&quot;, :id =&gt; pasokara.id), :class =&gt; &quot;add_favorite&quot;})</pre></td>
+            <td><pre><a name="line22">22</a>       link_to(&quot;[関連動画を探す]&quot;, {:controller =&gt; &quot;pasokara&quot;, :action =&gt; &quot;related_search&quot;, :id =&gt; pasokara.id}, :class =&gt; &quot;related_search_link&quot;, :target =&gt; &quot;_blank&quot;) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line23">23</a>     end</pre></td>
+            <td><pre><a name="line23">23</a>       link_to_remote(image_tag(&quot;icon/star_off_48.png&quot;, :size =&gt; @icon_size), :confirm =&gt; &quot;#{pasokara.name}をお気に入りに追加しますか？&quot;, :url =&gt; {:controller =&gt; &quot;favorite&quot;, :action =&gt; &quot;add&quot;, :id =&gt; pasokara.id}, :html =&gt; {:href =&gt; url_for(:controller =&gt; &quot;favorite&quot;, :action =&gt; &quot;add&quot;, :id =&gt; pasokara.id), :class =&gt; &quot;add_favorite&quot;})</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line24">24</a>   end</pre></td>
+            <td><pre><a name="line24">24</a>     end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line25">25</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line25">25</a> </pre></td>
+            <td><pre><a name="line26">26</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line26">26</a>   def tag_li(tag_obj)</pre></td>
+            <td><pre><a name="line27">27</a>   def tag_li(tag_obj)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line27">27</a>     content_tag(:li, :class=&gt; &quot;dir&quot;) do</pre></td>
+            <td><pre><a name="line28">28</a>     content_tag(:li, :class=&gt; &quot;dir&quot;) do</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line28">28</a>       image_tag(&quot;icon/search.png&quot;, :size =&gt; @icon_size, :class =&gt; &quot;tag_icon&quot;) +</pre></td>
+            <td><pre><a name="line29">29</a>       image_tag(&quot;icon/search.png&quot;, :size =&gt; @icon_size, :class =&gt; &quot;tag_icon&quot;) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line29">29</a>       link_to(h(tag_obj.name), {:controller =&gt; &quot;pasokara&quot;, :action =&gt; &quot;tag_search&quot;, :tag =&gt; tag_obj.name}) +</pre></td>
+            <td><pre><a name="line30">30</a>       link_to(h(tag_obj.name), {:controller =&gt; &quot;pasokara&quot;, :action =&gt; &quot;tag_search&quot;, :tag =&gt; tag_obj.name}) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line30">30</a>       &quot;(#{tag_obj.count})&quot;</pre></td>
+            <td><pre><a name="line31">31</a>       &quot;(#{tag_obj.count})&quot;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line31">31</a>     end</pre></td>
+            <td><pre><a name="line32">32</a>     end</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line32">32</a>   end</pre></td>
+            <td><pre><a name="line33">33</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line33">33</a> </pre></td>
+            <td><pre><a name="line34">34</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line34">34</a>   def info_box(entity)</pre></td>
+            <td><pre><a name="line35">35</a>   def info_box(entity)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line35">35</a>     %Q{</pre></td>
+            <td><pre><a name="line36">36</a>     %Q{</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line36">36</a>       &lt;div id=&quot;info-box-#{entity.id}&quot; class=&quot;info_box&quot;&gt;</pre></td>
+            <td><pre><a name="line37">37</a>       &lt;div id=&quot;info-box-#{entity.id}&quot; class=&quot;info_box&quot;&gt;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line37">37</a>         &lt;h3&gt;タグ&lt;/h3&gt;</pre></td>
+            <td><pre><a name="line38">38</a>         &lt;h3&gt;タグ&lt;/h3&gt;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line38">38</a>         #{tag_list(entity)}</pre></td>
+            <td><pre><a name="line39">39</a>         #{tag_list(entity)}</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line39">39</a>         #{info_list(entity)}</pre></td>
+            <td><pre><a name="line40">40</a>         #{info_list(entity)}</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line40">40</a>       &lt;/div&gt;</pre></td>
+            <td><pre><a name="line41">41</a>       &lt;/div&gt;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line41">41</a>     }</pre></td>
+            <td><pre><a name="line42">42</a>     }</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line42">42</a>   end</pre></td>
+            <td><pre><a name="line43">43</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line43">43</a> </pre></td>
+            <td><pre><a name="line44">44</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line44">44</a>   def info_list(entity)</pre></td>
+            <td><pre><a name="line45">45</a>   def info_list(entity)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line45">45</a>     %Q{</pre></td>
+            <td><pre><a name="line46">46</a>     %Q{</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line46">46</a>       &lt;div id=&quot;info-list-#{entity.id}&quot; class=&quot;info_list&quot;&gt;</pre></td>
+            <td><pre><a name="line47">47</a>       &lt;div id=&quot;info-list-#{entity.id}&quot; class=&quot;info_list&quot;&gt;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line47">47</a>         &lt;h3&gt;動画情報&lt;/h3&gt;</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line48">48</a>         &lt;div class=&quot;thumb clearfix&quot;&gt;#{image_tag(url_for(:controller =&gt; &quot;pasokara&quot;, :action =&gt; &quot;thumb&quot;, :id =&gt; entity.id), :size =&gt; &quot;160x120&quot;)}&lt;/div&gt;</pre></td>
+            <td><pre><a name="line48">48</a>         &lt;h3&gt;動画情報&lt;/h3&gt;</pre></td>
           </tr>
         
           
@@ -357,7 +357,7 @@
           
           
           <tr class="uncovered">
-            <td><pre><a name="line51">51</a>           &lt;span class=&quot;info_key&quot;&gt;投稿日時:&lt;/span&gt;&lt;span class=&quot;info_value&quot;&gt;#{h entity.nico_post}&lt;/span&gt;&lt;br /&gt;</pre></td>
+            <td><pre><a name="line51">51</a>           &lt;span class=&quot;info_key&quot;&gt;投稿日:&lt;/span&gt;&lt;span class=&quot;info_value&quot;&gt;#{h entity.nico_post.strftime(&quot;%Y/%m/%d&quot;)}&lt;/span&gt;&lt;br /&gt;</pre></td>
           </tr>
         
           
@@ -429,583 +429,589 @@
           
           
           <tr class="uncovered">
-            <td><pre><a name="line63">63</a>         &lt;h3&gt;タグ&lt;/h3&gt;</pre></td>
+            <td><pre><a name="line63">63</a>         &lt;div class=&quot;thumb clearfix&quot;&gt;#{image_tag(url_for(:controller =&gt; &quot;pasokara&quot;, :action =&gt; &quot;thumb&quot;, :id =&gt; entity.id), :size =&gt; &quot;160x120&quot;)}&lt;/div&gt;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line64">64</a>         #{tag_list(entity)}</pre></td>
+            <td><pre><a name="line64">64</a>         &lt;h3&gt;タグ&lt;/h3&gt;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line65">65</a>       &lt;/div&gt;</pre></td>
+            <td><pre><a name="line65">65</a>         #{tag_list(entity)}</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line66">66</a>     }</pre></td>
+            <td><pre><a name="line66">66</a>       &lt;/div&gt;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line67">67</a>   end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="inferred">
-            <td><pre><a name="line68">68</a> </pre></td>
-          </tr>
-        
-          
-          
-          <tr class="marked">
-            <td><pre><a name="line69">69</a>   def tag_list(entity)</pre></td>
+            <td><pre><a name="line67">67</a>     }</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line70">70</a>     content_tag(&quot;div&quot;, {:id =&gt; &quot;tag-list-#{entity.id}&quot;, :class =&gt; &quot;tag_list&quot;}) do</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line71">71</a>       entity.tag_list.inject(&quot;&quot;) do |str, p_tag|</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line72">72</a>         str &lt;&lt; content_tag(&quot;span&quot;, {:class =&gt; &quot;tag&quot;}) do</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line73">73</a>           &quot;&lt;a href=\&quot;/tag_search/#{u p_tag}\&quot;&gt;#{h p_tag}&lt;/a&gt;&quot;</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line74">74</a>         end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line75">75</a>         str</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line76">76</a>       end +</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line77">77</a>       link_to_remote(&quot;[編集]&quot;, :url =&gt; tag_form_open_path(:id =&gt; entity), :html =&gt; {:href =&gt; tag_form_open_path(:id =&gt; entity), :class =&gt; &quot;tag_edit_link&quot;})</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line78">78</a>     end</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line79">79</a>   end</pre></td>
+            <td><pre><a name="line68">68</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line80">80</a> </pre></td>
+            <td><pre><a name="line69">69</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line81">81</a>   def tag_list_edit(entity)</pre></td>
+            <td><pre><a name="line70">70</a>   def tag_list(entity)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line82">82</a>     tag_str = &quot;&quot;</pre></td>
+            <td><pre><a name="line71">71</a>     content_tag(&quot;div&quot;, {:id =&gt; &quot;tag-list-#{entity.id}&quot;, :class =&gt; &quot;tag_list&quot;}) do</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line83">83</a>     tag_idx = 1</pre></td>
+            <td><pre><a name="line72">72</a>       entity.tag_list.inject(&quot;&quot;) do |str, p_tag|</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line84">84</a>     entity.tag_list.each do |p_tag|</pre></td>
+            <td><pre><a name="line73">73</a>         str &lt;&lt; content_tag(&quot;span&quot;, {:class =&gt; &quot;tag&quot;}) do</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line85">85</a>       tag_str += tag_line_edit(entity, p_tag, tag_idx)</pre></td>
+            <td><pre><a name="line74">74</a>           &quot;&lt;a href=\&quot;/tag_search/#{u p_tag}\&quot;&gt;#{h p_tag}&lt;/a&gt;&quot;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line86">86</a>       tag_idx += 1</pre></td>
+            <td><pre><a name="line75">75</a>         end</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line87">87</a>     end</pre></td>
+            <td><pre><a name="line76">76</a>         str</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line88">88</a>     content_tag(&quot;div&quot;,</pre></td>
+            <td><pre><a name="line77">77</a>       end +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line89">89</a>       content_tag(&quot;div&quot;, tag_str, {:id =&gt; &quot;tag-line-box-#{entity.id}&quot;}) +</pre></td>
+            <td><pre><a name="line78">78</a>       link_to_remote(&quot;[編集]&quot;, :url =&gt; tag_form_open_path(:id =&gt; entity), :html =&gt; {:href =&gt; tag_form_open_path(:id =&gt; entity), :class =&gt; &quot;tag_edit_link&quot;})</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line90">90</a>       tag_edit_form(entity),</pre></td>
+            <td><pre><a name="line79">79</a>     end</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line91">91</a>     {:id =&gt; &quot;tag-list-#{entity.id}&quot;, :class =&gt; &quot;tag_list_edit&quot;})</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line92">92</a>   end</pre></td>
+            <td><pre><a name="line80">80</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line93">93</a> </pre></td>
+            <td><pre><a name="line81">81</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line94">94</a>   def tag_edit_form(entity)</pre></td>
+            <td><pre><a name="line82">82</a>   def tag_list_edit(entity)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line95">95</a>     tag_str = form_remote_tag :url =&gt; tagging_path(:id =&gt; entity.id) do</pre></td>
+            <td><pre><a name="line83">83</a>     tag_str = &quot;&quot;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line96">96</a>       text_field_tag(&quot;tags&quot;, &quot;&quot;, :size =&gt; 50) +</pre></td>
+            <td><pre><a name="line84">84</a>     tag_idx = 1</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line97">97</a>       submit_tag(&quot;編集&quot;) + &quot; &quot; +</pre></td>
+            <td><pre><a name="line85">85</a>     entity.tag_list.each do |p_tag|</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line98">98</a>       link_to_remote(&quot;[完了]&quot;, :url =&gt; tag_form_close_path(:id =&gt; entity), :html =&gt; {:href =&gt; tag_form_close_path(:id =&gt; entity), :class =&gt; &quot;tag_edit_link&quot;})</pre></td>
+            <td><pre><a name="line86">86</a>       tag_str += tag_line_edit(entity, p_tag, tag_idx)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line99">99</a>     end</pre></td>
+            <td><pre><a name="line87">87</a>       tag_idx += 1</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line100">100</a>     tag_str.join(&quot;\n&quot;)</pre></td>
+            <td><pre><a name="line88">88</a>     end</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line101">101</a>   end</pre></td>
+            <td><pre><a name="line89">89</a>     content_tag(&quot;div&quot;,</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line90">90</a>       content_tag(&quot;div&quot;, tag_str, {:id =&gt; &quot;tag-line-box-#{entity.id}&quot;}) +</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line91">91</a>       tag_edit_form(entity),</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line92">92</a>     {:id =&gt; &quot;tag-list-#{entity.id}&quot;, :class =&gt; &quot;tag_list_edit&quot;})</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line93">93</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line102">102</a> </pre></td>
+            <td><pre><a name="line94">94</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line103">103</a>   def tag_line_edit(entity, p_tag, tag_idx)</pre></td>
+            <td><pre><a name="line95">95</a>   def tag_edit_form(entity)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line104">104</a>     content_tag(&quot;div&quot;, {:id =&gt; &quot;tag-#{entity.id}-#{tag_idx}&quot;}) do</pre></td>
+            <td><pre><a name="line96">96</a>     tag_str = form_remote_tag :url =&gt; tagging_path(:id =&gt; entity.id) do</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line105">105</a>       content_tag(&quot;span&quot;, {:class =&gt; &quot;tag&quot;}) do</pre></td>
+            <td><pre><a name="line97">97</a>       text_field_tag(&quot;tags&quot;, &quot;&quot;, :size =&gt; 50) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line106">106</a>         link_to(h(p_tag), tag_search_path(:tag =&gt; p_tag)) + &quot; &quot; +</pre></td>
+            <td><pre><a name="line98">98</a>       submit_tag(&quot;編集&quot;) + &quot; &quot; +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line107">107</a>         link_to_remote(image_tag(&quot;icon/tag_del_button.png&quot;), {:url =&gt; tag_remove_path(:id =&gt; entity, :tag =&gt; p_tag, :tag_idx =&gt; tag_idx), :confirm =&gt; &quot;#{p_tag}を削除してよろしいですか？&quot;}, :href =&gt; tag_remove_path(:id =&gt; entity, :tag =&gt; p_tag))</pre></td>
+            <td><pre><a name="line99">99</a>       link_to_remote(&quot;[完了]&quot;, :url =&gt; tag_form_close_path(:id =&gt; entity), :html =&gt; {:href =&gt; tag_form_close_path(:id =&gt; entity), :class =&gt; &quot;tag_edit_link&quot;})</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line108">108</a>       end</pre></td>
+            <td><pre><a name="line100">100</a>     end</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line109">109</a>     end</pre></td>
+            <td><pre><a name="line101">101</a>     tag_str.join(&quot;\n&quot;)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line110">110</a>   end</pre></td>
+            <td><pre><a name="line102">102</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line111">111</a> </pre></td>
+            <td><pre><a name="line103">103</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line112">112</a>   def search_form</pre></td>
+            <td><pre><a name="line104">104</a>   def tag_line_edit(entity, p_tag, tag_idx)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line113">113</a>     form_tag(:controller =&gt; 'pasokara', :action =&gt; 'search', :query =&gt; nil, :page =&gt; nil) + &quot;\n&quot; +</pre></td>
+            <td><pre><a name="line105">105</a>     content_tag(&quot;div&quot;, {:id =&gt; &quot;tag-#{entity.id}-#{tag_idx}&quot;}) do</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line114">114</a>     content_tag(:label, &quot;曲名・タグ検索: &quot;) +</pre></td>
+            <td><pre><a name="line106">106</a>       content_tag(&quot;span&quot;, {:class =&gt; &quot;tag&quot;}) do</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line115">115</a>     text_field_tag(&quot;query&quot;, params[:query], :size =&gt; 32) +</pre></td>
+            <td><pre><a name="line107">107</a>         link_to(h(p_tag), tag_search_path(:tag =&gt; p_tag)) + &quot; &quot; +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line116">116</a>     submit_tag(&quot;Search&quot;) + &quot;\n&quot; +</pre></td>
+            <td><pre><a name="line108">108</a>         link_to_remote(image_tag(&quot;icon/tag_del_button.png&quot;), {:url =&gt; tag_remove_path(:id =&gt; entity, :tag =&gt; p_tag, :tag_idx =&gt; tag_idx), :confirm =&gt; &quot;#{p_tag}を削除してよろしいですか？&quot;}, :href =&gt; tag_remove_path(:id =&gt; entity, :tag =&gt; p_tag))</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line117">117</a>     &quot;&lt;/form&gt;&quot; + &quot;\n&quot; +</pre></td>
+            <td><pre><a name="line109">109</a>       end</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line118">118</a>     &quot;半角スペースでAND検索&quot;</pre></td>
+            <td><pre><a name="line110">110</a>     end</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line119">119</a>   end</pre></td>
+            <td><pre><a name="line111">111</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line120">120</a> </pre></td>
+            <td><pre><a name="line112">112</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line121">121</a>   def tag_search_form</pre></td>
+            <td><pre><a name="line113">113</a>   def search_form</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line122">122</a>     form_tag(:controller =&gt; 'pasokara', :action =&gt; 'tag_search', :tag =&gt; nil, :page =&gt; nil) + &quot;\n&quot; +</pre></td>
+            <td><pre><a name="line114">114</a>     form_tag(:controller =&gt; 'pasokara', :action =&gt; 'search', :query =&gt; nil, :page =&gt; nil) + &quot;\n&quot; +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line123">123</a>     content_tag(:label, &quot;タグ検索: &quot;) +</pre></td>
+            <td><pre><a name="line115">115</a>     content_tag(:label, &quot;曲名・タグ検索: &quot;) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line124">124</a>     text_field_tag(&quot;tag&quot;, &quot;&quot;, :size =&gt; 32) +</pre></td>
+            <td><pre><a name="line116">116</a>     text_field_tag(&quot;query&quot;, params[:query], :size =&gt; 32) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line125">125</a>     submit_tag(&quot;Search&quot;) + &quot;\n&quot; +</pre></td>
+            <td><pre><a name="line117">117</a>     submit_tag(&quot;Search&quot;) + &quot;\n&quot; +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line126">126</a>     &quot;&lt;/form&gt;&quot;</pre></td>
+            <td><pre><a name="line118">118</a>     &quot;&lt;/form&gt;&quot; + &quot;\n&quot; +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line127">127</a>   end</pre></td>
+            <td><pre><a name="line119">119</a>     &quot;半角スペースでAND検索&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line120">120</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line128">128</a> </pre></td>
+            <td><pre><a name="line121">121</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line129">129</a>   def scoped_tags(tags)</pre></td>
+            <td><pre><a name="line122">122</a>   def tag_search_form</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line130">130</a>     form_tag(:action =&gt; &quot;append_search_tag&quot;) +</pre></td>
+            <td><pre><a name="line123">123</a>     form_tag(:controller =&gt; 'pasokara', :action =&gt; 'tag_search', :tag =&gt; nil, :page =&gt; nil) + &quot;\n&quot; +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line131">131</a>     tags.inject(&quot;&quot;) do |str, t|</pre></td>
+            <td><pre><a name="line124">124</a>     content_tag(:label, &quot;タグ検索: &quot;) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line132">132</a>       remove_scope = link_to(image_tag(&quot;icon/cancel_16.png&quot;), {:remove =&gt; t}, :class =&gt; &quot;remove_scope&quot;)</pre></td>
+            <td><pre><a name="line125">125</a>     text_field_tag(&quot;tag&quot;, &quot;&quot;, :size =&gt; 32) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line133">133</a>       str += content_tag(:span, h(t) + remove_scope, :class =&gt; &quot;scoped_tag&quot;) + &quot; &gt; &quot;</pre></td>
+            <td><pre><a name="line126">126</a>     submit_tag(&quot;Search&quot;) + &quot;\n&quot; +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line134">134</a>       str</pre></td>
+            <td><pre><a name="line127">127</a>     &quot;&lt;/form&gt;&quot;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line135">135</a>     end +</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line136">136</a>     hidden_field_tag(&quot;tag&quot;, params[:tag]) +</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line137">137</a>     text_field_tag(&quot;append&quot;, &quot;&quot;, :size =&gt; 16) +</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line138">138</a>     submit_tag(&quot;タグ追加&quot;) +</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line139">139</a>     &quot;&lt;/form&gt;&quot;</pre></td>
-          </tr>
-        
-          
-          
-          <tr class="uncovered">
-            <td><pre><a name="line140">140</a>   end</pre></td>
+            <td><pre><a name="line128">128</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line141">141</a> </pre></td>
+            <td><pre><a name="line129">129</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line142">142</a>   def header_tag_list(tags, url_builder)</pre></td>
+            <td><pre><a name="line130">130</a>   def scoped_tags(tags)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line143">143</a>     content_tag(:div, :class =&gt; &quot;all_tag_list&quot;, :id =&gt; &quot;all_tag_list&quot;) do </pre></td>
+            <td><pre><a name="line131">131</a>     form_tag(:action =&gt; &quot;append_search_tag&quot;) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line144">144</a>       content_tag(&quot;h3&quot;, &quot;タグ一覧&quot;, :style =&gt; &quot;display: inline; margin-right: 10px;&quot;) +</pre></td>
+            <td><pre><a name="line132">132</a>     tags.inject(&quot;&quot;) do |str, t|</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line145">145</a>       link_to(&quot;[タグ一覧]&quot;, {:controller =&gt; &quot;tag&quot;, :action =&gt; &quot;list&quot;}, :class =&gt; &quot;tag_list_link&quot;) + &quot;&lt;br /&gt;\n&quot; +</pre></td>
+            <td><pre><a name="line133">133</a>       remove_scope = link_to(image_tag(&quot;icon/cancel_16.png&quot;), {:remove =&gt; t}, :class =&gt; &quot;remove_scope&quot;)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line146">146</a>       tags.inject(&quot;&quot;) do |str, t|</pre></td>
+            <td><pre><a name="line134">134</a>       str += content_tag(:span, h(t) + remove_scope, :class =&gt; &quot;scoped_tag&quot;) + &quot; &gt; &quot;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line147">147</a>         str += content_tag(:span, :class =&gt; &quot;tag&quot;) do</pre></td>
+            <td><pre><a name="line135">135</a>       str</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line148">148</a>           &quot;&lt;a href=\&quot;#{url_builder.call(t)}\&quot;&gt;#{h(t.name)}&lt;/a&gt;&quot; + &quot;(#{t.count})&quot;</pre></td>
+            <td><pre><a name="line136">136</a>     end +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line149">149</a>         end + &quot;\n&quot;</pre></td>
+            <td><pre><a name="line137">137</a>     hidden_field_tag(&quot;tag&quot;, params[:tag]) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line150">150</a>         str</pre></td>
+            <td><pre><a name="line138">138</a>     text_field_tag(&quot;append&quot;, &quot;&quot;, :size =&gt; 16) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line151">151</a>       end</pre></td>
+            <td><pre><a name="line139">139</a>     submit_tag(&quot;タグ追加&quot;) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line152">152</a>     end</pre></td>
+            <td><pre><a name="line140">140</a>     &quot;&lt;/form&gt;&quot;</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line153">153</a>   end</pre></td>
+            <td><pre><a name="line141">141</a>   end</pre></td>
           </tr>
         
           
           
           <tr class="inferred">
-            <td><pre><a name="line154">154</a> </pre></td>
+            <td><pre><a name="line142">142</a> </pre></td>
           </tr>
         
           
           
           <tr class="marked">
-            <td><pre><a name="line155">155</a>   def embed_player(pasokara)</pre></td>
+            <td><pre><a name="line143">143</a>   def header_tag_list(tags, url_builder)</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line156">156</a>     &quot;&lt;embed id='player' name='player' src='/swfplayer/player-viral.swf' height='360' width='480' allowscriptaccess='always' allowfullscreen='true' flashvars='file=#{u pasokara.movie_path}&amp;level=0&amp;skin=%2Fswfplayer%2Fsnel.swf&amp;image=#{u(url_for(:controller =&gt; &quot;pasokara&quot;, :action =&gt; &quot;thumb&quot;, :id =&gt; pasokara.id) + &quot;.jpg&quot;)}&amp;title=#{u pasokara.name}&amp;autostart=true&amp;dock=false&amp;bandwidth=5000&amp;plugins=viral-2d'/&gt;&quot;</pre></td>
+            <td><pre><a name="line144">144</a>     content_tag(:div, :class =&gt; &quot;all_tag_list&quot;, :id =&gt; &quot;all_tag_list&quot;) do </pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line157">157</a>   end</pre></td>
+            <td><pre><a name="line145">145</a>       content_tag(&quot;h3&quot;, &quot;タグ一覧&quot;, :style =&gt; &quot;display: inline; margin-right: 10px;&quot;) +</pre></td>
           </tr>
         
           
           
           <tr class="uncovered">
-            <td><pre><a name="line158">158</a> end</pre></td>
+            <td><pre><a name="line146">146</a>       link_to(&quot;[タグ一覧]&quot;, {:controller =&gt; &quot;tag&quot;, :action =&gt; &quot;list&quot;}, :class =&gt; &quot;tag_list_link&quot;) + &quot;&lt;br /&gt;\n&quot; +</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line147">147</a>       tags.inject(&quot;&quot;) do |str, t|</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line148">148</a>         str += content_tag(:span, :class =&gt; &quot;tag&quot;) do</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line149">149</a>           &quot;&lt;a href=\&quot;#{url_builder.call(t)}\&quot;&gt;#{h(t.name)}&lt;/a&gt;&quot; + &quot;(#{t.count})&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line150">150</a>         end + &quot;\n&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line151">151</a>         str</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line152">152</a>       end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line153">153</a>     end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line154">154</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="inferred">
+            <td><pre><a name="line155">155</a> </pre></td>
+          </tr>
+        
+          
+          
+          <tr class="marked">
+            <td><pre><a name="line156">156</a>   def embed_player(pasokara)</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line157">157</a>     &quot;&lt;embed id='player' name='player' src='/swfplayer/player-viral.swf' height='360' width='480' allowscriptaccess='always' allowfullscreen='true' flashvars='file=#{u pasokara.movie_path}&amp;level=0&amp;skin=%2Fswfplayer%2Fsnel.swf&amp;image=#{u(url_for(:controller =&gt; &quot;pasokara&quot;, :action =&gt; &quot;thumb&quot;, :id =&gt; pasokara.id) + &quot;.jpg&quot;)}&amp;title=#{u pasokara.name}&amp;autostart=true&amp;dock=false&amp;bandwidth=5000&amp;plugins=viral-2d'/&gt;&quot;</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line158">158</a>   end</pre></td>
+          </tr>
+        
+          
+          
+          <tr class="uncovered">
+            <td><pre><a name="line159">159</a> end</pre></td>
           </tr>
         
       </tbody>
     </table>
 
-    <p>Generated on Tue Mar 16 00:56:35 +0900 2010 with <a href="http://github.com/relevance/rcov">rcov 0.9.8</a></p>
+    <p>Generated on Fri Jun 11 01:28:52 +0900 2010 with <a href="http://github.com/relevance/rcov">rcov 0.9.8</a></p>
 
   </body>
 </html>
