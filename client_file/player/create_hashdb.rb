@@ -47,7 +47,7 @@ SQL
 INSERT OR REPLACE INTO path_table VALUES(?, ?)
 SQL
         puts "#{md5_hash} => #{entry_fullpath}"
-        db.execute(sql, md5_hash, entry_fullpath)
+        db.execute(sql, [md5_hash, entry_fullpath])
       end
     end
   end
