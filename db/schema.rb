@@ -82,9 +82,9 @@ ActiveRecord::Schema.define(:version => 20100612091615) do
 
   create_table "queued_files", :force => true do |t|
     t.integer  "pasokara_file_id", :null => false
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "queued_files", ["pasokara_file_id"], :name => "index_queued_files_on_pasokara_file_id"

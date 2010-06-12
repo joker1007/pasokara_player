@@ -20,7 +20,7 @@ module Util
         
         directory = Directory.new(attributes)
         if directory.save
-          print_process directory
+          # print_process directory
           return directory.id
         else
           return nil
@@ -92,7 +92,7 @@ module Util
           return already_record.id
         else
           if pasokara_file.save
-            print_process pasokara_file
+            #print_process pasokara_file
             return pasokara_file.id
           else
             return nil
@@ -112,7 +112,7 @@ module Util
       end
     end
 
-    def crowl_dir(dir, higher_directory_id = nil, force_thumbnail = false)
+    def crowl_dir(dir, higher_directory_id = nil,  force_thumbnail = false)
       puts "#{dir}の読み込み開始\n"
 
       begin
@@ -127,11 +127,11 @@ module Util
             attributes = {:name => name, :directory_id => higher_directory_id}
 
             dir_id = create_directory(attributes)
-            crowl_dir(entity_fullpath, dir_id)
+            crowl_dir(entity_fullpath, dir_id, force_thumbnail)
           elsif File.extname(entity) =~ /(mpg|avi|flv|ogm|mkv|mp4|wmv|swf)/i
             begin
               md5_hash = File.open(entity_fullpath) {|file| file.binmode; head = file.read(300*1024); Digest::MD5.hexdigest(head)}
-              video = RVideo::Inspector.new(:file => entity_fullpath)
+              video = RVideo::Inspector.new(:file => entity_fullpath.gsub(/'/, "\\'"))
               duration = video.duration ? video.duration / 1000 : nil
             rescue Exception
               puts "File Open Error: #{entity_fullpath}"

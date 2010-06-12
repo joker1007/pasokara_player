@@ -24,6 +24,14 @@ class PasokaraFile < ActiveRecord::Base
     ["マイリスが多い順", "mylist_count"],
   ]
 
+  after_create {|record|
+    puts "#{record.class} : #{record.id}を追加しました"
+  }
+
+  after_update {|record|
+    puts "#{record.class} : #{record.id}を更新しました"
+  }
+
   def self.related_files(id, limit = 10)
     sql = <<SQL
 select c.*, COUNT(b.taggable_id) as count from (select * from taggings a where a.taggable_id = #{id}) t
