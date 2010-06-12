@@ -41,6 +41,7 @@ class PasokaraController < ApplicationController
     end
   end
 
+  # 要修正
   def movie
     @pasokara = PasokaraFile.find(params[:id])
     movie_file = @pasokara.fullpath_of_computer
@@ -54,8 +55,7 @@ class PasokaraController < ApplicationController
 
   def preview
     @pasokara = PasokaraFile.find(params[:id])
-    movie_file = @pasokara.fullpath_of_computer
-    extname = File.extname(movie_file)
+    extname = File.extname(name)
     if extname =~ /mp4|flv/
       render :layout => false
     else

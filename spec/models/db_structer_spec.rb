@@ -8,8 +8,6 @@ describe Util::DbStructer do
   before(:each) do
     @valid_dir_attributes = {
       :name => "subdir",
-      :fullpath => "dummy",
-      :relative_path => "dummy",
       :directory_id => 8480,
     }
 

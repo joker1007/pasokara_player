@@ -10,32 +10,16 @@ describe PasokaraFile do
   before(:each) do
     @valid_attributes = {
       :name => "COOL&CREATE - ネココタマツリ.avi",
-      :fullpath => "L:\\pasokara\\COOL&CREATE\\COOL&CREATE - ネココタマツリ.avi",
-      :relative_path => "COOL&CREATE\\COOL&CREATE - ネココタマツリ.avi",
       :md5_hash => "asdfjl2asjfasd83jasdkfj",
     }
 
     @no_name_attributes = {
-      :fullpath => "L:\\pasokara\\COOL&CREATE\\COOL&CREATE - ネココタマツリ.avi",
-      :relative_path => "COOL&CREATE\\COOL&CREATE - ネココタマツリ.avi",
       :md5_hash => "asdfjl2asjfasd83jasdkfj",
     }
 
-    @no_fullpath_attributes = {
-      :name => "COOL&CREATE - ネココタマツリ.avi",
-      :relative_path => "COOL&CREATE\\COOL&CREATE - ネココタマツリ.avi",
-      :md5_hash => "asdfjl2asjfasd83jasdkfj",
-    }
-
-    @no_relative_path_attributes = {
-      :name => "COOL&CREATE - ネココタマツリ.avi",
-      :fullpath => "L:\\pasokara\\COOL&CREATE\\COOL&CREATE - ネココタマツリ.avi",
-      :md5_hash => "asdfjl2asjfasd83jasdkfj",
-    }
 
     @no_md5_hash__attributes = {
       :name => "COOL&CREATE - ネココタマツリ.avi",
-      :fullpath => "L:\\pasokara\\COOL&CREATE\\COOL&CREATE - ネココタマツリ.avi",
       :relative_path => "COOL&CREATE\\COOL&CREATE - ネココタマツリ.avi",
     }
 
@@ -89,54 +73,6 @@ describe PasokaraFile do
     @siawase_gyaku.preview_path.should == "/pasokara/preview/8362"
   end
 
-  it "fullpath(true)がUTF-8の適切なフルパスを返すこと" do
-    @esp_raging.fullpath.should == "L:/pasokara/COOL&CREATE/COOL&CREATE - ESP RAGING [myu314 remix].avi"
-    @siawase_gyaku.fullpath.should == "L:/pasokara/COOL&CREATE/【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv"
-    @esp_raging.fullpath(true).should == "L:/pasokara/COOL&CREATE/COOL&CREATE - ESP RAGING [myu314 remix].avi"
-    @siawase_gyaku.fullpath(true).should == "L:/pasokara/COOL&CREATE/【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv"
-  end
-
-  it "fullpath(false)がCP932の適切なフルパスを返すこと" do
-    @esp_raging.fullpath(false).should == NKF.nkf("-W -s --cp932", "L:\\pasokara\\COOL&CREATE\\COOL&CREATE - ESP RAGING [myu314 remix].avi")
-    @siawase_gyaku.fullpath(false).should == NKF.nkf("-W -s --cp932", "L:\\pasokara\\COOL&CREATE\\【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv")
-  end
-
-  it "fullpath_of_computer(true)がUTF-8の適切なフルパスを返すこと" do
-    @esp_raging.fullpath_of_computer.should == "L:/pasokara/COOL&CREATE/COOL&CREATE - ESP RAGING [myu314 remix].avi"
-    @siawase_gyaku.fullpath_of_computer.should == "L:/pasokara/COOL&CREATE/【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv"
-    @esp_raging.fullpath_of_computer(true).should == "L:/pasokara/COOL&CREATE/COOL&CREATE - ESP RAGING [myu314 remix].avi"
-    @siawase_gyaku.fullpath_of_computer(true).should == "L:/pasokara/COOL&CREATE/【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv"
-  end
-
-  it "fullpath_of_computer(false)がCP932の適切なフルパスを返すこと" do
-    @esp_raging.fullpath_of_computer(false).should == NKF.nkf("-W -s --cp932", "L:\\pasokara\\COOL&CREATE\\COOL&CREATE - ESP RAGING [myu314 remix].avi")
-    @siawase_gyaku.fullpath_of_computer(false).should == NKF.nkf("-W -s --cp932", "L:\\pasokara\\COOL&CREATE\\【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv")
-  end
-
-  it "relative_path(true)がUTF-8の適切なフルパスを返すこと" do
-    @esp_raging.relative_path.should == "COOL&CREATE/COOL&CREATE - ESP RAGING [myu314 remix].avi"
-    @siawase_gyaku.relative_path.should == "COOL&CREATE/【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv"
-    @esp_raging.relative_path(true).should == "COOL&CREATE/COOL&CREATE - ESP RAGING [myu314 remix].avi"
-    @siawase_gyaku.relative_path(true).should == "COOL&CREATE/【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv"
-  end
-
-  it "relative_pat(false)hがCP932の適切なフルパスを返すこと" do
-    @esp_raging.relative_path(false).should == NKF.nkf("-W -s --cp932", "COOL&CREATE\\COOL&CREATE - ESP RAGING [myu314 remix].avi")
-    @siawase_gyaku.relative_path(false).should == NKF.nkf("-W -s --cp932", "COOL&CREATE\\【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv")
-  end
-
-  it "thumb_file(true)がUTF-8の適切なフルパスを返すこと" do
-    @esp_raging.thumb_file.should == "L:/pasokara/COOL&CREATE/COOL&CREATE - ESP RAGING [myu314 remix].jpg"
-    @siawase_gyaku.thumb_file.should == "L:/pasokara/COOL&CREATE/【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.jpg"
-    @esp_raging.thumb_file(true).should == "L:/pasokara/COOL&CREATE/COOL&CREATE - ESP RAGING [myu314 remix].jpg"
-    @siawase_gyaku.thumb_file(true).should == "L:/pasokara/COOL&CREATE/【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.jpg"
-  end
-
-  it "thumb_file(false)がCP932の適切なフルパスを返すこと" do
-    @esp_raging.thumb_file(false).should == NKF.nkf("-W -s --cp932", "L:\\pasokara\\COOL&CREATE\\COOL&CREATE - ESP RAGING [myu314 remix].jpg")
-    @siawase_gyaku.thumb_file(false).should == NKF.nkf("-W -s --cp932", "L:\\pasokara\\COOL&CREATE\\【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.jpg")
-  end
-
   it "related_tagsが適切に関係するタグを返すこと" do
     tags = PasokaraFile.related_tags(["COOL&CREATE"])
     tags[0].name.should == "COOL&CREATE"
@@ -147,36 +83,4 @@ describe PasokaraFile do
     tags[2].count.should == 1
   end
 
-  it "write_out_infoがinfoファイルを適切に出力すること" do
-    test_fullpath = File.expand_path(File.dirname(__FILE__) + '/../just be friends.mp4')
-    write_out_path = File.expand_path(File.dirname(__FILE__) + '/../just be friends.txt')
-    @just_be_friends.fullpath = test_fullpath
-    @just_be_friends.write_out_info
-    File.file?(write_out_path).should be_true
-    expected_output = <<FILE
-[name]
-sm7601746
-
-[post]
-2009/07/11 06:06:12
-
-[tags]
-ボカロカラオケDB
-巡音ルカ
-ニコカラ
-
-[view_counter]
-3795
-
-[comment_num]
-36
-
-[mylist_counter]
-132
-
-FILE
-    result = File.open(write_out_path) {|file| file.read}
-    File.delete(write_out_path)
-    result.should == NKF.nkf("-W8 -w16L", expected_output)
-  end
 end

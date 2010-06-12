@@ -12,14 +12,4 @@ class Directory < ActiveRecord::Base
     (directories + pasokara_files)
   end
 
-  def fullpath(utf8 = false)
-    return nil if self["fullpath"].nil?
-
-    if utf8
-      self["fullpath"].gsub(/\343\200\234/, "～")
-    else
-      NKF.nkf("-Ws --cp932", self["fullpath"]).gsub(/\//, "\\")
-    end
-  end
-
 end

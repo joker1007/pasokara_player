@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100606135643) do
+ActiveRecord::Schema.define(:version => 20100612042557) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -44,16 +44,12 @@ ActiveRecord::Schema.define(:version => 20100606135643) do
   add_index "computers", ["online"], :name => "index_computers_on_online"
 
   create_table "directories", :force => true do |t|
-    t.string   "name",          :null => false
-    t.string   "fullpath"
+    t.string   "name",         :null => false
     t.integer  "directory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "relative_path"
-    t.integer  "computer_id"
   end
 
-  add_index "directories", ["computer_id"], :name => "index_directories_on_computer_id"
   add_index "directories", ["directory_id"], :name => "index_directories_on_directory_id"
 
   create_table "favorites", :force => true do |t|
@@ -67,23 +63,17 @@ ActiveRecord::Schema.define(:version => 20100606135643) do
 
   create_table "pasokara_files", :force => true do |t|
     t.string   "name",                              :null => false
-    t.string   "fullpath"
     t.integer  "directory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "relative_path"
-    t.string   "comment_file"
-    t.string   "thumb_file"
     t.string   "md5_hash",            :limit => 32, :null => false
     t.string   "nico_name"
     t.datetime "nico_post"
     t.integer  "nico_view_counter"
     t.integer  "nico_comment_num"
     t.integer  "nico_mylist_counter"
-    t.integer  "computer_id"
   end
 
-  add_index "pasokara_files", ["computer_id"], :name => "index_pasokara_files_on_computer_id"
   add_index "pasokara_files", ["directory_id"], :name => "index_pasokara_files_on_directory_id"
   add_index "pasokara_files", ["nico_name"], :name => "index_pasokara_files_on_nico_name"
   add_index "pasokara_files", ["nico_post"], :name => "index_pasokara_files_on_nico_post"
@@ -91,9 +81,9 @@ ActiveRecord::Schema.define(:version => 20100606135643) do
 
   create_table "queued_files", :force => true do |t|
     t.integer  "pasokara_file_id", :null => false
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
   end
 
   add_index "queued_files", ["pasokara_file_id"], :name => "index_queued_files_on_pasokara_file_id"
