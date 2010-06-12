@@ -13,6 +13,7 @@ class PasokaraFile < ActiveRecord::Base
   has_many :sing_logs
 
   validates_uniqueness_of :md5_hash
+  validates_presence_of :name, :md5_hash
 
   SORT_OPTIONS = [
     ["名前順", "name"],
@@ -43,6 +44,13 @@ SQL
     end
   end
 
+  def duration_str
+    if duration
+      (sprintf("%02d", duration / 60)) + ":" + sprintf("%02d", (duration % 60))
+    else
+      ""
+    end
+  end
 
   def movie_path
     extname = File.extname(name)

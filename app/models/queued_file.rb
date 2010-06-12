@@ -4,6 +4,7 @@ class QueuedFile < ActiveRecord::Base
   belongs_to :pasokara_file
   belongs_to :user
 
+  validates_presence_of :pasokara_file_id
 
   def self.enq(pasokara, user_id = nil)
     QueuedFile.create do |q|

@@ -167,6 +167,10 @@ span.tag img {
   vertical-align: middle;
 }
 
+span.duration {
+  margin-left: 4px;
+}
+
 pre {
   background-color: #eee;
   padding: 10px;

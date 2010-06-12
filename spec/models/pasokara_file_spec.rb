@@ -13,6 +13,12 @@ describe PasokaraFile do
       :md5_hash => "asdfjl2asjfasd83jasdkfj",
     }
 
+    @duration_attributes = {
+      :name => "COOL&CREATE - ネココタマツリ.avi",
+      :md5_hash => "asdfjl2asjfasd83jasdkfj",
+      :duration => 245,
+    }
+
     @no_name_attributes = {
       :md5_hash => "asdfjl2asjfasd83jasdkfj",
     }
@@ -20,7 +26,6 @@ describe PasokaraFile do
 
     @no_md5_hash__attributes = {
       :name => "COOL&CREATE - ネココタマツリ.avi",
-      :relative_path => "COOL&CREATE\\COOL&CREATE - ネココタマツリ.avi",
     }
 
     @cool_and_create = directories(:cool_and_create_dir)
@@ -71,6 +76,11 @@ describe PasokaraFile do
   it "preview_pathが適切なファイルパスを返すこと" do
     @esp_raging.preview_path.should == "/pasokara/preview/8340"
     @siawase_gyaku.preview_path.should == "/pasokara/preview/8362"
+  end
+
+  it "duration_strが適切な長さを返すこと" do
+    pasokara = PasokaraFile.new(@duration_attributes)
+    pasokara.duration_str.should == "04:05"
   end
 
   it "related_tagsが適切に関係するタグを返すこと" do

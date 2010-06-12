@@ -1,4 +1,7 @@
 # _*_ coding: utf-8 _*_
+
+require "rvideo"
+
 module Util
   class DbStructer
 
@@ -47,6 +50,11 @@ module Util
             changed = true
           end
 
+          if already_record.duration != pasokara_file.duration
+            already_record.duration = pasokara_file.duration
+            changed = true
+          end
+
           if already_record.tag_list.empty? and !pasokara_file.tag_list.empty?
             already_record.tag_list.add pasokara_file.tag_list
             changed = true
@@ -91,8 +99,8 @@ module Util
           end
         end
       rescue ActiveRecord::ActiveRecordError
-        p $@
-        raise "ARError"
+        puts $!
+        return nil
       end
     end
 
@@ -123,11 +131,13 @@ module Util
           elsif File.extname(entity) =~ /(mpg|avi|flv|ogm|mkv|mp4|wmv|swf)/i
             begin
               md5_hash = File.open(entity_fullpath) {|file| file.binmode; head = file.read(300*1024); Digest::MD5.hexdigest(head)}
+              video = RVideo::Inspector.new(:file => entity_fullpath)
+              duration = video.duration ? video.duration / 1000 : nil
             rescue Exception
               puts "File Open Error: #{entity_fullpath}"
               next
             end
-            attributes = {:name => name, :directory_id => higher_directory_id, :md5_hash => md5_hash}
+            attributes = {:name => name, :directory_id => higher_directory_id, :md5_hash => md5_hash, :duration => duration}
             info_file, parser = check_info_file(entity_fullpath)
 
             tags = parser.parse_tag(info_file)

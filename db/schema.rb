@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100612042557) do
+ActiveRecord::Schema.define(:version => 20100612091615) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(:version => 20100612042557) do
     t.integer  "nico_view_counter"
     t.integer  "nico_comment_num"
     t.integer  "nico_mylist_counter"
+    t.integer  "duration"
   end
 
   add_index "pasokara_files", ["directory_id"], :name => "index_pasokara_files_on_directory_id"

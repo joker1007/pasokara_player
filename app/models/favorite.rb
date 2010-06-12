@@ -4,4 +4,5 @@ class Favorite < ActiveRecord::Base
   belongs_to :pasokara_file
 
   validates_uniqueness_of :user_id, :scope => [:pasokara_file_id]
+  validates_presence_of :user_id, :pasokara_file_id
 end
