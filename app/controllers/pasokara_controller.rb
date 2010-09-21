@@ -72,7 +72,7 @@ class PasokaraController < ApplicationController
 
       order = order_options
 
-      @pasokaras = PasokaraFile.union([{:conditions => conditions}, PasokaraFile.find_options_for_find_tagged_with(query_words, :on => :tags, :match_all => true, :order => "name")], order)
+      @pasokaras = PasokaraFile.union([{:conditions => conditions}.merge(pasokara_files_select), PasokaraFile.find_options_for_find_tagged_with(query_words, {:on => :tags, :match_all => true, :order => "name"}.merge(pasokara_files_select))], order)
 
       @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => 50)
     end
@@ -98,7 +98,7 @@ class PasokaraController < ApplicationController
 
       find_options.merge!(order)
 
-      @pasokaras = PasokaraFile.tagged_with(@tag_words, find_options).find(:all).paginate(:page => params[:page], :per_page => 50)
+      @pasokaras = PasokaraFile.tagged_with(@tag_words, find_options).find(:all, pasokara_files_select).paginate(:page => params[:page], :per_page => 50)
       
     end
     render :action => 'search'
@@ -179,5 +179,9 @@ class PasokaraController < ApplicationController
         "/pasokara/append_search_tag?tag=#{ERB::Util.u(@query)}&append=#{ERB::Util.u(t.name)}"
       }
     end
+  end
+
+  def pasokara_files_select
+    {:select => "pasokara_files.id, pasokara_files.name, pasokara_files.nico_name, pasokara_files.nico_post, pasokara_files.nico_view_counter, pasokara_files.nico_comment_num, pasokara_files.nico_mylist_counter, pasokara_files.duration, pasokara_files.created_at"}
   end
 end
