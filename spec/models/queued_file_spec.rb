@@ -31,6 +31,7 @@ describe QueuedFile do
   end
 
   it "PasokaraFileをキューに入れられること" do
+    QueuedFile.delete_all
     QueuedFile.enq(@just_be_friends)
     QueuedFile.deq.pasokara_file.should == @just_be_friends
     QueuedFile.enq(@just_be_friends, 1)

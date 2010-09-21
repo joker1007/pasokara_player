@@ -24,12 +24,15 @@ module NicoParser
       end
 
       def text(text)
-        if @current_tag =~ /(video_id|first_retrieve|view_counter|mylist_counter|comment_num)/
+        if @current_tag =~ /(video_id|first_retrieve|view_counter|mylist_counter|comment_num|description)/
           if $1 == "video_id"
             key = "nico_name"
             val = text
           elsif $1 == "first_retrieve"
             key = "nico_post"
+            val = text
+          elsif $1 == "description"
+            key = "nico_description"
             val = text
           else 
             key = "nico_" + $1
@@ -111,6 +114,12 @@ module NicoParser
         result += "<mylist_counter>"
         result += info_set[:nico_mylist_counter].to_s
         result += "</mylist_counter>\n"
+      end
+
+      if info_set[:nico_description]
+        result += "<description>"
+        result += info_set[:nico_description]
+        result += "</description>\n"
       end
     end
   end

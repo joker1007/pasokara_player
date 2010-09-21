@@ -28,6 +28,7 @@ describe NicoParser::NicoPlayerParser do
       :nico_view_counter => 6431,
       :nico_comment_num => 340,
       :nico_mylist_counter => 229,
+      :nico_description => "投稿者のコメント欄",
     }
   end
 end

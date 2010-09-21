@@ -25,11 +25,11 @@ class PasokaraFile < ActiveRecord::Base
   ]
 
   after_create {|record|
-    puts "#{record.class} : #{record.id}を追加しました"
+    puts "#{record.class} : #{record.id}を追加しました" unless RAILS_ENV == "test"
   }
 
   after_update {|record|
-    puts "#{record.class} : #{record.id}を更新しました"
+    puts "#{record.class} : #{record.id}を更新しました" unless RAILS_ENV == "test"
   }
 
   def self.related_files(id, limit = 10)

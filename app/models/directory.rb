@@ -9,7 +9,7 @@ class Directory < ActiveRecord::Base
   validates_presence_of :name
 
   after_create {|record|
-    puts "#{record.class} : #{record.id}を追加しました"
+    puts "#{record.class} : #{record.id}を追加しました" unless RAILS_ENV == "test"
   }
 
   def entities

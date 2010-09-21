@@ -1,6 +1,19 @@
 module NicoParser
   class NicoPlayerParser
 
+    def info_name2key(info_name)
+      table = {
+        "name" => "nico_name",
+        "post" => "nico_post",
+        "view_counter" => "nico_view_counter",
+        "comment_num" => "nico_comment_num",
+        "mylist_counter" => "nico_mylist_counter",
+        "comment" => "nico_description",
+      }
+
+      table[info_name]
+    end
+
     def parse_tag(info_file)
       tag_mode = false
       tags = []
@@ -49,12 +62,12 @@ module NicoParser
               else
                 value = line.chomp
               end
-              info_key = "nico_" + info_key
+              info_key = info_name2key(info_key)
               info_set.merge!(info_key.to_sym => value)
             end
 
             if line.chomp =~ /\[(.*)\]/
-              next unless ($1 == "name" or $1 == "post" or $1 == "view_counter" or $1 == "comment_num" or $1 == "mylist_counter")
+              next unless ($1 == "name" or $1 == "post" or $1 == "view_counter" or $1 == "comment_num" or $1 == "mylist_counter" or $1 == "comment")
               parse_mode = true
               info_key = $1
             end
