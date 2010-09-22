@@ -120,6 +120,15 @@ module ApplicationHelper
     "半角スペースでAND検索"
   end
 
+  def solr_search_form
+    form_tag(:controller => 'pasokara', :action => 'solr_search', :query => nil, :page => nil) + "\n" +
+    content_tag(:label, "曲名・タグ検索: ") +
+    text_field_tag("query", params[:query], :size => 32) +
+    submit_tag("Search") + "\n" +
+    "</form>"
+  end
+
+
   def tag_search_form
     form_tag(:controller => 'pasokara', :action => 'tag_search', :tag => nil, :page => nil) + "\n" +
     content_tag(:label, "タグ検索: ") +
@@ -141,13 +150,15 @@ module ApplicationHelper
     "</form>"
   end
 
-  def header_tag_list(tags, url_builder)
+  def header_tag_list(tags, query = nil)
     content_tag(:div, :class => "all_tag_list", :id => "all_tag_list") do 
       content_tag("h3", "タグ一覧", :style => "display: inline; margin-right: 10px;") +
       link_to("[タグ一覧]", {:controller => "tag", :action => "list"}, :class => "tag_list_link") + "<br />\n" +
       tags.inject("") do |str, t|
         str += content_tag(:span, :class => "tag") do
-          "<a href=\"#{url_builder.call(t)}\">#{h(t.name)}</a>" + "(#{t.count})"
+          prm = {:append => t.name}
+          prm.merge! :tag => query if query
+          link_to(h(t.name), {:controller => "pasokara", :action => "append_search_tag"}.merge(prm)) + "(#{t.count})"
         end + "\n"
         str
       end

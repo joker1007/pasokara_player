@@ -12,6 +12,7 @@ esp_raging:
   nico_view_counter: 3895
   nico_comment_num: 36
   nico_mylist_counter: 122
+  nico_description: コメント1
 
 siawase_gyaku:
   id: 8362
@@ -25,6 +26,7 @@ siawase_gyaku:
   nico_view_counter: 4795
   nico_comment_num: 36
   nico_mylist_counter: 112
+  nico_description: コメント2
     
 just_be_friends:
   id: 9118
@@ -38,4 +40,5 @@ just_be_friends:
   nico_view_counter: 3795
   nico_comment_num: 36
   nico_mylist_counter: 132
+  nico_description: コメント3
   

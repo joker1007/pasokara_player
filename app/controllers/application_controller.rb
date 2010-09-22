@@ -18,9 +18,6 @@ class ApplicationController < ActionController::Base
     unless fragment_exist?(@tag_list_cache_key)
       options = {:limit => tag_limit, :order => "count desc, tags.name asc"}
       @header_tags = PasokaraFile.tag_counts(options)
-      @tag_search_url_builder = Proc.new {|t|
-        "/tag_search/#{ERB::Util.u(t.name)}"
-      }
     end
     true
   end

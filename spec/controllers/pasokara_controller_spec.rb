@@ -391,4 +391,5 @@ describe PasokaraController do
       response.should render_template("pasokara/search")
     end
   end
+  
 end

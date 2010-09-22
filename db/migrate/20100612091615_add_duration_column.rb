@@ -1,6 +1,6 @@
 class AddDurationColumn < ActiveRecord::Migration
   def self.up
-    add_column :pasokara_files, :duration, :integer
+    add_column :pasokara_files, :duration, :integer, :default => 0
   end
 
   def self.down

@@ -1,7 +1,8 @@
 # _*_ coding: utf-8 _*_
+require "solr"
 class PasokaraController < ApplicationController
   layout 'pasokara_player'
-  before_filter :top_tag_load, :except => [:tag_search]
+  before_filter :top_tag_load, :except => [:tag_search, :solr_search]
   before_filter :related_tag_load, :only => [:tag_search]
 
   def queue
@@ -78,6 +79,49 @@ class PasokaraController < ApplicationController
     end
   end
 
+  def solr_search
+    @query = params[:query].respond_to?(:force_encoding) ? params[:query].force_encoding(Encoding::UTF_8) : params[:query]
+    unless fragment_exist?(:query => @query, :page => params[:page])
+
+      @solr = Solr::Connection.new("http://#{SOLR_SERVER}/solr")
+
+      page = params[:page].nil? ? 1 : params[:page].to_i
+      per_page = 50
+
+      prm = {
+        :start => (page - 1) * 50,
+        :rows => per_page,
+        :facets => {:fields => [:tag], :limit => 50, :mincount => 1}
+      }
+
+      query = "name:#{@query} OR tag:#{@query} OR nico_description:#{@query}"
+      res = @solr.query(query, prm)
+
+      @pasokaras = WillPaginate::Collection.new(page, per_page)
+      res.hits.each do |result|
+        result.delete "tag"
+        result.delete "score"
+        pasokara = PasokaraFile.new(result)
+        pasokara.id = result["id"]
+        @pasokaras << pasokara
+      end
+
+      @pasokaras.total_entries = res.total_hits
+
+      facets = res.field_facets("tag")
+
+      facets.each do |facet|
+        facet.instance_eval do
+          def name; self["name"]; end
+          def count; self["value"]; end
+        end
+      end
+
+      @header_tags = facets
+    end
+    render :action => 'search'
+  end
+
   def tag_search
     @query = params[:tag].respond_to?(:force_encoding) ? params[:tag].force_encoding(Encoding::UTF_8) : params[:tag]
     @tag_words = @query.split(/\+|\s/)
@@ -111,7 +155,8 @@ class PasokaraController < ApplicationController
   end
 
   def append_search_tag
-    tag = params[:tag].split(/\+|\s/).push(params[:append]).join("+")
+    current_tags = params[:tag] || ""
+    tag = current_tags.split(/\+|\s/).push(params[:append]).join("+")
     redirect_to :action => "tag_search", :tag => tag
   end
 
@@ -175,9 +220,6 @@ class PasokaraController < ApplicationController
     @tag_list_cache_key = "#{@query}_related_tags_#{tag_limit}"
     unless fragment_exist?(@tag_list_cache_key)
       @header_tags = PasokaraFile.related_tags(@tag_words, tag_limit)
-      @tag_search_url_builder = Proc.new {|t|
-        "/pasokara/append_search_tag?tag=#{ERB::Util.u(@query)}&append=#{ERB::Util.u(t.name)}"
-      }
     end
   end
 

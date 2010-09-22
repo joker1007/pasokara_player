@@ -60,6 +60,10 @@ SQL
     end
   end
 
+  def duration
+    self["duration"] || 0
+  end
+
   def movie_path
     extname = File.extname(name)
     "/pasokara/movie/#{id}#{extname}"
