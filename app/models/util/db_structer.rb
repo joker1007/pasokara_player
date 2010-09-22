@@ -85,6 +85,11 @@ module Util
             changed = true
           end
 
+          if already_record.nico_description.nil? and !pasokara_file.nico_description.nil?
+            already_record.nico_description = pasokara_file.nico_description
+            changed = true
+          end
+
           if changed
             already_record.save
             #print_process already_record
