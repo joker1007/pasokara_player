@@ -122,8 +122,9 @@ module ApplicationHelper
 
   def solr_search_form
     form_tag(:controller => 'pasokara', :action => 'solr_search', :query => nil, :page => nil) + "\n" +
-    content_tag(:label, "曲名・タグ検索: ") +
-    text_field_tag("query", params[:query], :size => 32) +
+    content_tag(:label, "Solr検索: ") +
+    text_field_tag("query", params[:query], :size => 32) + " : " +
+    select_tag("field", options_for_select([["名前", "n"], ["タグ", "t"], ["説明", "d"], ["全て", "a"]])) +
     submit_tag("Search") + "\n" +
     "</form>"
   end

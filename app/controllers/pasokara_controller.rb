@@ -81,6 +81,24 @@ class PasokaraController < ApplicationController
 
   def solr_search
     @query = params[:query].respond_to?(:force_encoding) ? params[:query].force_encoding(Encoding::UTF_8) : params[:query]
+    words = @query.split(/\s+/)
+    case params[:field]
+    when "n"
+      solr_query = words.join(" AND ")
+    when "t"
+      solr_query = words.map {|w| "tag:#{w}"}.join(" AND ")
+    when "d"
+      solr_query = words.map {|w| "nico_description:#{w}"}.join(" AND ")
+    when "a"
+      solr_query_temp = []
+      solr_query_temp << words.map {|w| "name:#{w}"}.join(" AND ")
+      solr_query_temp << words.map {|w| "tag:#{w}"}.join(" AND ")
+      solr_query_temp << words.map {|w| "nico_description:#{w}"}.join(" AND ")
+      solr_query = solr_query_temp.map {|q| "(#{q})"}.join(" OR ")
+    else
+      solr_query = words.join(" AND ")
+    end
+
     unless fragment_exist?(:query => @query, :page => params[:page])
 
       @solr = Solr::Connection.new("http://#{SOLR_SERVER}/solr")
@@ -94,8 +112,7 @@ class PasokaraController < ApplicationController
         :facets => {:fields => [:tag], :limit => 50, :mincount => 1}
       }
 
-      query = "name:#{@query} OR tag:#{@query} OR nico_description:#{@query}"
-      res = @solr.query(query, prm)
+      res = @solr.query(solr_query, prm)
 
       @pasokaras = WillPaginate::Collection.new(page, per_page)
       res.hits.each do |result|
