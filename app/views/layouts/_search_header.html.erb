@@ -7,7 +7,7 @@
 <% end %>
 <br />
 <%= solr_search_form %>
-<# cache(@tag_list_cache_key) do %>
+<% cache(@tag_list_cache_key) do %>
   <%= header_tag_list(@header_tags, @query) %>
-<# end %>
+<% end %>
 <hr />

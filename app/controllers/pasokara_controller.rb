@@ -83,6 +83,8 @@ class PasokaraController < ApplicationController
     @filters = (params[:filter] || "").split(/\+/)
     solr_query = set_solr_query(@query)
 
+    @tag_list_cache_key = "solr_#{@query}_#{@filters.join("+")}_related_tags"
+
     unless fragment_exist?(:query => @query, :page => params[:page])
 
       @solr = Solr::Connection.new("http://#{SOLR_SERVER}/solr")
