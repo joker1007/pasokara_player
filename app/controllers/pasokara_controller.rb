@@ -4,6 +4,15 @@ class PasokaraController < ApplicationController
   before_filter :top_tag_load, :except => [:tag_search, :solr_search, :thumb]
   before_filter :related_tag_load, :only => [:tag_search]
 
+  def list
+    @pasokaras = PasokaraFile.find(:all, :select => "id, name, nico_name, duration")
+    respond_to do |format|
+      format.xml {render :xml => @pasokaras.to_xml}
+      format.json {render :json => @pasokaras.to_json}
+      format.text {render :text => @pasokaras.map {|pasokara| pasokara.nico_name }.join("\n")}
+    end
+  end
+
   def queue
     if params[:id] =~ /^\d+$/
       @pasokara = PasokaraFile.find(params[:id])
