@@ -265,7 +265,7 @@ class PasokaraController < ApplicationController
   end
 
   def solr_order_options
-    order = nil
+    order = [{:name_str => :ascending}]
     case params[:sort]
     when "view_count"
       order = [{:nico_view_counter => :descending}]
