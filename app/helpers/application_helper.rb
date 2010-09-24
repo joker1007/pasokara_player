@@ -123,8 +123,8 @@ module ApplicationHelper
   def solr_search_form
     form_tag(:controller => 'pasokara', :action => 'solr_search', :query => nil, :page => nil) + "\n" +
     content_tag(:label, "Solr検索: ") +
-    text_field_tag("query", params[:query], :size => 32) + " : " +
-    select_tag("field", options_for_select([["名前", "n"], ["タグ", "t"], ["説明", "d"], ["全て", "a"]])) +
+    text_field_tag("query", params[:query], :size => 56) + " : " +
+    select_tag("field", options_for_select([["名前", "n"], ["タグ", "t"], ["説明", "d"], ["全て", "a"], ["Raw", "r"]], params[:field])) +
     submit_tag("Search") + "\n" +
     "</form>"
   end
@@ -157,9 +157,7 @@ module ApplicationHelper
       link_to("[タグ一覧]", {:controller => "tag", :action => "list"}, :class => "tag_list_link") + "<br />\n" +
       tags.inject("") do |str, t|
         str += content_tag(:span, :class => "tag") do
-          prm = {:append => t.name}
-          prm.merge! :tag => query if query
-          link_to(h(t.name), {:controller => "pasokara", :action => "append_search_tag"}.merge(prm)) + "(#{t.count})"
+          link_to(h(t.name), t.link_options) + "(#{t.count})"
         end + "\n"
         str
       end

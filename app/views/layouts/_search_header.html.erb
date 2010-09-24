@@ -6,9 +6,6 @@
 <%= image_tag("icon/star_48.png", :size => icon_size) %><%= link_to("お気に入り", :controller => 'favorite', :action => 'list') %><br />
 <% end %>
 <br />
-<%= search_form %>
-<br />
-<br />
 <%= solr_search_form %>
 <% cache(@tag_list_cache_key) do %>
   <%= header_tag_list(@header_tags, @query) %>

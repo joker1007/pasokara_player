@@ -1,5 +1,4 @@
 # _*_ coding: utf-8 _*_
-require "solr"
 class PasokaraController < ApplicationController
   layout 'pasokara_player'
   before_filter :top_tag_load, :except => [:tag_search, :solr_search]
@@ -81,23 +80,8 @@ class PasokaraController < ApplicationController
 
   def solr_search
     @query = params[:query].respond_to?(:force_encoding) ? params[:query].force_encoding(Encoding::UTF_8) : params[:query]
-    words = @query.split(/\s+/)
-    case params[:field]
-    when "n"
-      solr_query = words.join(" AND ")
-    when "t"
-      solr_query = words.map {|w| "tag:#{w}"}.join(" AND ")
-    when "d"
-      solr_query = words.map {|w| "nico_description:#{w}"}.join(" AND ")
-    when "a"
-      solr_query_temp = []
-      solr_query_temp << words.map {|w| "name:#{w}"}.join(" AND ")
-      solr_query_temp << words.map {|w| "tag:#{w}"}.join(" AND ")
-      solr_query_temp << words.map {|w| "nico_description:#{w}"}.join(" AND ")
-      solr_query = solr_query_temp.map {|q| "(#{q})"}.join(" OR ")
-    else
-      solr_query = words.join(" AND ")
-    end
+    @filters = (params[:filter] || "").split(/\+/)
+    solr_query = set_solr_query(@query)
 
     unless fragment_exist?(:query => @query, :page => params[:page])
 
@@ -109,6 +93,9 @@ class PasokaraController < ApplicationController
       prm = {
         :start => (page - 1) * 50,
         :rows => per_page,
+        :sort => solr_order_options,
+        :field_list => [:id, :name, :nico_name, :nico_view_counter, :nico_comment_num, :nico_mylist_counter, :nico_post, :duration],
+        :filter_queries => @filters,
         :facets => {:fields => [:tag], :limit => 50, :mincount => 1}
       }
 
@@ -116,8 +103,6 @@ class PasokaraController < ApplicationController
 
       @pasokaras = WillPaginate::Collection.new(page, per_page)
       res.hits.each do |result|
-        result.delete "tag"
-        result.delete "score"
         pasokara = PasokaraFile.new(result)
         pasokara.id = result["id"]
         @pasokaras << pasokara
@@ -127,10 +112,16 @@ class PasokaraController < ApplicationController
 
       facets = res.field_facets("tag")
 
+      # ヘルパーメソッド向けにインターフェースを合わせる
       facets.each do |facet|
+        facet.instance_variable_set(:@filters, @filters)
+        facet.instance_variable_set(:@query, @query)
+        facet.instance_variable_set(:@field, params[:field])
         facet.instance_eval do
-          def name; self["name"]; end
           def count; self["value"]; end
+          def link_options
+            {:controller => "pasokara", :action => "solr_search", :query => @query, :field => @field, :filter => @filters.join("+") + "+tag:#{name}"}
+          end
         end
       end
 
@@ -237,10 +228,57 @@ class PasokaraController < ApplicationController
     @tag_list_cache_key = "#{@query}_related_tags_#{tag_limit}"
     unless fragment_exist?(@tag_list_cache_key)
       @header_tags = PasokaraFile.related_tags(@tag_words, tag_limit)
+      @header_tags.each do |tag|
+        tag.instance_variable_set(:@query, params[:tag])
+        def tag.link_options
+          {:controller => "pasokara", :action => "append_search_tag", :append => name, :tag => @query}
+        end
+      end
     end
   end
 
   def pasokara_files_select
     {:select => "pasokara_files.id, pasokara_files.name, pasokara_files.nico_name, pasokara_files.nico_post, pasokara_files.nico_view_counter, pasokara_files.nico_comment_num, pasokara_files.nico_mylist_counter, pasokara_files.duration, pasokara_files.created_at"}
+  end
+
+  def set_solr_query(query)
+    words = query.split(/\s+/)
+    case params[:field]
+    when "n"
+      solr_query = words.join(" AND ")
+    when "t"
+      solr_query = words.map {|w| "tag:#{w}"}.join(" AND ")
+    when "d"
+      solr_query = words.map {|w| "nico_description:#{w}"}.join(" AND ")
+    when "r"
+      solr_query = @query
+    when "a"
+      solr_query_temp = []
+      solr_query_temp << words.map {|w| "name:#{w}"}.join(" AND ")
+      solr_query_temp << words.map {|w| "tag:#{w}"}.join(" AND ")
+      solr_query_temp << words.map {|w| "nico_description:#{w}"}.join(" AND ")
+      solr_query = solr_query_temp.map {|q| "(#{q})"}.join(" OR ")
+    else
+      solr_query = words.join(" AND ")
+    end
+    solr_query
+  end
+
+  def solr_order_options
+    order = nil
+    case params[:sort]
+    when "view_count"
+      order = [{:nico_view_counter => :descending}]
+    when "view_count_r"
+      order = [{:nico_view_counter => :ascending}]
+    when "post_new"
+      order = [{:nico_post => :descending}]
+    when "post_old"
+      order = [{:nico_post => :ascending}]
+    when "mylist_count"
+      order = [{:nico_mylist_counter => :descending}]
+    end
+
+    order
   end
 end

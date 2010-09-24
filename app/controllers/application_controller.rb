@@ -18,6 +18,12 @@ class ApplicationController < ActionController::Base
     unless fragment_exist?(@tag_list_cache_key)
       options = {:limit => tag_limit, :order => "count desc, tags.name asc"}
       @header_tags = PasokaraFile.tag_counts(options)
+      @header_tags.each do |tag|
+        tag.instance_variable_set(:@query, params[:tag])
+        def tag.link_options
+          {:controller => "pasokara", :action => "append_search_tag", :append => name, :tag => @query}
+        end
+      end
     end
     true
   end
