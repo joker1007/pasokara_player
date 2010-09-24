@@ -1,7 +1,7 @@
 # _*_ coding: utf-8 _*_
 class PasokaraController < ApplicationController
   layout 'pasokara_player'
-  before_filter :top_tag_load, :except => [:tag_search, :solr_search]
+  before_filter :top_tag_load, :except => [:tag_search, :solr_search, :thumb]
   before_filter :related_tag_load, :only => [:tag_search]
 
   def queue
@@ -74,7 +74,7 @@ class PasokaraController < ApplicationController
 
       @pasokaras = PasokaraFile.union([{:conditions => conditions}.merge(pasokara_files_select), PasokaraFile.find_options_for_find_tagged_with(query_words, {:on => :tags, :match_all => true, :order => "name"}.merge(pasokara_files_select))], order)
 
-      @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => 50)
+      @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => per_page)
     end
   end
 
@@ -83,26 +83,22 @@ class PasokaraController < ApplicationController
     @filters = (params[:filter] || "").split(/\+/)
     solr_query = set_solr_query(@query)
 
-    @tag_list_cache_key = "solr_#{@solr_query}_#{@filters.join("+")}_related_tags"
+    @solr = Solr::Connection.new("http://#{SOLR_SERVER}/solr")
 
-    unless fragment_exist?(:query => @query, :filter => params[:filter], :field => params[:field], :page => params[:page], :sort => params[:sort])
+    page = params[:page].nil? ? 1 : params[:page].to_i
 
-      @solr = Solr::Connection.new("http://#{SOLR_SERVER}/solr")
+    prm = {
+      :start => (page - 1) * 50,
+      :rows => per_page,
+      :sort => solr_order_options,
+      :field_list => [:id, :name, :nico_name, :nico_view_counter, :nico_comment_num, :nico_mylist_counter, :nico_post, :duration],
+      :filter_queries => @filters,
+      :facets => {:fields => [:tag], :limit => 50, :mincount => 1}
+    }
 
-      page = params[:page].nil? ? 1 : params[:page].to_i
-      per_page = 50
+    res = @solr.query(solr_query, prm)
 
-      prm = {
-        :start => (page - 1) * 50,
-        :rows => per_page,
-        :sort => solr_order_options,
-        :field_list => [:id, :name, :nico_name, :nico_view_counter, :nico_comment_num, :nico_mylist_counter, :nico_post, :duration],
-        :filter_queries => @filters,
-        :facets => {:fields => [:tag], :limit => 50, :mincount => 1}
-      }
-
-      res = @solr.query(solr_query, prm)
-
+    unless fragment_exist?(:query => solr_query, :filter => params[:filter], :field => params[:field], :page => params[:page], :sort => params[:sort])
       @pasokaras = WillPaginate::Collection.new(page, per_page)
       res.hits.each do |result|
         pasokara = PasokaraFile.new(result)
@@ -111,6 +107,10 @@ class PasokaraController < ApplicationController
       end
 
       @pasokaras.total_entries = res.total_hits
+    end
+
+    @tag_list_cache_key = "solr_tag_#{solr_query}_#{params[:filter]}_#{params[:field]}"
+    unless fragment_exist?(@tag_list_cache_key)
 
       facets = res.field_facets("tag")
 
@@ -152,7 +152,7 @@ class PasokaraController < ApplicationController
 
       find_options.merge!(order)
 
-      @pasokaras = PasokaraFile.tagged_with(@tag_words, find_options).find(:all, pasokara_files_select).paginate(:page => params[:page], :per_page => 50)
+      @pasokaras = PasokaraFile.tagged_with(@tag_words, find_options).find(:all, pasokara_files_select).paginate(:page => params[:page], :per_page => per_page)
       
     end
     render :action => 'search'
@@ -160,7 +160,7 @@ class PasokaraController < ApplicationController
 
   def related_search
     @query = params[:id].respond_to?(:force_encoding) ? params[:id].force_encoding(Encoding::UTF_8) : params[:id]
-    @pasokaras = PasokaraFile.related_files(@query.to_i, 30).paginate(:page => params[:page], :per_page => 30)
+    @pasokaras = PasokaraFile.related_files(@query.to_i, 30).paginate(:page => params[:page], :per_page => per_page)
     render :action => 'search'
   end
 
@@ -282,5 +282,9 @@ class PasokaraController < ApplicationController
     end
 
     order
+  end
+
+  def per_page
+    50
   end
 end
