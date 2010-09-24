@@ -9,7 +9,7 @@ class PasokaraController < ApplicationController
     respond_to do |format|
       format.xml {render :xml => @pasokaras.to_xml}
       format.json {render :json => @pasokaras.to_json}
-      format.text {render :text => @pasokaras.map {|pasokara| pasokara.nico_name }.join("\n")}
+      format.text {render :text => @pasokaras.map {|pasokara| pasokara.nico_name }.compact.join("\n")}
     end
   end
 
