@@ -7,6 +7,8 @@
 <% end -%>
 <% form_tag do -%>
   <%= hidden_field_tag "query", params[:query] %>
+  <%= hidden_field_tag "field", params[:field] %>
+  <%= hidden_field_tag "filter", params[:filter] %>
   <label for="sort">ソート: </label><%= select_tag "sort", options_for_select(PasokaraFile::SORT_OPTIONS, params[:sort]) %>
   <%= submit_tag "並び替え" %>
 <% end -%>
