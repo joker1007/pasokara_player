@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100921145208) do
+ActiveRecord::Schema.define(:version => 20100925145104) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -62,11 +62,11 @@ ActiveRecord::Schema.define(:version => 20100921145208) do
   add_index "favorites", ["user_id", "pasokara_file_id"], :name => "index_favorites_on_user_id_and_pasokara_file_id"
 
   create_table "pasokara_files", :force => true do |t|
-    t.string   "name",                              :null => false
+    t.string   "name",                               :null => false
     t.integer  "directory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "md5_hash",            :limit => 32, :null => false
+    t.string   "md5_hash",            :limit => 32,  :null => false
     t.string   "nico_name"
     t.datetime "nico_post"
     t.integer  "nico_view_counter"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20100921145208) do
     t.integer  "nico_mylist_counter"
     t.integer  "duration"
     t.text     "nico_description"
+    t.string   "fullpath",            :limit => 500
   end
 
   add_index "pasokara_files", ["directory_id"], :name => "index_pasokara_files_on_directory_id"
