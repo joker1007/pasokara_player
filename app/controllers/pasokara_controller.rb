@@ -43,6 +43,7 @@ class PasokaraController < ApplicationController
   end
 
   def thumb
+    expires_in(8.hours, :public => true)
     if data = CACHE[params[:id]]
       send_data(data, :filename => "#{params[:id]}.jpg", :disposition => "inline", :type => "image/jpeg")
     else
