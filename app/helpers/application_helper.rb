@@ -19,7 +19,7 @@ module ApplicationHelper
     content_tag(:div, :class => "title") do
       image_tag("icon/music_48x48.png", :size => @icon_size, :class => "entity_icon") +
       link_to(h(pasokara.name), {:controller => 'pasokara', :action => 'queue', :id => pasokara.id}) +
-      link_to_remote("[詳細]", :url => {:controller => "pasokara", :action => "show", :id => pasokara.id}, :html => {:href => url_for(:controller => "pasokara", :action => "show", :id => pasokara.id), :class => "show_info", :id => "show-info-#{pasokara.id}"}) +
+      #link_to_remote("[詳細]", :url => {:controller => "pasokara", :action => "show", :id => pasokara.id}, :html => {:href => url_for(:controller => "pasokara", :action => "show", :id => pasokara.id), :class => "show_info", :id => "show-info-#{pasokara.id}"}) +
       #link_to("[プレビュー]", pasokara.preview_path, :class => "preview_link", :target => "_blank") +
       link_to("[関連動画を探す]", {:controller => "pasokara", :action => "related_search", :id => pasokara.id}, :class => "related_search_link", :target => "_blank") +
       content_tag(:span, :class => "duration") {pasokara.duration_str} +
