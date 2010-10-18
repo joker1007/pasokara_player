@@ -52,6 +52,22 @@ SQL
     end
   end
 
+  def nico_post_str
+    if nico_post
+      nico_post.strftime("%Y/%m/%d")
+    else
+      ""
+    end
+  end
+
+  def nico_url
+    if nico_name
+      "http://www.nicovideo.jp/watch/" + nico_name
+    else
+      ""
+    end
+  end
+
   def duration_str
     if duration
       (sprintf("%02d", duration / 60)) + ":" + sprintf("%02d", (duration % 60))
