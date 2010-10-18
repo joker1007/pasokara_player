@@ -8,3 +8,5 @@ Capfile
 config/deploy.rb
 client_file/player/notifier/twitter.yml
 .autotest
+coverage
+coverage/**
