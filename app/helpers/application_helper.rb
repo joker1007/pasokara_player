@@ -28,6 +28,11 @@ module ApplicationHelper
     info_box(pasokara)
   end
 
+  def favorite_li(pasokara)
+    pasokara_file_li(pasokara) +
+    link_to_remote("[削除する]", :url => {:controller => "favorite", :action => "remove", :id => pasokara.id}, :html => {:href => url_for(:controller => "favorite", :action => "remove", :id => pasokara.id), :class => "show_info"})
+  end
+
   def tag_li(tag_obj)
     content_tag(:li, :class=> "dir") do
       image_tag("icon/search.png", :size => @icon_size, :class => "tag_icon") +
@@ -40,8 +45,9 @@ module ApplicationHelper
     %Q{
       <div id="info-box-#{entity.id}" class="info_box">
         <h3>タグ</h3>
-        <div class="thumb clearfix">#{image_tag(url_for(:controller => "pasokara", :action => "thumb", :id => entity.id), :size => "160x120")}</div>
         #{tag_list(entity)}
+        <hr />
+        <h3>動画情報</h3>
         #{info_list(entity)}
       </div>
     }
@@ -50,7 +56,7 @@ module ApplicationHelper
   def info_list(entity)
     %Q{
       <div id="info-list-#{entity.id}" class="info_list">
-        <h3>動画情報</h3>
+        <div class="thumb clearfix">#{image_tag(url_for(:controller => "pasokara", :action => "thumb", :id => entity.id), :size => "160x120")}</div>
         <div class="nico_info clearfix">
           <span class="info_key">ニコニコID:</span><span class="info_value">#{link_to(entity.nico_name, entity.nico_url) if entity.nico_name}</span><br />
           <span class="info_key">投稿日:</span><span class="info_value">#{h entity.nico_post_str}</span><br />
@@ -58,16 +64,6 @@ module ApplicationHelper
           <span class="info_key">コメント数:</span><span class="info_value">#{number_with_delimiter(entity.nico_comment_num)}</span><br />
           <span class="info_key">マイリスト数:</span><span class="info_value">#{number_with_delimiter(entity.nico_mylist_counter)}</span><br />
         </div>
-      </div>
-    }
-  end
-
-  def tag_box(entity)
-    %Q{
-      <div id="tag-box-#{entity.id}" class="tag_box">
-        <div class="thumb clearfix">#{image_tag(url_for(:controller => "pasokara", :action => "thumb", :id => entity.id), :size => "160x120")}</div>
-        <h3>タグ</h3>
-        #{tag_list(entity)}
       </div>
     }
   end

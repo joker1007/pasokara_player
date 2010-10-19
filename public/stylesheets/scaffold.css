@@ -61,15 +61,18 @@ li.user_list {
 
 li.pasokara_file {
   list-style: none;
-  width: 300px;
+  width: 320px;
   height: 400px;
   display: inline-table;
+  padding-bottom: 8px;
 }
 
 div.title {
   border-bottom: 1px solid #000000;
   background-color: #B0E0E6;
   padding-bottom: 3px;
+  line-height: 20px;
+  word-wrap: break-word;
 }
 
 li.directory {
@@ -83,15 +86,6 @@ li.queue {
   list-style: none;
 }
 
-div.entity_box {
-  width: 310px;
-  max-height: 300px;
-  height: auto;
-  font-size: 12px;
-  display: inline-table;
-  overflow: auto;
-  margin: 0 0 0 0;
-}
 
 div.nico_info {
   margin-bottom: 4px;
@@ -108,6 +102,7 @@ div.thumb {
   padding-bottom: 32767px;
   float: right;
 }
+
 .clearfix:after {
   content: ".";
   display: block;
@@ -122,17 +117,15 @@ span.info_key {
   margin-right: 10px;
 }
 
-.tag_box, .info_box {
-  margin-top: 0px;
-  margin-bottom: 15px;
+.info_box {
   padding: 0px 2px 2px 2px;
-  max-width: 800px;
   overflow: hidden;
 }
 
 div.tag_list, div.info_list {
   margin-bottom: 10px;
-  margin-left: 4px;
+  min-height: 100px;
+  overflow: hidden;
 }
 
 div.all_tag_list {
@@ -153,8 +146,8 @@ span.login_user {
 
 span.tag {
   font-size: 12px;
-  margin-right: 6px;
-  line-height: 28px;
+  margin-right: 5px;
+  line-height: 26px;
 }
 
 span.tag img {
