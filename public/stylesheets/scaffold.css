@@ -55,7 +55,8 @@ li.user_list {
   padding-bottom: 10px;
   border: 2px solid #483D8B;
   background-color: #ADD8E6;
-  width: 360px;
+  width: 200px;
+  display: inline-table;
   list-style: none;
 }
 
@@ -86,6 +87,14 @@ li.queue {
   list-style: none;
 }
 
+
+li.tag {
+  list-style: none;
+  background-color: #B0E0E6;
+  width: 320px;
+  display: inline-table;
+  padding-bottom: 8px;
+}
 
 div.nico_info {
   margin-bottom: 4px;

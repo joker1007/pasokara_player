@@ -5,5 +5,5 @@
   <li class="user_list"><%= link_to(user.name, {:controller => "user", :action => "login", :id => user}) %></li>
 
 <% end %>
-  <li class="user_list"><%= link_to("ログアウト", {:controller => "user", :action => "logout"}) %></li>
 </ol>
+<%= link_to("ログアウト", {:controller => "user", :action => "logout"}) %>

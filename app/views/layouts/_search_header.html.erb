@@ -1,7 +1,7 @@
 <%# encoding: utf-8%>
 <% icon_size = request.mobile? ? "12x12" : "24x24" %>
 <%= image_tag("icon/kghostview.png", :size => icon_size) %><%= link_to("予約確認", :controller => 'queue', :action => 'list') %><br />
-<%= image_tag("icon/kghostview.png", :size => icon_size) %><%= link_to("ログ", :controller => 'sing_log', :action => 'list') %><br />
+<%= image_tag("icon/kghostview.png", :size => icon_size) %><%= link_to("りれき", :controller => 'sing_log', :action => 'list') %><br />
 <% if session[:current_user] %>
 <%= image_tag("icon/star_48.png", :size => icon_size) %><%= link_to("お気に入り", :controller => 'favorite', :action => 'list') %><br />
 <% end %>

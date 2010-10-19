@@ -34,11 +34,9 @@ module ApplicationHelper
   end
 
   def tag_li(tag_obj)
-    content_tag(:li, :class=> "dir") do
-      image_tag("icon/search.png", :size => @icon_size, :class => "tag_icon") +
-      link_to(h(tag_obj.name), {:controller => "pasokara", :action => "tag_search", :tag => tag_obj.name}) +
-      "(#{tag_obj.count})"
-    end
+    image_tag("icon/search.png", :size => @icon_size, :class => "tag_icon") +
+    link_to(h(tag_obj.name), {:controller => "pasokara", :action => "tag_search", :tag => tag_obj.name}) +
+    "(#{tag_obj.count})"
   end
 
   def info_box(entity)
