@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require File.dirname(__FILE__)+'/helper'
 require 'hpricot'
 
@@ -32,7 +33,7 @@ class HelpersTest < Test::Unit::TestCase
     text,attrs,path,params = links.first
     assert_equal("STRING", text)
     assert_equal("http://example.jp", path)
-    assert(attrs.include?("lcs"))
+    assert(attrs.to_hash.include?("lcs"))
   end
 
   # get_position_link_to(自動判別), TUKA
@@ -77,7 +78,7 @@ class HelpersTest < Test::Unit::TestCase
     text,attrs,path,params = links.first
     assert_equal("STRING", text)
     assert_equal("http://example.jp", path)
-    assert(attrs.include?("z"))
+    assert(attrs.to_hash.include?("z"))
   end
 
   # get_position_link_to(自動判別), Vodafone
@@ -119,7 +120,7 @@ class HelpersTest < Test::Unit::TestCase
     text,attrs,path,params = links.first
     assert_equal("STRING", text)
     assert_equal("http://example.jp", path)
-    assert(attrs.include?("utn"))
+    assert(attrs.to_hash.include?("utn"))
   end
 
   # DoCoMo オープンiエリア取得用のリンクが正しく出力されるか。
@@ -142,7 +143,7 @@ class HelpersTest < Test::Unit::TestCase
     text,attrs,path,params = links.first
     assert_equal("STRING", text)
     assert_equal("http://example.jp", path)
-    assert(attrs.include?("lcs"))
+    assert(attrs.to_hash.include?("lcs"))
   end
 
   # au簡易位置情報取得用のリンクが正しく出力されるか。
@@ -177,7 +178,7 @@ class HelpersTest < Test::Unit::TestCase
     text,attrs,path,params = links.first
     assert_equal("STRING", text)
     assert_equal("http://example.jp", path)
-    assert(attrs.include?("z"))
+    assert(attrs.to_hash.include?("z"))
   end
 
   # Softbank 3G 位置情報取得用のリンクが正しく出力されるか。
