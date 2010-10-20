@@ -10,4 +10,5 @@ client_file/player/notifier/twitter.yml
 .autotest
 coverage
 coverage/**
-public/video/*/*
+public/video
+public/video/**
