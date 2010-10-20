@@ -54,10 +54,10 @@ class PasokaraController < ApplicationController
   # 要修正
   def movie
     @pasokara = PasokaraFile.find(params[:id])
-    movie_file = @pasokara.fullpath_of_computer
+    movie_file = @pasokara.fullpath
     extname = File.extname(movie_file)
-    if extname =~ /mp4|flv/
-      send_file(movie_file, :filename => "#{params[:id]}#{extname}")
+    if File.exist?(movie_file) and extname =~ /mp4|flv/
+      send_file(movie_file, :filename => "#{params[:id]}#{extname}", :x_sendfile => true)
     else
       render :text => "Not Flash Movie", :status => 404
     end
@@ -65,8 +65,8 @@ class PasokaraController < ApplicationController
 
   def preview
     @pasokara = PasokaraFile.find(params[:id])
-    extname = File.extname(name)
-    if extname =~ /mp4|flv/
+    extname = File.extname(@pasokara.fullpath)
+    if File.exist?(@pasokara.fullpath) and extname =~ /mp4|flv/
       render :layout => false
     else
       render :text => "Not Flash Movie", :status => 404

@@ -81,8 +81,9 @@ SQL
   end
 
   def movie_path
+    subdir = ((id / 1000) * 1000).to_s
     extname = File.extname(name)
-    "/pasokara/movie/#{id}#{extname}"
+    "/video/#{subdir}/#{id}#{extname}"
   end
 
   def preview_path

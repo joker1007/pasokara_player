@@ -81,8 +81,8 @@ describe PasokaraFile do
   end
 
   it "movie_pathが適切なファイルパスを返すこと" do
-    @esp_raging.movie_path.should == "/pasokara/movie/8340.avi"
-    @siawase_gyaku.movie_path.should == "/pasokara/movie/8362.flv"
+    @esp_raging.movie_path.should == "/video/8000/8340.avi"
+    @siawase_gyaku.movie_path.should == "/video/8000/8362.flv"
   end
 
   it "preview_pathが適切なファイルパスを返すこと" do
