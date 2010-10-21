@@ -66,6 +66,9 @@ li.pasokara_file {
   height: 400px;
   display: inline-table;
   padding-bottom: 8px;
+  border: 2px solid #00008b;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
 }
 
 div.title {
@@ -140,8 +143,10 @@ div.tag_list, div.info_list {
 div.all_tag_list {
   margin: 10px;
   padding: 5px;
-  border: 1px solid #000;
-  max-width: 1240px;
+  border: 2px solid #000;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  max-width: 1040px;
 }
 
 #tag_scope {
