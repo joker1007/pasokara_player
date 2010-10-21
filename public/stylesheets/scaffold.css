@@ -89,6 +89,7 @@ div.title {
 
 li.directory {
   background-color: #B0E0E6;
+  line-height: 30px;
   list-style: none;
 }
 
@@ -177,6 +178,7 @@ span.tag img {
 }
 
 span.duration {
+  color: #EEEEEE;
   margin-left: 4px;
 }
 
