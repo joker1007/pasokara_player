@@ -206,13 +206,13 @@ a img {
 a { color: #4169E1; }
 a:visited { color: #666; }
 a:hover { color: #fff; background-color:#000; }
-a.queue_link { color: #a0cccc; }
+a.queue_link { color: #a0cccc; font-weight: bold; }
 a.queue_link:hover { color: #fff; background-color:#000; }
 a.tag_list_link { color: red; }
 a.tag_edit_link { color: red; }
 a.show_info { color: red; margin-left: 10px; }
-a.preview_link { color: #55e000; margin-left: 10px; }
-a.related_search_link { color: #D2892E; margin-left: 10px; }
+a.preview_link { color: #55e000; margin-left: 10px; font-weight: bold; }
+a.related_search_link { color: #D2892E; margin-left: 10px; font-weight: bold; }
 
 a.queue_remove {
   float: right;
