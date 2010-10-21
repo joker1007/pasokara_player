@@ -9,10 +9,8 @@ module ApplicationHelper
   end
 
   def directory_li(directory)
-    content_tag(:div, :class => "title") do
-      image_tag("icon/elastic_movie.png", :size => @icon_size, :class => "entity_icon") +
-      link_to(h(directory.name), {:controller => "dir", :action => "show", :id => directory.id})
-    end
+    image_tag("icon/elastic_movie.png", :size => @icon_size, :class => "entity_icon") +
+    link_to(h(directory.name), {:controller => "dir", :action => "show", :id => directory.id})
   end
 
   def pasokara_file_li(pasokara)
