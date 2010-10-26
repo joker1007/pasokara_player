@@ -117,12 +117,14 @@ module ApplicationHelper
   end
 
   def solr_search_form
+    "<div id=\"solr_search\" class=\"search\">" +
     form_tag(:controller => 'pasokara', :action => 'solr_search', :query => nil, :page => nil) + "\n" +
     content_tag(:label, "Solr検索: ") +
     text_field_tag("query", params[:query], :size => 56) + " : " +
     select_tag("field", options_for_select([["全て", "a"], ["名前", "n"], ["タグ", "t"], ["説明", "d"], ["Raw", "r"]], params[:field])) +
     submit_tag("Search") + "\n" +
-    "</form>"
+    "</form>" +
+    "</div>"
   end
 
 
@@ -136,6 +138,7 @@ module ApplicationHelper
 
   def scoped_tags(tags)
     form_tag(:action => "append_search_tag") +
+    content_tag(:label, "タグスコープ:") +
     tags.inject("") do |str, t|
       remove_scope = link_to(image_tag("icon/cancel_16.png"), {:remove => t}, :class => "remove_scope")
       str += content_tag(:span, h(t) + remove_scope, :class => "scoped_tag") + " > "

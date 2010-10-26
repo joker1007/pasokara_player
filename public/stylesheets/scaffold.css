@@ -1,71 +1,7 @@
-body { background-color: #fff; color: #333; }
-
-body, p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size:   14px;
-  line-height: 16px;
-}
-
-h3 {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-
-ul {
-  padding-left: 3px;
-}
-
-li {
-  margin-top: 4px;
-  margin-bottom: 3px;
-  max-width: 800px;
-  border: 1px solid #000; 
-}
-
-#entity_list {
-  max-width; 800px;
-}
-
-div#user_info {
-  float: right;
-  font-size: 12px;
-  line-height: 16px;
-}
-.user_link { margin-bottom: 20px; }
-
-.notification {
-  border: 2px solid #32CD32;
-  background-color: #ADFF2F;
-  margin-top: 20px;
-  padding-top: 4px;
-  padding-left: 3px;
-  padding-right: 3px;
-  padding-bottom: 4px;
-}
-
-li.user_list {
-  margin-left: 0px;
-  margin-right: 30px;
-  margin-bottom: 0px;
-  margin-top: 0px;
-  padding-top: 10px;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-bottom: 10px;
-  border: 2px solid #483D8B;
-  background-color: #ADD8E6;
-  width: 200px;
-  display: inline-table;
-  list-style: none;
-}
-
-li.pasokara_file {
-  list-style: none;
-  width: 320px;
-  height: 400px;
-  display: inline-table;
-  padding-bottom: 8px;
+div.user_form_box {
+  width: 640px;
+  margin: 10px 8px 0px 8px;
+  padding: 8px 2px 8px 2px;
   border: 2px solid #00008b;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -73,93 +9,25 @@ li.pasokara_file {
   -webkit-box-shadow: 6px 6px 6px #404040;
 }
 
-div.title {
-  border-bottom: 1px solid #000000;
-  /*background-color: #B0E0E6;*/
-  background-image: url("../images/konn.png");
-  background-repeat: repeat-x;
-  padding-bottom: 3px;
-  line-height: 20px;
-  word-wrap: break-word;
-  -moz-border-radius-topleft: 10px;
-  -moz-border-radius-topright: 10px;
-  -webkit-border-top-left-radius: 10px;
-  -webkit-border-top-right-radius: 10px;
-}
-
-li.directory {
-  background-color: #B0E0E6;
-  line-height: 30px;
-  list-style: none;
-}
-
-li.queue {
-  padding-right: 10px;
-  background-color: #BDFF7F;
-  list-style: none;
-}
-
-
-li.tag {
-  list-style: none;
-  background-color: #B0E0E6;
-  width: 320px;
-  display: inline-table;
+div.user_form_box p {
+  border-bottom: 1px solid #888888;
   padding-bottom: 8px;
 }
 
-div.nico_info {
-  margin-bottom: 4px;
-  margin-left: 4px;
-  font-size: 12px;
-  line-height: 16px;
+span.setting_name {
+  border: 2px solid #00008b;
 }
 
-div.thumb {
-  margin-top: 6px;
-  margin-right: 2px;
-  margin-left: 2px;
-  margin-bottom: -32764px;
-  padding-bottom: 32767px;
-  float: right;
-}
-
-.clearfix:after {
-  content: ".";
-  display: block;
-  clear: both;
-  height: 0.1px;
-  font-size: 0.1em;
-  line-height: 0;
-  visibility: hidden;
-}
-
-span.info_key {
-  margin-right: 10px;
-}
-
-.info_box {
-  padding: 0px 2px 2px 2px;
-  overflow: hidden;
-}
-
-div.tag_list, div.info_list {
-  margin-bottom: 10px;
-  min-height: 100px;
-  overflow: hidden;
-}
-
-div.all_tag_list {
-  margin: 10px;
-  padding: 5px;
-  border: 2px solid #000;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  max-width: 1040px;
+span.setting_value {
+  border: 2px solid #00008b;
 }
 
 #tag_scope {
-  margin-bottom: 4em;
+  margin-bottom: 20px;
+  border-top: 1px solid #888888;
+  border-bottom: 1px solid #888888;
+  padding-top: 8px;
+  padding-bottom: 5px;
 }
 
 span.login_user {
@@ -173,8 +41,16 @@ span.tag {
   line-height: 26px;
 }
 
-span.tag img {
+span img {
   vertical-align: middle;
+}
+
+span.scoped_tag {
+  border: 1px solid #999999;
+  padding: 2px 4px 2px 4px;
+  background-color: #A0D0E0;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
 }
 
 span.duration {
@@ -203,7 +79,7 @@ a img {
   border: none;
 }
 
-a { color: #4169E1; }
+a { color: #4169E1; text-decoration: none; }
 a:visited { color: #666; }
 a:hover { color: #fff; background-color:#000; }
 a.queue_link { color: #a0cccc; font-weight: bold; }

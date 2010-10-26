@@ -2,6 +2,8 @@
 class TagController < ApplicationController
   layout "pasokara_player"
 
+  before_filter :top_tag_load
+
   def list
     options = {:order => "count desc, tags.name asc"}
     @tags = PasokaraFile.tag_counts(options).paginate(:page => params[:page], :per_page => per_page)

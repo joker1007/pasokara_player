@@ -1,7 +1,5 @@
 <%# encoding: utf8 %>
-<h1>Pasokara Player</h1>
 
-<%= render 'layouts/search_header' %>
 <% cache(:action => "index", :page => params[:page]) do -%>
   <% @grouping.each do |rootpath, dirs| %>
     <h2><%= h rootpath %></h2>

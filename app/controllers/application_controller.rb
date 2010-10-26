@@ -28,6 +28,10 @@ class ApplicationController < ActionController::Base
     true
   end
 
+  def oauth
+    @oauth ||= Twitter::OAuth.new(::TWITTER_CONSUMER_KEY, ::TWITTER_CONSUMER_SECRET)
+  end
+
   def login_check
     @user = User.find(session[:current_user]) if session[:current_user]
   end

@@ -1,5 +1,7 @@
-<h3>ユーザー作成</h3>
-<% form_for @user, :url => {:action => "create"} do |f| %>
+<h1>ユーザー作成</h1>
+<div class="user_form_box">
+<% form_for @new_user, :url => {:action => "create"} do |f| %>
   Name: <%= f.text_field :name %>
   <%= submit_tag("Create") %>
 <% end %>
+</div>

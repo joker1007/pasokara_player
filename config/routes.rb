@@ -16,6 +16,8 @@ ActionController::Routing::Routes.draw do |map|
   map.all_tag 'all_tag', :controller => 'pasokara', :action => 'all_tag'
   map.last_queue 'queue/last.:format', :controller => 'queue', :action => 'last'
   map.dequeue 'queue/deque.:format', :controller => 'queue', :action => 'deque'
+  map.twitter_auth 'twitter/auth', :controller => 'user', :action => 'twitter_auth'
+  map.twitter_finalize 'twitter/finalize', :controller => 'user', :action => 'twitter_finalize'
   map.pasokara_list 'pasokara/list.:format', :controller => 'pasokara', :action => 'list'
 
   # This route can be invoked with purchase_url(:id => product.id)

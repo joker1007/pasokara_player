@@ -11,8 +11,6 @@ class QueuedFile < ActiveRecord::Base
       q.pasokara_file = pasokara
       q.user_id = user_id
     end
-
-    PasokaraNotifier.instance.queue_notify(pasokara.name)
   end
 
   def self.deq
