@@ -1,12 +1,33 @@
 header { display: block; }
 
-div#user_info {
-  float: right;
-  font-size: 12px;
-  line-height: 16px;
+h1#site_title {
+  font-size: 40px;
+  color: #FFFFFF;
 }
 
-.user_link { margin-bottom: 20px; }
+h1#site_title span {
+  font-size: larger;
+  color: #ff6633;
+  letter-spacing: -10px;
+}
+
+div#user_info {
+  font-size: 12px;
+  line-height: 16px;
+  margin-bottom: 20px;
+  color: #FFFFFF;
+}
+
+div#user_info a {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
+span.login_user {
+  margin-right: 10px;
+  color: #00ff66;
+}
+
 
 div.search {
   margin-left: 10px;

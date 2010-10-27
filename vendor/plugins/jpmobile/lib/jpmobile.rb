@@ -14,6 +14,8 @@ module Jpmobile
     autoload :Emobile,   'jpmobile/mobile/emobile'
     autoload :Willcom,   'jpmobile/mobile/willcom'
     autoload :Ddipocket, 'jpmobile/mobile/willcom'
+    autoload :Iphone, 'jpmobile/mobile/iphone'
+    autoload :Ipad, 'jpmobile/mobile/ipad'
 
     def self.carriers
       @carriers ||= constants

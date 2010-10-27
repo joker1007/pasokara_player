@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 module Jpmobile
   module Mobile
-    class Iphone < AbstractMobile
+    class Ipad < AbstractMobile
       # 対応するuser-agentの正規表現
-      USER_AGENT_REGEXP = /(iPhone|iPod|iPad)/
+      USER_AGENT_REGEXP = /(iPad)/
 
       # cookieに対応しているか？
       def supports_cookie?
@@ -12,3 +12,4 @@ module Jpmobile
     end
   end
 end
+

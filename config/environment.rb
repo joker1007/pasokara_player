@@ -60,7 +60,3 @@ require 'memcache'
 memcache_option = {:namespace => "thumbnail", :timeout => 3}
 CACHE = MemCache.new(MEMCACHE_SERVER, memcache_option)
 
-#jpmobile iphone
-require 'lib/jpmobile/mobile/iphone.rb'
-carriers = Jpmobile::Mobile.carriers
-Jpmobile::Mobile.carriers = carriers.push("Iphone")
