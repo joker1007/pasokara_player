@@ -57,7 +57,10 @@ class QueueController < ApplicationController
         begin
           oauth.authorize_from_access(user.twitter_access_token, user.twitter_access_secret)
           client = Twitter::Base.new(oauth)
-          client.update("Singing Now: #{@queue.pasokara_file.name}")
+          tweet_body = "Singing Now: #{@queue.pasokara_file.name}"
+          tweet_body += " http://www.nicovideo.jp/watch/#{@queue.pasokara_file.nico_name}" if @queue.pasokara_file.nico_name
+          tweet_body += " #nicokara"
+          client.update(tweet_body)
         rescue Exception
           logger.warn "#{@queue.user}'s Tweet Failed"
         end
