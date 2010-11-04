@@ -90,6 +90,14 @@ SQL
     "/pasokara/preview/#{id}"
   end
 
+  def stream_prefix
+    id.to_s + "-stream"
+  end
+
+  def m3u8_filename
+    stream_prefix + ".m3u8"
+  end
+
   def self.related_tags(tags, limit = 30)
 
     conditions = tags.map {|tag| "a.name = '#{tag}'"}.join(" OR ")

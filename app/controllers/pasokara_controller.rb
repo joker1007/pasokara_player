@@ -66,10 +66,24 @@ class PasokaraController < ApplicationController
   def preview
     @pasokara = PasokaraFile.find(params[:id])
     extname = File.extname(@pasokara.fullpath)
-    if File.exist?(@pasokara.fullpath) and extname =~ /mp4|flv/
-      render :layout => false
+    if request.mobile.iphone? or request.mobile.ipad?
+      if File.exist?(@pasokara.fullpath) and extname == ".mp4"
+        @movie_path = @pasokara.movie_path
+        render :layout => false
+      else
+        @movie_path = "/video/#{@pasokara.m3u8_filename}"
+        unless File.exist?("#{RAILS_ROOT}/public/video/#{@pasokara.m3u8_filename}")
+          Resque.enqueue(Job::VideoEncoder, @pasokara.id, request.raw_host_with_port)
+        end
+
+        render :layout => false
+      end
     else
-      render :text => "Not Flash Movie", :status => 404
+      if File.exist?(@pasokara.fullpath) and extname =~ /mp4|flv/
+        render :layout => false
+      else
+        render :text => "Not Flash Movie", :status => 404
+      end
     end
   end
 
@@ -255,6 +269,10 @@ class PasokaraController < ApplicationController
 
   def set_solr_query(query)
     words = query.split(/\s+/)
+    if words.empty?
+      return "*.*"
+    end
+
     case params[:field]
     when "n"
       solr_query = words.join(" AND ")
