@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#if edit
-# must edtit linux and windows too.
+export PATH=/usr/local/bin:$PATH
 
 job_dir=`dirname $0`
 
