@@ -1,5 +1,5 @@
-module Linux
-  module Player
+module Player
+  module Linux
     
     def launch_player(cmd)
       pid = fork {

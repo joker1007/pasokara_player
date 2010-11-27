@@ -1,8 +1,8 @@
 require 'win32/process'
 
 
-module Win
-  module Player
+module Player
+  module Win
     
     include Windows::Synchronize
     include Windows::Process

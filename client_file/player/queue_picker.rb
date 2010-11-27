@@ -1,25 +1,41 @@
 # _*_ coding: utf-8 _*_
 require 'rubygems'
-require 'drb/drb'
 require 'net/http'
 require 'time'
 require 'sqlite3'
 require 'rexml/document'
 require 'rexml/streamlistener'
 
-require File.join(File.dirname(__FILE__), "notifier/gntp.rb")
-require File.join(File.dirname(__FILE__), "notifier/twitter.rb")
-
+$:.push File.expand_path(File.dirname(__FILE__))
 
 # 実行環境がWindowsか判別
 WIN32 = RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/ ? true : false
+MACOS = RUBY_PLATFORM.downcase =~ /darwin/ ? true : false
+
+module Notifier
+end
+
+module Player
+end
+
+
+Notifier.autoload :Gntp, "notifier/gntp"
+Notifier.autoload :GrowlNotifier, "notifier/growl"
+Player.autoload :Win, "player/windows"
+Player.autoload :Linux, "player/linux"
+
 
 # Windowsなら文字コードをSJISにセットする。
 if WIN32
   $KCODE = 's'
+  PPNotifier = Notifier::Gntp
+  PPPlayer = Player::Win
 else
   $KCODE = 'u'
+  PPNotifier = Notifier::GrowlNotifier
+  PPPlayer = Player::Linux
 end
+
 
 # リモートから取得したデータをオブジェクト化するため、事前定義する
 class PasokaraFile
@@ -70,25 +86,22 @@ end
 class QueuePicker
 
   # プレーヤープロセスの生成、監視方法を、プラットフォームで切り替える。
-  if WIN32
-    require File.join(File.dirname(__FILE__), "player/windows_player")
-    include Win::Player
-  else
-    require File.join(File.dirname(__FILE__), "player/linux_player")
-    include Linux::Player
-  end
+  include PPPlayer
 
-  def initialize
+  def initialize(server, port = 80)
+    @server = server
+    @port = port
+
     unless File.exist?(File.join(File.dirname(__FILE__), "filepath.db"))
       puts "Database Not Found"
       exit 1
     end
 
-    @http = Net::HTTP::Proxy(nil).new(ARGV[0], ARGV[1])
+    @http = Net::HTTP::Proxy(nil).new(server, port)
     @player_thread = nil
     @playing = false
     @current_queue_id = nil
-    @base_dir = ARGV[2]
+    #@base_dir = ARGV[2]
     @db = SQLite3::Database.new(File.join(File.dirname(__FILE__), "filepath.db"))
 
     player_setting = File.open(File.join(File.dirname(__FILE__), "pasokara_player_setting.txt")) {|file| file.gets.chop}
@@ -102,6 +115,7 @@ class QueuePicker
         "#{player_setting}"
       end
     RUBY
+
   end
 
   def play_loop
@@ -125,7 +139,10 @@ class QueuePicker
 
           # キューが取得できたら再生処理へ
           if queue
+            p queue.md5_hash
             @file_path = @db.get_first_value("select filepath from path_table where hash = \"#{queue.md5_hash}\"")
+            p @file_path
+            p play_cmd
 
             sleep 3
             @file_name = File.basename(queue.name)
@@ -156,6 +173,9 @@ class QueuePicker
           end
         end
         sleep 3
+      rescue Interrupt
+        puts "Exit"
+        exit 0
       rescue
         puts $!
         puts $@
@@ -179,11 +199,11 @@ class QueuePicker
   end
 
   def play_notify
-    Notifier::Gntp.instance.play_notify(@file_name)
+    PPNotifier.instance.play_notify(@file_name)
   end
 
   def queue_notify
-    Notifier::Gntp.instance.queue_notify(@latest_queue_name)
+    PPNotifier.instance.queue_notify(@latest_queue_name)
   end
 
   def get_latest_queue
@@ -216,6 +236,15 @@ class QueuePicker
 
 end
 
-client = QueuePicker.new
+if ARGV[0]
+  server = ARGV[0]
+else
+  STDOUT.write("Input Server Address: ")
+  STDOUT.flush
+  server = STDIN.gets.chomp
+end
+
+
+client = QueuePicker.new(server)
 puts "Start Queue Picker Client"
 client.play_loop
