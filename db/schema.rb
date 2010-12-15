@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100925145104) do
+ActiveRecord::Schema.define(:version => 20100320030150) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -44,13 +44,18 @@ ActiveRecord::Schema.define(:version => 20100925145104) do
   add_index "computers", ["online"], :name => "index_computers_on_online"
 
   create_table "directories", :force => true do |t|
-    t.string   "name",         :null => false
+    t.string   "name",          :null => false
+    t.string   "fullpath",      :null => false
     t.integer  "directory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "relative_path", :null => false
+    t.integer  "computer_id"
   end
 
+  add_index "directories", ["computer_id"], :name => "index_directories_on_computer_id"
   add_index "directories", ["directory_id"], :name => "index_directories_on_directory_id"
+  add_index "directories", ["fullpath", "computer_id"], :name => "index_directories_on_fullpath_and_computer_id", :unique => true
 
   create_table "favorites", :force => true do |t|
     t.integer  "user_id",          :null => false
@@ -62,31 +67,32 @@ ActiveRecord::Schema.define(:version => 20100925145104) do
   add_index "favorites", ["user_id", "pasokara_file_id"], :name => "index_favorites_on_user_id_and_pasokara_file_id"
 
   create_table "pasokara_files", :force => true do |t|
-    t.string   "name",                               :null => false
+    t.string   "name",                                               :null => false
     t.integer  "directory_id"
+    t.string   "fullpath",            :limit => 500
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "md5_hash",            :limit => 32,  :null => false
+    t.string   "md5_hash",            :limit => 32,                  :null => false
     t.string   "nico_name"
     t.datetime "nico_post"
     t.integer  "nico_view_counter"
     t.integer  "nico_comment_num"
     t.integer  "nico_mylist_counter"
-    t.integer  "duration"
-    t.text     "nico_description"
-    t.string   "fullpath",            :limit => 500
+    t.integer  "duration",                            :default => 0
+    t.string   "nico_description",    :limit => 1000
   end
 
   add_index "pasokara_files", ["directory_id"], :name => "index_pasokara_files_on_directory_id"
+  add_index "pasokara_files", ["md5_hash"], :name => "index_pasokara_files_on_md5_hash"
   add_index "pasokara_files", ["nico_name"], :name => "index_pasokara_files_on_nico_name"
   add_index "pasokara_files", ["nico_post"], :name => "index_pasokara_files_on_nico_post"
   add_index "pasokara_files", ["nico_view_counter"], :name => "index_pasokara_files_on_nico_view_counter"
 
   create_table "queued_files", :force => true do |t|
     t.integer  "pasokara_file_id", :null => false
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
   end
 
   add_index "queued_files", ["pasokara_file_id"], :name => "index_queued_files_on_pasokara_file_id"
@@ -121,7 +127,10 @@ ActiveRecord::Schema.define(:version => 20100925145104) do
   add_index "tags", ["name"], :name => "index_tags_on_name"
 
   create_table "users", :force => true do |t|
-    t.string   "name",       :null => false
+    t.string   "name",                                    :null => false
+    t.string   "twitter_access_token"
+    t.string   "twitter_access_secret"
+    t.boolean  "tweeting",              :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

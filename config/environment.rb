@@ -22,7 +22,7 @@ Rails::Initializer.run do |config|
   config.gem "rspec-rails", :lib => false
   config.gem "solr-ruby", :lib => "solr"
   config.gem "twitter", :version => "~> 0.8.4"
-  config.gem "remarkable_rails", :lib => false
+  #config.gem "remarkable_rails", :lib => false
   config.gem "elkinsware-erubis_rails_helper", :lib => "erubis_rails_helper", :source => "http://gems.github.com"
   config.gem "cosine-active_record_encoding", :lib => "active_record_encoding", :source => "http://gems.github.com"
   # config.gem "aws-s3", :lib => "aws/s3"
