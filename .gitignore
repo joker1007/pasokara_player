@@ -8,3 +8,8 @@ client_file/**/*.db
 Capfile
 config/deploy.rb
 client_file/player/notifier/twitter.yml
+.autotest
+coverage
+coverage/**
+public/video
+public/video/**

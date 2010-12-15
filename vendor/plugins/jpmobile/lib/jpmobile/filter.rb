@@ -1,8 +1,6 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
 # = 文字コードフィルタ
 # thanks to masuidrive <masuidrive (at) masuidrive.jp>
-
-require 'scanf'
 
 class ActionController::Base #:nodoc:
   def self.mobile_filter(options={})
@@ -26,13 +24,8 @@ module Jpmobile
   module Filter
     # 文字コードフィルタのベースクラス。
     class Base
-      def initialize
-        @counter = 0 # render :component 時に多重で適用されるのを防ぐ
-      end
       # 外部コードから内部コードに変換
       def before(controller)
-        @counter += 1
-        return unless @counter == 1
         if respond_to?(:to_internal) && apply_incoming?(controller)
           Util.deep_apply(controller.params) do |value|
             value = to_internal(value, controller)
@@ -41,8 +34,6 @@ module Jpmobile
       end
       # 内部コードから外部コードに変換
       def after(controller)
-        @counter -= 1
-        return unless @counter.zero?
         if respond_to?(:to_external) && apply_outgoing?(controller) && controller.response.body.is_a?(String)
           controller.response.body = to_external(controller.response.body, controller)
           after_after(controller) if respond_to? :after_after
@@ -107,7 +98,7 @@ module Jpmobile
       end
       private
       def filter(str, from, to)
-        str = str.clone
+        str = str.dup
         from.each_with_index do |int, i|
           str.gsub!(int, to[i])
         end
@@ -118,8 +109,8 @@ module Jpmobile
     # 半角カナと全角カナのフィルタ
     class HankakuKana < FilterTable
       include ApplyOnlyForMobile
-      @@internal = %w(ガ ギ グ ゲ ゴ ザ ジ ズ ゼ ゾ ダ ヂ ヅ デ ド バ ビ ブ ベ ボ パ ピ プ ペ ポ ヴ ア イ ウ エ オ カ キ ク ケ コ サ シ ス セ ソ タ チ ツ テ ト ナ ニ ヌ ネ ノ ハ ヒ フ ヘ ホ マ ミ ム メ モ ヤ ユ ヨ ラ リ ル レ ロ ワ ヲ ン ャ ュ ョ ァ ィ ゥ ェ ォ ッ ゛ ゜ ー ).freeze
-      @@external = %w(ｶﾞ ｷﾞ ｸﾞ ｹﾞ ｺﾞ ｻﾞ ｼﾞ ｽﾞ ｾﾞ ｿﾞ ﾀﾞ ﾁﾞ ﾂﾞ ﾃﾞ ﾄﾞ ﾊﾞ ﾋﾞ ﾌﾞ ﾍﾞ ﾎﾞ ﾊﾟ ﾋﾟ ﾌﾟ ﾍﾟ ﾎﾟ ｳﾞ ｱ ｲ ｳ ｴ ｵ ｶ ｷ ｸ ｹ ｺ ｻ ｼ ｽ ｾ ｿ ﾀ ﾁ ﾂ ﾃ ﾄ ﾅ ﾆ ﾇ ﾈ ﾉ ﾊ ﾋ ﾌ ﾍ ﾎ ﾏ ﾐ ﾑ ﾒ ﾓ ﾔ ﾕ ﾖ ﾗ ﾘ ﾙ ﾚ ﾛ ﾜ ｦ ﾝ ｬ ｭ ｮ ｧ ｨ ｩ ｪ ｫ ｯ ﾞ ﾟ ｰ).freeze
+      @@internal = %w(ガ ギ グ ゲ ゴ ザ ジ ズ ゼ ゾ ダ ヂ ヅ デ ド バ ビ ブ ベ ボ パ ピ プ ペ ポ ヴ ア イ ウ エ オ カ キ ク ケ コ サ シ ス セ ソ タ チ ツ テ ト ナ ニ ヌ ネ ノ ハ ヒ フ ヘ ホ マ ミ ム メ モ ヤ ユ ヨ ラ リ ル レ ロ ワ ヲ ン ャ ュ ョ ァ ィ ゥ ェ ォ ッ ゛ ゜ ー 。 「 」 、 ・).freeze
+      @@external = %w(ｶﾞ ｷﾞ ｸﾞ ｹﾞ ｺﾞ ｻﾞ ｼﾞ ｽﾞ ｾﾞ ｿﾞ ﾀﾞ ﾁﾞ ﾂﾞ ﾃﾞ ﾄﾞ ﾊﾞ ﾋﾞ ﾌﾞ ﾍﾞ ﾎﾞ ﾊﾟ ﾋﾟ ﾌﾟ ﾍﾟ ﾎﾟ ｳﾞ ｱ ｲ ｳ ｴ ｵ ｶ ｷ ｸ ｹ ｺ ｻ ｼ ｽ ｾ ｿ ﾀ ﾁ ﾂ ﾃ ﾄ ﾅ ﾆ ﾇ ﾈ ﾉ ﾊ ﾋ ﾌ ﾍ ﾎ ﾏ ﾐ ﾑ ﾒ ﾓ ﾔ ﾕ ﾖ ﾗ ﾘ ﾙ ﾚ ﾛ ﾜ ｦ ﾝ ｬ ｭ ｮ ｧ ｨ ｩ ｪ ｫ ｯ ﾞ ﾟ ｰ ｡ ｢ ｣ ､ ･).freeze
     end
 
     # 絵文字変換フィルタ

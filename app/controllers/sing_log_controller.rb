@@ -1,5 +1,6 @@
 class SingLogController < ApplicationController
   layout 'pasokara_player'
+  before_filter :top_tag_load, :only => [:list]
 
   def list
     @sing_logs = SingLog.paginate(:all, :order => "created_at desc", :per_page => 50, :page => params[:page])

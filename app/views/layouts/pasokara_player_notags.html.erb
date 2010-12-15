@@ -1,0 +1,79 @@
+<%# encoding: utf-8 %>
+<!DOCTYPE HTML>
+
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta name="robots" content="noindex,nofollow">
+  <% if request.mobile %>
+    <% if request.mobile.iphone? %>
+      <meta name="viewport" content="width=640, initial-scale=0.5">
+    <% elsif request.mobile.ipad? %>
+      <meta name="viewport" content="width=640, initial-scale=1.0">
+    <% end %>
+  <% end %>
+
+  <title>Pasokara Player</title>
+  <%= stylesheet_link_tag 'main' %>
+  <%= stylesheet_link_tag 'entity' %>
+  <%= stylesheet_link_tag 'header' %>
+  <%= stylesheet_link_tag 'scaffold' %>
+  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag "jquery-1.3.2.min.js" %>
+  <%= javascript_include_tag "jquery-fonteffect-1.0.0.min.js" %>
+  <%= javascript_include_tag "jquery.linkwrapper-1.0.3.js" %>
+  <%= javascript_include_tag "throbberA.js" %>
+  <script type="text/javascript">
+    jQuery.noConflict();
+    j$ = jQuery;
+
+    j$(document).ready(function() {
+      j$('div.title a.queue_link').linkwrapper();
+      j$('li.queue a').linkwrapper();
+
+      j$('#site_title').FontEffect({
+         mirror: true,
+         mirrorColor: "#FFFFFF",
+         mirrorOffset: -15,
+         mirrorHeight: 70,
+         gradient: true,
+         gradientFromTop: true,
+         gradientColor: "#AAA",
+         gradientPosition: 20,
+         gradientLength: 50,
+         gradientSteps: 20 
+      });
+    })
+    /*
+    j$(document).ready(function() {
+        j$("a.user_link").fancybox({
+          'zoomSpeedIn': 300,
+          'zoomSpeedOut': 300,
+          'frameWidth': 250,
+          'frameheight': 600,
+          'hideOnContentClick': false,
+          'centerOnScroll': false,
+        });
+    }); 
+    */
+  </script>
+</head>
+<body>
+  <header>
+  <h1 id="site_title"><span>P</span>asokara Player</h1>
+  <div id="user_info"><%= content_tag(:span, "現在のログインユーザー: " + @user.name, :class => "login_user") if session[:current_user] %><a class="user_link" href="/user/switch">ユーザー切り替え</a> : <a class="user_link" href="/user/new">ユーザー作成</a><div class="clearfix"></div></div>
+
+  <% if flash[:notice] -%>
+    <div class="notification"><%= flash[:notice] %></div>
+  <% end -%>
+  </header>
+  <div id="main">
+  <%= render 'layouts/search_header_notags' %>
+
+  <article>
+  <%= yield %>
+  </article>
+
+</div>
+</body>
+</html>

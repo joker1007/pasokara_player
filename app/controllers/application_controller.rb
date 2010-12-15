@@ -13,16 +13,23 @@ class ApplicationController < ActionController::Base
 
   protected
   def top_tag_load
-    tag_limit = request.mobile? ? 10 : 50
+    tag_limit = request.mobile? ? 50 : 50
     @tag_list_cache_key = "top_tags_#{tag_limit}"
     unless fragment_exist?(@tag_list_cache_key)
       options = {:limit => tag_limit, :order => "count desc, tags.name asc"}
       @header_tags = PasokaraFile.tag_counts(options)
-      @tag_search_url_builder = Proc.new {|t|
-        "/tag_search/#{ERB::Util.u(t.name)}"
-      }
+      @header_tags.each do |tag|
+        tag.instance_variable_set(:@query, params[:tag])
+        def tag.link_options
+          {:controller => "pasokara", :action => "append_search_tag", :append => name, :tag => @query}
+        end
+      end
     end
     true
+  end
+
+  def oauth
+    @oauth ||= Twitter::OAuth.new(::TWITTER_CONSUMER_KEY, ::TWITTER_CONSUMER_SECRET)
   end
 
   def login_check

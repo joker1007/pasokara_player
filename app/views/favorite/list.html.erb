@@ -1,18 +1,18 @@
-<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :controller => 'dir', :action => 'index') %><br />
-<h1><%= image_tag("icon/search.png", :class => "parent_dir", :size => "32x32") %><%= h @user.name %></h1>
-<%= render 'layouts/search_header' %>
+<h1><%= image_tag("icon/search.png", :class => "parent_dir", :size => "32x32") %><%= h @user.name %>のお気に入り</h1>
 <% form_tag do -%>
   <%= hidden_field_tag "query", params[:query] %>
   <label for="sort">ソート: </label><%= select_tag "sort", options_for_select(PasokaraFile::SORT_OPTIONS, params[:sort]) %>
   <%= submit_tag "並び替え" %>
 <% end -%>
-<ul id="entity_list" class="autopagerize_page_element">
+<div id="entity_list" class="autopagerize_page_element">
+  <ul>
   <% @pasokaras.each do |pasokara| %>
-    <%= link_to_remote("お気に入りから削除する", :url => {:controller => "favorite", :action => "remove", :id => pasokara.id}, :html => {:href => url_for(:controller => "favorite", :action => "remove", :id => pasokara.id), :class => "remove_favorite"}) %>
-    <%= entity_li(pasokara) %>
-    <%= tag_box(pasokara) %>
+    <li class="<%= pasokara.class.to_s.underscore %>">
+      <%= favorite_li(pasokara) %>
+    </li>
   <% end %>
-</ul>
+  </ul>
+</div>
 <br />
 <%= will_paginate(@pasokaras, :params => {:query => params[:query]}) %>
 <br />

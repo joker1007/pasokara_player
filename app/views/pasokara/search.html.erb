@@ -1,28 +1,26 @@
-<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :controller => 'dir', :action => 'index') %><br />
 <h1><%= image_tag("icon/search.png", :class => "parent_dir", :size => "32x32") %><%= h @query %></h1>
-<%= render 'layouts/search_header' %>
 <% if @tag_words -%>
-  <h3>タグ・スコープ</h3>
   <div id="tag_scope"><%= scoped_tags(@tag_words) %></div>
 <% end -%>
 <% form_tag do -%>
   <%= hidden_field_tag "query", params[:query] %>
+  <%= hidden_field_tag "field", params[:field] %>
+  <%= hidden_field_tag "filter", params[:filter] %>
   <label for="sort">ソート: </label><%= select_tag "sort", options_for_select(PasokaraFile::SORT_OPTIONS, params[:sort]) %>
   <%= submit_tag "並び替え" %>
 <% end -%>
-<% cache(:query => @query, :page => params[:page], :sort => params[:sort]) do -%>
-  <ul id="entity_list" class="autopagerize_page_element">
+<% cache(:query => @query, :filter => params[:filter], :field => params[:field], :page => params[:page], :sort => params[:sort]) do -%>
+  <div id="entity_list" class="autopagerize_page_element">
+    <ul>
     <% @pasokaras.each do |pasokara| %>
       <% cache("pasokara_li_#{pasokara.id}") do %>
-        <div id="entity_box_<%= "#{pasokara.id}" %>" class="entity_box">
         <%= entity_li(pasokara) %>
-        <%= tag_box(pasokara) %>
-      </div>
       <% end %>
     <% end %>
-  </ul>
+    </ul>
+  </div>
   <br />
-  <%= will_paginate(@pasokaras, :params => {:query => params[:query], :sort => params[:sort]}) %>
+  <%= will_paginate(@pasokaras, :params => {:query => params[:query], :sort => params[:sort], :filter => params[:filter], :field => params[:field]}) %>
 <% end -%>
 <br />
 <%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :controller => 'dir', :action => 'index') %>

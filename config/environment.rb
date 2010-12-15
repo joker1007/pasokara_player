@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-#RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -20,6 +20,8 @@ Rails::Initializer.run do |config|
   config.gem "sqlite3-ruby", :lib => "sqlite3"
   config.gem "rspec", :lib => false
   config.gem "rspec-rails", :lib => false
+  config.gem "solr-ruby", :lib => "solr"
+  config.gem "twitter", :version => "~> 0.8.4"
   config.gem "remarkable_rails", :lib => false
   config.gem "elkinsware-erubis_rails_helper", :lib => "erubis_rails_helper", :source => "http://gems.github.com"
   config.gem "cosine-active_record_encoding", :lib => "active_record_encoding", :source => "http://gems.github.com"
@@ -57,3 +59,4 @@ require File.join(File.dirname(__FILE__), 'pp_setting')
 require 'memcache'
 memcache_option = {:namespace => "thumbnail", :timeout => 3}
 CACHE = MemCache.new(MEMCACHE_SERVER, memcache_option)
+

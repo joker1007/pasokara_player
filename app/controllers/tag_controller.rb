@@ -2,15 +2,17 @@
 class TagController < ApplicationController
   layout "pasokara_player"
 
+  before_filter :top_tag_load
+
   def list
     options = {:order => "count desc, tags.name asc"}
-    @tags = PasokaraFile.tag_counts(options).paginate(:page => params[:page], :per_page => 50)
+    @tags = PasokaraFile.tag_counts(options).paginate(:page => params[:page], :per_page => per_page)
   end
 
   def search
     options = {:order => "count desc, tags.name asc"}
     options.merge!({:conditions => ["tags.name LIKE ?", "%#{params[:tag]}%"]})
-    @tags = PasokaraFile.tag_counts(options).paginate(:page => params[:page], :per_page => 50)
+    @tags = PasokaraFile.tag_counts(options).paginate(:page => params[:page], :per_page => per_page)
     respond_to do |format|
       format.html
       format.js {
@@ -21,4 +23,10 @@ class TagController < ApplicationController
       }
     end
   end
+
+  private
+  def per_page
+    100
+  end
+
 end

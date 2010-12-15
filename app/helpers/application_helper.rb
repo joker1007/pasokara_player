@@ -3,34 +3,38 @@
 module ApplicationHelper
 
   def entity_li(entity)
-    send(entity.class.to_s.underscore + "_li", entity)
+    content_tag(:li, :class => entity.class.to_s.underscore) do
+      send(entity.class.to_s.underscore + "_li", entity)
+    end
   end
 
   def directory_li(directory)
-    content_tag(:li, :class=> "dir") do
-      image_tag("icon/elastic_movie.png", :size => @icon_size, :class => "entity_icon") +
-      link_to(h(directory.name), {:controller => "dir", :action => "show", :id => directory.id})
-    end
+    image_tag("icon/elastic_movie.png", :size => @icon_size, :class => "entity_icon") +
+    link_to(h(directory.name), {:controller => "dir", :action => "show", :id => directory.id})
   end
 
   def pasokara_file_li(pasokara)
-    content_tag(:li, :class=> "dir") do
+    content_tag(:div, :class => "title") do
       image_tag("icon/music_48x48.png", :size => @icon_size, :class => "entity_icon") +
-      link_to(h(pasokara.name), {:controller => 'pasokara', :action => 'queue', :id => pasokara.id}) +
-      link_to_remote("[詳細]", :url => {:controller => "pasokara", :action => "show", :id => pasokara.id}, :html => {:href => url_for(:controller => "pasokara", :action => "show", :id => pasokara.id), :class => "show_info", :id => "show-info-#{pasokara.id}"}) +
-      #link_to("[プレビュー]", pasokara.preview_path, :class => "preview_link", :target => "_blank") +
+      link_to(h(pasokara.name), {:controller => 'pasokara', :action => 'queue', :id => pasokara.id}, :class => "queue_link") +
+      #link_to_remote("[詳細]", :url => {:controller => "pasokara", :action => "show", :id => pasokara.id}, :html => {:href => url_for(:controller => "pasokara", :action => "show", :id => pasokara.id), :class => "show_info", :id => "show-info-#{pasokara.id}"}) +
+      link_to("[プレビュー]", pasokara.preview_path, :class => "preview_link", :target => "_blank") +
       link_to("[関連動画を探す]", {:controller => "pasokara", :action => "related_search", :id => pasokara.id}, :class => "related_search_link", :target => "_blank") +
       content_tag(:span, :class => "duration") {pasokara.duration_str} +
       link_to_remote(image_tag("icon/star_off_48.png", :size => @icon_size), :confirm => "#{pasokara.name}をお気に入りに追加しますか？", :url => {:controller => "favorite", :action => "add", :id => pasokara.id}, :html => {:href => url_for(:controller => "favorite", :action => "add", :id => pasokara.id), :class => "add_favorite"})
-    end
+    end +
+    info_box(pasokara)
+  end
+
+  def favorite_li(pasokara)
+    pasokara_file_li(pasokara) +
+    link_to_remote("[削除する]", :url => {:controller => "favorite", :action => "remove", :id => pasokara.id}, :html => {:href => url_for(:controller => "favorite", :action => "remove", :id => pasokara.id), :class => "show_info"})
   end
 
   def tag_li(tag_obj)
-    content_tag(:li, :class=> "dir") do
-      image_tag("icon/search.png", :size => @icon_size, :class => "tag_icon") +
-      link_to(h(tag_obj.name), {:controller => "pasokara", :action => "tag_search", :tag => tag_obj.name}) +
-      "(#{tag_obj.count})"
-    end
+    image_tag("icon/search.png", :size => @icon_size, :class => "tag_icon") +
+    link_to(h(tag_obj.name), {:controller => "pasokara", :action => "tag_search", :tag => tag_obj.name}) +
+    "(#{tag_obj.count})"
   end
 
   def info_box(entity)
@@ -38,6 +42,8 @@ module ApplicationHelper
       <div id="info-box-#{entity.id}" class="info_box">
         <h3>タグ</h3>
         #{tag_list(entity)}
+        <hr />
+        <h3>動画情報</h3>
         #{info_list(entity)}
       </div>
     }
@@ -46,24 +52,14 @@ module ApplicationHelper
   def info_list(entity)
     %Q{
       <div id="info-list-#{entity.id}" class="info_list">
-        <h3>動画情報</h3>
+        <div class="thumb clearfix">#{image_tag(url_for(:controller => "pasokara", :action => "thumb", :id => entity.id), :size => "160x120")}</div>
         <div class="nico_info clearfix">
-          <span class="info_key">ニコニコID:</span><span class="info_value">#{link_to(entity.nico_name, "http://www.nicovideo.jp/watch/" + entity.nico_name) if entity.nico_name}</span><br />
-          <span class="info_key">投稿日:</span><span class="info_value">#{h entity.nico_post.strftime("%Y/%m/%d")}</span><br />
+          <span class="info_key">ニコニコID:</span><span class="info_value">#{link_to(entity.nico_name, entity.nico_url) if entity.nico_name}</span><br />
+          <span class="info_key">投稿日:</span><span class="info_value">#{h entity.nico_post_str}</span><br />
           <span class="info_key">再生数:</span><span class="info_value">#{number_with_delimiter(entity.nico_view_counter)}</span><br />
           <span class="info_key">コメント数:</span><span class="info_value">#{number_with_delimiter(entity.nico_comment_num)}</span><br />
           <span class="info_key">マイリスト数:</span><span class="info_value">#{number_with_delimiter(entity.nico_mylist_counter)}</span><br />
         </div>
-      </div>
-    }
-  end
-
-  def tag_box(entity)
-    %Q{
-      <div id="tag-box-#{entity.id}" class="tag_box">
-        <div class="thumb clearfix">#{image_tag(url_for(:controller => "pasokara", :action => "thumb", :id => entity.id), :size => "160x120")}</div>
-        <h3>タグ</h3>
-        #{tag_list(entity)}
       </div>
     }
   end
@@ -120,6 +116,18 @@ module ApplicationHelper
     "半角スペースでAND検索"
   end
 
+  def solr_search_form
+    "<div id=\"solr_search\" class=\"search\">" +
+    form_tag(:controller => 'pasokara', :action => 'solr_search', :query => nil, :page => nil) + "\n" +
+    content_tag(:label, "Solr検索: ") +
+    text_field_tag("query", params[:query], :size => 56) + " : " +
+    select_tag("field", options_for_select([["全て", "a"], ["名前", "n"], ["タグ", "t"], ["説明", "d"], ["Raw", "r"]], params[:field])) +
+    submit_tag("Search") + "\n" +
+    "</form>" +
+    "</div>"
+  end
+
+
   def tag_search_form
     form_tag(:controller => 'pasokara', :action => 'tag_search', :tag => nil, :page => nil) + "\n" +
     content_tag(:label, "タグ検索: ") +
@@ -130,6 +138,7 @@ module ApplicationHelper
 
   def scoped_tags(tags)
     form_tag(:action => "append_search_tag") +
+    content_tag(:label, "タグスコープ:") +
     tags.inject("") do |str, t|
       remove_scope = link_to(image_tag("icon/cancel_16.png"), {:remove => t}, :class => "remove_scope")
       str += content_tag(:span, h(t) + remove_scope, :class => "scoped_tag") + " > "
@@ -141,13 +150,13 @@ module ApplicationHelper
     "</form>"
   end
 
-  def header_tag_list(tags, url_builder)
+  def header_tag_list(tags, query = nil)
     content_tag(:div, :class => "all_tag_list", :id => "all_tag_list") do 
       content_tag("h3", "タグ一覧", :style => "display: inline; margin-right: 10px;") +
       link_to("[タグ一覧]", {:controller => "tag", :action => "list"}, :class => "tag_list_link") + "<br />\n" +
       tags.inject("") do |str, t|
         str += content_tag(:span, :class => "tag") do
-          "<a href=\"#{url_builder.call(t)}\">#{h(t.name)}</a>" + "(#{t.count})"
+          link_to(h(t.name), t.link_options) + "(#{t.count})"
         end + "\n"
         str
       end
@@ -156,5 +165,13 @@ module ApplicationHelper
 
   def embed_player(pasokara)
     "<embed id='player' name='player' src='/swfplayer/player-viral.swf' height='360' width='480' allowscriptaccess='always' allowfullscreen='true' flashvars='file=#{u pasokara.movie_path}&level=0&skin=%2Fswfplayer%2Fsnel.swf&image=#{u(url_for(:controller => "pasokara", :action => "thumb", :id => pasokara.id) + ".jpg")}&title=#{u pasokara.name}&autostart=true&dock=false&bandwidth=5000&plugins=viral-2d'/>"
+  end
+
+  def embed_player_iphone(pasokara)
+    %Q{
+      <video id="video_#{pasokara.id}" controls>
+        <source src="#{pasokara.movie_path}" type="video/mp4">
+      </video>
+    }
   end
 end

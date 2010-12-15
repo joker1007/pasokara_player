@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe QueueController do
-  fixtures :pasokara_files, :sing_logs
+  fixtures :pasokara_files, :sing_logs, :users
 
   before do
     @esp_raging = pasokara_files(:esp_raging)
@@ -26,7 +26,7 @@ describe QueueController do
       end
 
       it "QueuedFile.deqメソッドが呼ばれること" do
-        QueuedFile.should_receive(:deq).once.and_return(@esp_raging)
+        QueuedFile.should_receive(:deq).once.and_return(stub_model(QueuedFile, :pasokara_file => @esp_raging))
         get 'deque'
       end
 

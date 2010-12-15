@@ -19,6 +19,18 @@ describe PasokaraFile do
       :duration => 245,
     }
 
+    @nico_post_attributes = {
+      :name => "COOL&CREATE - ネココタマツリ.avi",
+      :md5_hash => "asdfjl2asjfasd83jasdkfj",
+      :nico_post => Time.local(2010, 10, 10),
+    }
+
+    @nico_name_attributes = {
+      :name => "COOL&CREATE - ネココタマツリ.avi",
+      :md5_hash => "asdfjl2asjfasd83jasdkfj",
+      :nico_name => "sm123456",
+    }
+
     @no_name_attributes = {
       :md5_hash => "asdfjl2asjfasd83jasdkfj",
     }
@@ -69,8 +81,8 @@ describe PasokaraFile do
   end
 
   it "movie_pathが適切なファイルパスを返すこと" do
-    @esp_raging.movie_path.should == "/pasokara/movie/8340.avi"
-    @siawase_gyaku.movie_path.should == "/pasokara/movie/8362.flv"
+    @esp_raging.movie_path.should == "/video/8000/8340.avi"
+    @siawase_gyaku.movie_path.should == "/video/8000/8362.flv"
   end
 
   it "preview_pathが適切なファイルパスを返すこと" do
@@ -81,6 +93,16 @@ describe PasokaraFile do
   it "duration_strが適切な長さを返すこと" do
     pasokara = PasokaraFile.new(@duration_attributes)
     pasokara.duration_str.should == "04:05"
+  end
+
+  it "nico_post_strがyyyy/mm/ddのフォーマットで日時を返すこと" do
+    pasokara = PasokaraFile.new(@nico_post_attributes)
+    pasokara.nico_post_str.should == "2010/10/10"
+  end
+  
+  it "nico_urlがニコニコ動画へのリンクを返すこと" do
+    pasokara = PasokaraFile.new(@nico_name_attributes)
+    pasokara.nico_url.should == "http://www.nicovideo.jp/watch/" + pasokara.nico_name
   end
 
   it "related_tagsが適切に関係するタグを返すこと" do

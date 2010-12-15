@@ -52,6 +52,22 @@ SQL
     end
   end
 
+  def nico_post_str
+    if nico_post
+      nico_post.strftime("%Y/%m/%d")
+    else
+      ""
+    end
+  end
+
+  def nico_url
+    if nico_name
+      "http://www.nicovideo.jp/watch/" + nico_name
+    else
+      ""
+    end
+  end
+
   def duration_str
     if duration
       (sprintf("%02d", duration / 60)) + ":" + sprintf("%02d", (duration % 60))
@@ -60,13 +76,26 @@ SQL
     end
   end
 
+  def duration
+    self["duration"] || 0
+  end
+
   def movie_path
+    subdir = ((id / 1000) * 1000).to_s
     extname = File.extname(name)
-    "/pasokara/movie/#{id}#{extname}"
+    "/video/#{subdir}/#{id}#{extname}"
   end
 
   def preview_path
     "/pasokara/preview/#{id}"
+  end
+
+  def stream_prefix
+    id.to_s + "-stream"
+  end
+
+  def m3u8_filename
+    stream_prefix + ".m3u8"
   end
 
   def self.related_tags(tags, limit = 30)

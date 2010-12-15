@@ -7,11 +7,13 @@
   <%= submit_tag "検索" %>
 <% end %>
 <% cache(:action => "list", :page => params[:page]) do -%>
-  <ul id="entity_list" class="autopagerize_page_element">
+  <div id="entity_list" class="autopagerize_page_element">
+    <ul>
     <% @tags.each do |tag| %>
       <%= entity_li(tag) %>
     <% end %>
-  </ul>
+    </ul>
+  </div>
   <%= will_paginate(@tags) %>
 <% end -%>
 <br />

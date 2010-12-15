@@ -1,6 +1,7 @@
 # _*_ coding: utf-8 _*_
 class QueueController < ApplicationController
   layout 'pasokara_player'
+  before_filter :top_tag_load, :only => [:list]
 
 
   def list
@@ -50,6 +51,20 @@ class QueueController < ApplicationController
   def deque
     @queue = QueuedFile.deq
     if @queue
+
+      user = @queue.user
+      if user and user.tweeting
+        begin
+          oauth.authorize_from_access(user.twitter_access_token, user.twitter_access_secret)
+          client = Twitter::Base.new(oauth)
+          tweet_body = "Singing Now: #{@queue.pasokara_file.name}"
+          tweet_body += " http://www.nicovideo.jp/watch/#{@queue.pasokara_file.nico_name}" if @queue.pasokara_file.nico_name
+          tweet_body += " #nicokara"
+          client.update(tweet_body)
+        rescue Exception
+          logger.warn "#{@queue.user}'s Tweet Failed"
+        end
+      end
 
       respond_to do |format|
         format.html

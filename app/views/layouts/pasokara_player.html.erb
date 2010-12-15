@@ -1,43 +1,80 @@
 <%# encoding: utf-8 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html>
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta name="robots" content="noindex,nofollow">
-  <meta name="viewport" content="width=480, initial-scale=0.667">
+  <% if request.mobile %>
+    <% if request.mobile.iphone? %>
+      <meta name="viewport" content="width=640, initial-scale=0.5">
+    <% elsif request.mobile.ipad? %>
+      <meta name="viewport" content="width=640, initial-scale=1.0">
+    <% end %>
+  <% end %>
 
   <title>Pasokara Player</title>
+  <%= stylesheet_link_tag 'main' %>
+  <%= stylesheet_link_tag 'entity' %>
+  <%= stylesheet_link_tag 'header' %>
   <%= stylesheet_link_tag 'scaffold' %>
   <%= stylesheet_link_tag 'jquery.fancybox' %>
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag "jquery-1.3.2.min.js" %>
+  <%= javascript_include_tag "jquery-fonteffect-1.0.0.min.js" %>
   <%= javascript_include_tag "jquery.fancybox-1.2.1.pack.js" %>
+  <%= javascript_include_tag "jquery.linkwrapper-1.0.3.js" %>
   <script type="text/javascript">
     jQuery.noConflict();
     j$ = jQuery;
 
     j$(document).ready(function() {
+      j$('div.title a.queue_link').linkwrapper();
+      j$('li.queue a').linkwrapper();
+
+      j$('#site_title').FontEffect({
+         mirror: true,
+         mirrorColor: "#FFFFFF",
+         mirrorOffset: -15,
+         mirrorHeight: 70,
+         gradient: true,
+         gradientFromTop: true,
+         gradientColor: "#AAA",
+         gradientPosition: 20,
+         gradientLength: 50,
+         gradientSteps: 20 
+      });
+    })
+    /*
+    j$(document).ready(function() {
         j$("a.user_link").fancybox({
           'zoomSpeedIn': 300,
           'zoomSpeedOut': 300,
           'frameWidth': 250,
+          'frameheight': 600,
           'hideOnContentClick': false,
           'centerOnScroll': false,
         });
     }); 
+    */
   </script>
 </head>
 <body>
-  <div id="user_info"><div class="clearfix"><%= content_tag(:span, "現在のログインユーザー: " + @user.name, :class => "login_user") if session[:current_user] %><a class="user_link" href="/user/switch">ユーザー切り替え</a> : <a class="user_link" href="/user/new">ユーザー作成</a></div></div>
+  <header>
+  <h1 id="site_title"><span>P</span>asokara Player</h1>
+  <div id="user_info"><%= content_tag(:span, "現在のログインユーザー: " + @user.name, :class => "login_user") if session[:current_user] %><a class="user_link" href="/user/switch">ユーザー切り替え</a> : <a class="user_link" href="/user/new">ユーザー作成</a><div class="clearfix"></div></div>
 
-  <br />
-<% if flash[:notice] -%>
-  <div class="notification"><%= flash[:notice] %></div>
-<% end -%>
+  <% if flash[:notice] -%>
+    <div class="notification"><%= flash[:notice] %></div>
+  <% end -%>
+  </header>
+  <div id="main">
+  <%= render 'layouts/search_header' %>
 
-<%= yield %>
+  <article>
+  <%= yield %>
+  </article>
 
+</div>
 </body>
 </html>
