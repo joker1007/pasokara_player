@@ -2,6 +2,7 @@
 config/database.yml
 config/pasokara_dir_setting
 config/pp_setting.rb
+config/nico_downloader.yml
 client_file/database/pasokara_dir_setting.txt
 client_file/player/pasokara_player_setting.txt
 client_file/**/*.db

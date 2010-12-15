@@ -1,19 +1,18 @@
 # _*_ coding: utf-8 _*_
 require File.dirname(__FILE__) + '/../../config/environment'
 
-namespace :pasokara do
-  desc 'Pasokara File DB structure'
-  task :struct do
-    Directory.struct_all
-  end
-
-  desc 'Write Out TagFile from DB'
-  task :write_tag do
-    PasokaraFile.find(:all).each do |p|
-      p.write_out_tag
+namespace :nicokara do
+  desc 'download nicokara'
+  task :download do
+    setting = YAML.load_file(File.dirname(__FILE__) + '/../../config/nico_downloader.yml')
+    setting["url_list"].each do |url|
+      downloader = Util::NicoDownloader.new
+      downloader.rss_download(url, setting["dir"])
     end
   end
+end
 
+namespace :pasokara do
   desc 'no file directory delete'
   task :delete_dir do
     Directory.find(:all).each do |d|

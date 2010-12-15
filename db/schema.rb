@@ -11,26 +11,6 @@
 
 ActiveRecord::Schema.define(:version => 20100320030150) do
 
-  create_table "bdrb_job_queues", :force => true do |t|
-    t.text     "args"
-    t.string   "worker_name"
-    t.string   "worker_method"
-    t.string   "job_key"
-    t.integer  "taken"
-    t.integer  "finished"
-    t.integer  "timeout"
-    t.integer  "priority"
-    t.datetime "submitted_at"
-    t.datetime "started_at"
-    t.datetime "finished_at"
-    t.datetime "archived_at"
-    t.string   "tag"
-    t.string   "submitter_info"
-    t.string   "runner_info"
-    t.string   "worker_key"
-    t.datetime "scheduled_at"
-  end
-
   create_table "computers", :force => true do |t|
     t.string   "name",                          :null => false
     t.string   "mount_path",                    :null => false
@@ -44,18 +24,13 @@ ActiveRecord::Schema.define(:version => 20100320030150) do
   add_index "computers", ["online"], :name => "index_computers_on_online"
 
   create_table "directories", :force => true do |t|
-    t.string   "name",          :null => false
-    t.string   "fullpath",      :null => false
+    t.string   "name",         :null => false
     t.integer  "directory_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "relative_path", :null => false
-    t.integer  "computer_id"
   end
 
-  add_index "directories", ["computer_id"], :name => "index_directories_on_computer_id"
   add_index "directories", ["directory_id"], :name => "index_directories_on_directory_id"
-  add_index "directories", ["fullpath", "computer_id"], :name => "index_directories_on_fullpath_and_computer_id", :unique => true
 
   create_table "favorites", :force => true do |t|
     t.integer  "user_id",          :null => false
@@ -112,8 +87,8 @@ ActiveRecord::Schema.define(:version => 20100320030150) do
     t.integer  "taggable_id"
     t.integer  "tagger_id"
     t.string   "tagger_type"
-    t.string   "taggable_type"
-    t.string   "context"
+    t.string   "taggable_type", :limit => 100
+    t.string   "context",       :limit => 200
     t.datetime "created_at"
   end
 

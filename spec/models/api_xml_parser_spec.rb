@@ -21,6 +21,7 @@ describe NicoParser::ApiXmlParser do
       :nico_comment_num => 6,
       :nico_mylist_counter => 10,
       :nico_description => "ばたふりゃ！●うｐした動画→mylist/16913119",
+      :name => "[ニコカラ] えんどうさまのばたふりゃ",
     }
   end
 end

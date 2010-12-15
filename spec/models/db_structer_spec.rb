@@ -60,11 +60,13 @@ describe Util::DbStructer do
   end
 
   it "nameの無いレコードは作成に失敗すること" do
+    PasokaraFile.delete_all
     created = Util::DbStructer.new.create_pasokara_file(@no_name_attributes)
     created.should be_nil
   end
 
   it "md5_hashの無いレコードは作成に失敗すること" do
+    PasokaraFile.delete_all
     created = Util::DbStructer.new.create_pasokara_file(@no_md5_hash_attributes)
     created.should be_nil
   end
