@@ -70,6 +70,7 @@ module Util
 
 
     def download(nico_name, dir = "/tmp/nicomovie")
+      login
       @logger.info "[INFO] download sequence start: #{nico_name}"
       url = get_flv_url(nico_name)
 
