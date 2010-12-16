@@ -20,6 +20,7 @@ module Util
       @mail = account["mail"]
       @pass = account["pass"]
       @error_count = 0
+      @rss_error_count = 0
     end
   
     def login?
@@ -38,13 +39,13 @@ module Util
     def get_rss(rss_url)
       begin
         login
+        @logger.info "[INFO] get rss data: #{rss_url}"
         page = @agent.get rss_url
         RSS::Parser.parse(page.body, true)
       rescue Exception
-        puts "Sleep 10 seconds"
-        sleep 10
-        puts "Retry get_rss: #{rss_url}"
-        retry
+        @logger.fatal "[FATAL] get rss data failed: #{rss_url} #{$!}"
+        @rss_error_count += 1
+        raise "rss get error"
       end
     end
 
@@ -57,7 +58,7 @@ module Util
         @logger.info "[INFO] download url => #{url}"
         return url
       rescue Exception
-        @logger.fatal "[FATAL] api access error: #{nico_name}"
+        @logger.fatal "[FATAL] api access error: #{nico_name} #{$!}"
         @error_count += 1
         raise "api error"
       end
@@ -70,7 +71,7 @@ module Util
         @logger.info "[INFO] movie info download completed: #{nico_name}"
         page.body
       rescue Exception
-        @logger.fatal "[FATAL] api access error: #{nico_name}"
+        @logger.fatal "[FATAL] api access error: #{nico_name} #{$!}"
         @error_count += 1
         raise "api error"
       end
@@ -89,8 +90,8 @@ module Util
 
       begin
         @agent.get("http://www.nicovideo.jp/watch/#{nico_name}")
-      rescue 
-        @logger.fatal "[FATAL] movie page load error: #{nico_name}"
+      rescue Exception
+        @logger.fatal "[FATAL] movie page load error: #{nico_name} #{$!}"
         @error_count += 1
         raise "movie page load error"
       end
@@ -106,7 +107,7 @@ module Util
         end
         @logger.info "[INFO] download completed: #{nico_name}"
       rescue Exception
-        @logger.fatal "[FATAL] download failed: #{nico_name}"
+        @logger.fatal "[FATAL] download failed: #{nico_name} #{$!}"
         @error_count += 1
         raise "download failed"
       end
@@ -124,7 +125,20 @@ module Util
     end
 
     def rss_download(rss_url, dir = "/tmp/nicomovie")
-      rss = get_rss(rss_url)
+      begin
+        rss = get_rss(rss_url)
+        @rss_error_count = 0
+      rescue
+        if @rss_error_count > 0 and @rss_error_count <= 3
+          puts "Sleep 10 seconds"
+          sleep 10
+          puts "Retry #{rss_url}"
+          retry
+        else
+          return false
+        end
+      end
+
       rss.items.each do |item|
         item.link =~ /^http.*\/watch\/(.*)/
         nico_name = $1
