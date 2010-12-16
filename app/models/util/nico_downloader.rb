@@ -36,8 +36,16 @@ module Util
     end
 
     def get_rss(rss_url)
-      page = @agent.get rss_url
-      RSS::Parser.parse(page.body, true)
+      begin
+        login
+        page = @agent.get rss_url
+        RSS::Parser.parse(page.body, true)
+      rescue Exception
+        puts "Sleep 10 seconds"
+        sleep 10
+        puts "Retry get_rss: #{rss_url}"
+        retry
+      end
     end
 
     def get_flv_url(nico_name)
@@ -116,7 +124,6 @@ module Util
     end
 
     def rss_download(rss_url, dir = "/tmp/nicomovie")
-      login
       rss = get_rss(rss_url)
       rss.items.each do |item|
         item.link =~ /^http.*\/watch\/(.*)/
