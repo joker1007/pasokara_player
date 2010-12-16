@@ -4,10 +4,11 @@ require File.dirname(__FILE__) + '/../../config/environment'
 namespace :nicokara do
   desc 'download nicokara'
   task :download do
+    downloader = Util::NicoDownloader.new
     setting = YAML.load_file(File.dirname(__FILE__) + '/../../config/nico_downloader.yml')
     setting["url_list"].each do |url|
-      downloader = Util::NicoDownloader.new
       downloader.rss_download(url, setting["dir"])
+      sleep 15
     end
   end
 end
