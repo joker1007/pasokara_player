@@ -111,6 +111,7 @@ module Util
         file.write info
       end
 
+      @logger.info "[INFO] download sequence completed: #{nico_name}"
       @error_count = 0
     end
 
@@ -123,6 +124,8 @@ module Util
         unless PasokaraFile.find_by_nico_name(nico_name)
           begin
             download(nico_name, dir)
+            puts "Load directory #{File.join(dir, nico_name)}"
+            Util::DbStructer.new.crowl_dir(File.join(dir, nico_name))
           rescue
             if @error_count > 0 and @error_count <= 3
               puts "Sleep 10 seconds"
@@ -132,8 +135,6 @@ module Util
             end
           end
           @error_count = 0
-          puts "Load directory #{File.join(dir, nico_name)}"
-          Util::DbStructer.new.crowl_dir(File.join(dir, nico_name))
           puts "Sleep 7 seconds"
           sleep 7
         end
