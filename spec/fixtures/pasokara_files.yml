@@ -3,6 +3,7 @@
 esp_raging:
   id: 8340
   name: "COOL&CREATE - ESP RAGING [myu314 remix].avi"
+  fullpath: "/pasokara/COOL&CREATE - ESP RAGING [myu314 remix].avi"
   directory_id: 8480
   created_at: 2009-10-12 16:49:25
   updated_at: 2009-10-31 06:05:19
@@ -17,6 +18,7 @@ esp_raging:
 siawase_gyaku:
   id: 8362
   name: "【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv"
+  fullpath: "/pasokara/【ニコカラ】シアワセうさぎ（逆）(夏) OnVocal.flv"
   directory_id: 8480
   created_at: 2009-10-12 16:49:27
   updated_at: 2009-11-28 11:29:00
@@ -31,6 +33,7 @@ siawase_gyaku:
 just_be_friends:
   id: 9118
   name: "【ニコカラ】Just Be Friends halyosy ver. 歌入り(sm7601746).mp4"
+  fullpath: "/pasokara/【ニコカラ】Just Be Friends halyosy ver. 歌入り(sm7601746).mp4"
   directory_id: 17002
   created_at: 2009-10-12 16:52:00
   updated_at: 2009-11-22 10:02:56
