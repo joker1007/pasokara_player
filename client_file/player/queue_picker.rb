@@ -39,7 +39,12 @@ end
 
 # リモートから取得したデータをオブジェクト化するため、事前定義する
 class PasokaraFile
-  attr_accessor :id, :name, :nico_name, :md5_hash
+  attr_accessor :id, :name, :nico_name, :md5_hash, :fullpath
+
+  def movie_path
+    "/pasokara/movie/#{id}"
+  end
+
 end
 
 # 取得したXMLをパースし、PasokaraFileオブジェクトを作る
@@ -56,7 +61,7 @@ class QueueListener
   end
 
   def text(text)
-    if @current_tag =~ /(^id$|^name$|nico_name|md5_hash)/
+    if @current_tag =~ /(^id$|^name$|nico_name|md5_hash|fullpath)/
       unless @current_attrs.empty?
         case @current_attrs["type"]
         when "integer"
@@ -140,7 +145,8 @@ class QueuePicker
           # キューが取得できたら再生処理へ
           if queue
             p queue.md5_hash
-            @file_path = @db.get_first_value("select filepath from path_table where hash = \"#{queue.md5_hash}\"")
+            #@file_path = @db.get_first_value("select filepath from path_table where hash = \"#{queue.md5_hash}\"")
+            @file_path = "http://#{@server}:#{@port}#{queue.movie_path}"
             p @file_path
             p play_cmd
 

@@ -56,11 +56,7 @@ class PasokaraController < ApplicationController
     @pasokara = PasokaraFile.find(params[:id])
     movie_file = @pasokara.fullpath
     extname = File.extname(movie_file)
-    if File.exist?(movie_file) and extname =~ /mp4|flv/
-      send_file(movie_file, :filename => "#{params[:id]}#{extname}", :x_sendfile => true)
-    else
-      render :text => "Not Flash Movie", :status => 404
-    end
+    send_file(movie_file, :filename => "#{params[:id]}#{extname}", :x_sendfile => true)
   end
 
   def preview
