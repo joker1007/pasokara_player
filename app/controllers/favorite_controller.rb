@@ -41,12 +41,14 @@ class FavoriteController < ApplicationController
   end
 
   def list
-    options = {:page => params[:page], :per_page => 50}
+    unless @user
+      redirect_to :controller => "user", :action => "switch"
+    else
+      options = {:page => params[:page], :per_page => 50}
+      order = order_options
+      options.merge!(order)
 
-    order = order_options
-
-    options.merge!(order)
-
-    @pasokaras = @user.pasokara_files.paginate(options)
+      @pasokaras = @user.pasokara_files.paginate(options)
+    end
   end
 end

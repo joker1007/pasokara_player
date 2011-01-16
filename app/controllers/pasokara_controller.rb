@@ -22,8 +22,16 @@ class PasokaraController < ApplicationController
       render :text => "パラメーターが不正です。", :status => 404 and return
     end
     QueuedFile.enq @pasokara, session[:current_user]
-    flash[:notice] = "#{@pasokara.name} の予約が完了しました"
-    redirect_to root_path
+
+    message = "#{@pasokara.name} の予約が完了しました"
+    if request.xhr?
+      render :update do |page|
+        page.alert(message)
+      end
+    else
+      flash[:notice] = message
+      redirect_to root_path
+    end
   end
 
   def show
