@@ -93,9 +93,10 @@ class QueuePicker
   # プレーヤープロセスの生成、監視方法を、プラットフォームで切り替える。
   include PPPlayer
 
-  def initialize(server, port = 80)
+  def initialize(server, local = false, port = 80)
     @server = server
     @port = port
+    @local = local
 
     unless File.exist?(File.join(File.dirname(__FILE__), "filepath.db"))
       puts "Database Not Found"
@@ -106,8 +107,7 @@ class QueuePicker
     @player_thread = nil
     @playing = false
     @current_queue_id = nil
-    #@base_dir = ARGV[2]
-    @db = SQLite3::Database.new(File.join(File.dirname(__FILE__), "filepath.db"))
+    @db = SQLite3::Database.new(File.join(File.dirname(__FILE__), "filepath.db")) if @local
 
     player_setting = File.open(File.join(File.dirname(__FILE__), "pasokara_player_setting.txt")) {|file| file.gets.chop}
     player_setting.gsub!(/%f/, '#{@file_path}')
@@ -144,11 +144,14 @@ class QueuePicker
 
           # キューが取得できたら再生処理へ
           if queue
-            p queue.md5_hash
-            #@file_path = @db.get_first_value("select filepath from path_table where hash = \"#{queue.md5_hash}\"")
-            @file_path = "http://#{@server}:#{@port}#{queue.movie_path}"
-            p @file_path
-            p play_cmd
+            puts "md5 hash: #{queue.md5_hash}"
+            if @local
+              @file_path = @db.get_first_value("select filepath from path_table where hash = \"#{queue.md5_hash}\"")
+            else
+              @file_path = "http://#{@server}:#{@port}#{queue.movie_path}"
+            end
+            puts "file path: #{@file_path}"
+            puts "player command: #{play_cmd}"
 
             sleep 3
             @file_name = File.basename(queue.name)
@@ -242,6 +245,12 @@ class QueuePicker
 
 end
 
+local = false
+if ARGV[0] == "-l"
+  local = true
+  ARGV.shift
+end
+
 if ARGV[0]
   server = ARGV[0]
 else
@@ -251,6 +260,6 @@ else
 end
 
 
-client = QueuePicker.new(server)
+client = QueuePicker.new(server, local)
 puts "Start Queue Picker Client"
 client.play_loop
