@@ -152,7 +152,7 @@ module ApplicationHelper
   def header_tag_list(tags, query = nil)
     content_tag(:div, :class => "all_tag_list", :id => "all_tag_list") do 
       content_tag("h3", "タグ一覧", :style => "display: inline; margin-right: 10px;") +
-      link_to("[タグ一覧]", {:controller => "tag", :action => "list"}, :class => "tag_list_link") + "<br />\n" +
+      link_to("[全てのタグ一覧]", {:controller => "tag", :action => "list"}, :class => "tag_list_link") + "<br />\n" +
       tags.inject("") do |str, t|
         str += content_tag(:span, :class => "tag") do
           link_to(h(t.name), t.link_options) + "(#{t.count})"

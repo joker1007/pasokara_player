@@ -53,6 +53,17 @@ div#main {
   border-top: 0px;
 }
 
+div.usage {
+  padding-left: 10px;
+  padding-bottom: 30px;
+}
+div.usage p{
+  margin-bottom: 60px;
+}
+div.usage img {
+  border: 4px solid #a00;
+}
+
 article {
   padding-left: 10px;
 }

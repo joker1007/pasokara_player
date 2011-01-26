@@ -16,7 +16,7 @@ describe PasokaraController do
 
   describe "GET '/pasokara/queue/8340'" do
     before do
-      PasokaraFile.should_receive(:find).with("8340").and_return(@esp_raging)
+      PasokaraFile.should_receive(:find).with("8340", :select => "id, name, nico_name, duration").and_return(@esp_raging)
       get 'queue', :id => "8340"
     end
 
@@ -55,7 +55,7 @@ describe PasokaraController do
   
   describe "GET '/pasokara/queue/sm7601746'" do
     before do
-      PasokaraFile.should_receive(:find_by_nico_name).with("sm7601746").and_return(@just_be_friends)
+      PasokaraFile.should_receive(:find_by_nico_name).with("sm7601746", :select => "id, name, nico_name, duration").and_return(@just_be_friends)
       get 'queue', :id => "sm7601746"
     end
 

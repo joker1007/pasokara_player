@@ -96,6 +96,9 @@ ul#menu li a#favorite {
 ul#menu li a#user_edit {
   padding-left: 20px;
 }
+ul#menu li a#usage {
+  padding-left: 28px;
+}
 
 
 /***** Button effects *****/

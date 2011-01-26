@@ -8,6 +8,7 @@
       <li><%= link_to("お気に入り", {:controller => 'favorite', :action => 'list'}, :id => "favorite") %></li>
       <li><%= link_to("設定変更", {:controller => 'user', :action => 'edit'}, :id => "user_edit") %></li>
     <% end %>
+    <li><%= link_to("使い方", {:controller => 'help', :action => 'usage'}, :id => "usage") %></li>
   </ul>
 </nav>
 <br />
