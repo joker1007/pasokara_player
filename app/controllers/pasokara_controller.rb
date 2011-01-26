@@ -15,9 +15,9 @@ class PasokaraController < ApplicationController
 
   def queue
     if params[:id] =~ /^\d+$/
-      @pasokara = PasokaraFile.find(params[:id])
+      @pasokara = PasokaraFile.find(params[:id], :select => "id, name, nico_name, duration")
     elsif params[:id] =~ /sm\d+/
-      @pasokara = PasokaraFile.find_by_nico_name(params[:id])
+      @pasokara = PasokaraFile.find_by_nico_name(params[:id], :select => "id, name, nico_name, duration")
     else
       render :text => "パラメーターが不正です。", :status => 404 and return
     end
@@ -30,7 +30,11 @@ class PasokaraController < ApplicationController
       end
     else
       flash[:notice] = message
-      redirect_to root_path
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.xml { render :xml => @pasokaras.to_xml }
+        format.json { render :json => @pasokaras.to_json }
+      end
     end
   end
 
@@ -104,6 +108,12 @@ class PasokaraController < ApplicationController
 
       @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => per_page)
     end
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @pasokaras.to_xml }
+      format.json { render :json => @pasokaras.to_json }
+    end
   end
 
   def solr_search
@@ -157,7 +167,12 @@ class PasokaraController < ApplicationController
 
       @header_tags = facets
     end
-    render :action => 'search'
+
+    respond_to do |format|
+      format.html { render :action => 'search' }
+      format.xml { render :xml => @pasokaras.to_xml }
+      format.json { render :json => @pasokaras.to_json }
+    end
   end
 
   def tag_search
@@ -183,13 +198,23 @@ class PasokaraController < ApplicationController
       @pasokaras = PasokaraFile.tagged_with(@tag_words, find_options).find(:all, pasokara_files_select).paginate(:page => params[:page], :per_page => per_page)
       
     end
-    render :action => 'search'
+
+    respond_to do |format|
+      format.html { render :action => 'search' }
+      format.xml { render :xml => @pasokaras.to_xml }
+      format.json { render :json => @pasokaras.to_json }
+    end
   end
 
   def related_search
     @query = params[:id].respond_to?(:force_encoding) ? params[:id].force_encoding(Encoding::UTF_8) : params[:id]
     @pasokaras = PasokaraFile.related_files(@query.to_i, 30).paginate(:page => params[:page], :per_page => per_page)
-    render :action => 'search'
+
+    respond_to do |format|
+      format.html { render :action => 'search' }
+      format.xml { render :xml => @pasokaras.to_xml }
+      format.json { render :json => @pasokaras.to_json }
+    end
   end
 
   def append_search_tag

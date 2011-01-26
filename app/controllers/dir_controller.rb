@@ -12,6 +12,12 @@ class DirController < ApplicationController
         @grouping["Root"] << dir
       end
     end
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @grouping.to_xml }
+      format.json { render :json => @grouping.to_json }
+    end
   end
 
   def show

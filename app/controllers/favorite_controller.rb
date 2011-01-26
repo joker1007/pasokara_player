@@ -42,13 +42,19 @@ class FavoriteController < ApplicationController
 
   def list
     unless @user
-      redirect_to :controller => "user", :action => "switch"
+      redirect_to :controller => "user", :action => "switch" and return
     else
       options = {:page => params[:page], :per_page => 50}
       order = order_options
       options.merge!(order)
 
       @pasokaras = @user.pasokara_files.paginate(options)
+    end
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @pasokaras.to_xml }
+      format.json { render :json => @pasokaras.to_json }
     end
   end
 end
