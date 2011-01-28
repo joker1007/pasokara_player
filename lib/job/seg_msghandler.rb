@@ -8,7 +8,7 @@ STDOUT.sync = true
 @duration = ARGV.shift || 10
 @dir = File.dirname(File.expand_path(__FILE__))
 
-@segmenter_wait = 2
+@segmenter_wait = 1
 
 File.delete @m3u8_file if File.exist?(@m3u8_file)
 

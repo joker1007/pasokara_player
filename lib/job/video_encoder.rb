@@ -3,7 +3,7 @@ module Job
     @queue = :default
 
     def self.perform(id, host)
-      segmenter_duration = "8"
+      segmenter_duration = "5"
 
       pasokara = PasokaraFile.find(id)
       input_file = pasokara.fullpath
