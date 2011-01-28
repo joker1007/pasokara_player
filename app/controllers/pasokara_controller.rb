@@ -72,23 +72,24 @@ class PasokaraController < ApplicationController
   end
 
   def preview
+    @notag_list = true
     @pasokara = PasokaraFile.find(params[:id])
     extname = File.extname(@pasokara.fullpath)
     if request.mobile? and (request.mobile.iphone? or request.mobile.ipad?)
       if File.exist?(@pasokara.fullpath) and extname == ".mp4"
         @movie_path = @pasokara.movie_path
-        render :layout => "pasokara_player_notags"
+        render
       else
         @movie_path = "/video/#{@pasokara.m3u8_filename}"
         unless File.exist?("#{RAILS_ROOT}/public/video/#{@pasokara.m3u8_filename}")
           Resque.enqueue(Job::VideoEncoder, @pasokara.id, request.raw_host_with_port)
         end
 
-        render :layout => "pasokara_player_notags"
+        render
       end
     else
       if File.exist?(@pasokara.fullpath) and extname =~ /mp4|flv/
-        render :layout => "pasokara_player_notags"
+        render
       else
         render :text => "Not Flash Movie", :status => 404
       end

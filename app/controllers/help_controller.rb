@@ -1,5 +1,7 @@
 class HelpController < ApplicationController
+  layout "pasokara_player"
+
   def usage
-    render :layout => "pasokara_player_notags"
+    @notag_list = true
   end
 end
