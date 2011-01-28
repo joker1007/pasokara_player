@@ -4,7 +4,9 @@ STDOUT.sync = true
 
 @m3u8_file = ARGV.shift
 @http_prefix = ARGV.shift
+@file_prefix = ARGV.shift
 @duration = ARGV.shift || 10
+@dir = File.dirname(File.expand_path(__FILE__))
 
 @segmenter_wait = 2
 
@@ -37,12 +39,9 @@ puts 'segmenter_handler: started'
 while line = gets
   if line =~ /segmenter: (\d+), (\d+), (\d+), (.+?)(, (-?\d+\.\d*))?$/
     index = $2.to_i
-    if $5
-      duration = $6.to_f.round
-      duration = @duration if duration < 0.0    
-    else
-      duration = @duration
-    end
+    get_duration = `ffmpeg -i "#{@file_prefix}-#{sprintf('%05d', index)}.ts" 2>&1 | ruby #{@dir}/get_duration.rb`
+    duration = get_duration.to_f.round
+    duration = @duration if duration < 0.0    
     if index < @segmenter_wait
       str << "#EXTINF:#{duration},\n"
       str << @http_prefix + sprintf('%05d',index) + ".ts\n"
