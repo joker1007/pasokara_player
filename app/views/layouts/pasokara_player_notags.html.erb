@@ -14,14 +14,7 @@
   <% end %>
 
   <title>Pasokara Player</title>
-  <%= stylesheet_link_tag 'main' %>
-  <%= stylesheet_link_tag 'entity' %>
-  <%= stylesheet_link_tag 'header' %>
-  <%= stylesheet_link_tag 'scaffold' %>
-  <%= javascript_include_tag :defaults %>
-  <%= javascript_include_tag "jquery-1.3.2.min.js" %>
-  <%= javascript_include_tag "jquery-fonteffect-1.0.0.min.js" %>
-  <%= javascript_include_tag "jquery.linkwrapper-1.0.3.js" %>
+  <%= header_loading %>
   <%= javascript_include_tag "throbberA.js" %>
   <script type="text/javascript">
     jQuery.noConflict();
@@ -44,18 +37,7 @@
          gradientSteps: 20 
       });
     })
-    /*
-    j$(document).ready(function() {
-        j$("a.user_link").fancybox({
-          'zoomSpeedIn': 300,
-          'zoomSpeedOut': 300,
-          'frameWidth': 250,
-          'frameheight': 600,
-          'hideOnContentClick': false,
-          'centerOnScroll': false,
-        });
-    }); 
-    */
+    j$("img").lazyload();
   </script>
 </head>
 <body>
@@ -74,6 +56,6 @@
   <%= yield %>
   </article>
 
-</div>
+  </div>
 </body>
 </html>

@@ -21,10 +21,10 @@ li.user_list {
 }
 
 li.pasokara_file {
-  width: 320px;
-  height: 400px;
+  width: 400px;
+  height: 380px;
   display: inline-table;
-  margin-left: 10px;
+  margin-left: 8px;
   margin-bottom: 8px;
   padding-bottom: 8px;
   border: 2px solid #00008b;
