@@ -1,0 +1,13 @@
+<p>
+  <b>Url:</b>
+  <%=h @dl_feed.url %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @dl_feed.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_dl_feed_path(@dl_feed) %> |
+<%= link_to 'Back', dl_feeds_path %>

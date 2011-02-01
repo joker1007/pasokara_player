@@ -49,7 +49,7 @@ label {
 div#main {
   background-color: #EEEEEE;
   max-width: 1040px;
-  padding: 0px;
+  padding: 0;
   border: 2px solid #333;
   border-top: 0px;
   -moz-box-shadow: 6px 6px 6px #666666;
@@ -65,6 +65,18 @@ div.usage p{
 }
 div.usage img {
   border: 4px solid #a00;
+}
+
+div.dl_feed {
+  padding-left: 10px;
+  padding-bottom: 30px;
+}
+
+table#dl_feed_table tr.even{
+  background-color: #BBBBEE;
+}
+table#dl_feed_table th,td {
+  padding: 8px;
 }
 
 article {

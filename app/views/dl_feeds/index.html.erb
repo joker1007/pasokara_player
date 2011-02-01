@@ -1,0 +1,27 @@
+<div class="dl_feed">
+  <h1>DL対象リストURL</h1>
+  <p>
+  1日1回、登録されているURLのRSSを取得し, <br />
+  動画をダウンロード、データベースに登録する。
+  </p>
+
+  <table id ="dl_feed_table">
+    <tr>
+      <th>Url</th>
+      <th>Name</th>
+    </tr>
+
+  <% @dl_feeds.each do |dl_feed| %>
+    <tr class="<%= cycle("odd", "even") %>">
+      <td><%=h dl_feed.url %></td>
+      <td><%=h dl_feed.name %></td>
+      <td><%= link_to 'Edit', edit_dl_feed_path(dl_feed) %></td>
+      <td><%= link_to 'Destroy', dl_feed, :confirm => '削除してもよろしいですか?', :method => :delete %></td>
+    </tr>
+  <% end %>
+  </table>
+
+  <br />
+
+  <%= link_to '新しくURLを追加する', new_dl_feed_path %>
+</div>
