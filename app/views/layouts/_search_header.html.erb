@@ -4,7 +4,7 @@
 </nav>
 <br />
 <%= solr_search_form %>
-<% unless @notag_list %>
+<% unless @no_tag_load %>
   <% cache(@tag_list_cache_key) do %>
     <%= header_tag_list(@header_tags, @query) %>
   <% end %>

@@ -80,6 +80,10 @@ SQL
     self["duration"] || 0
   end
 
+  def html_id
+    self.class.to_s.underscore + "-#{self.id}"
+  end
+
   def movie_path
     subdir = ((id / 1000) * 1000).to_s
     extname = File.extname(fullpath)

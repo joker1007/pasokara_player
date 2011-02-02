@@ -1,10 +1,11 @@
 class DlFeedsController < ApplicationController
   layout "pasokara_player"
 
+  before_filter :no_tag_load
+
   # GET /dl_feeds
   # GET /dl_feeds.xml
   def index
-    @notag_list = true
     @dl_feeds = DlFeed.all
 
     respond_to do |format|
@@ -16,7 +17,6 @@ class DlFeedsController < ApplicationController
   # GET /dl_feeds/1
   # GET /dl_feeds/1.xml
   def show
-    @notag_list = true
     @dl_feed = DlFeed.find(params[:id])
 
     respond_to do |format|
@@ -28,7 +28,6 @@ class DlFeedsController < ApplicationController
   # GET /dl_feeds/new
   # GET /dl_feeds/new.xml
   def new
-    @notag_list = true
     @dl_feed = DlFeed.new
 
     respond_to do |format|
@@ -39,14 +38,12 @@ class DlFeedsController < ApplicationController
 
   # GET /dl_feeds/1/edit
   def edit
-    @notag_list = true
     @dl_feed = DlFeed.find(params[:id])
   end
 
   # POST /dl_feeds
   # POST /dl_feeds.xml
   def create
-    @notag_list = true
     @dl_feed = DlFeed.new(params[:dl_feed])
 
     respond_to do |format|
@@ -64,7 +61,6 @@ class DlFeedsController < ApplicationController
   # PUT /dl_feeds/1
   # PUT /dl_feeds/1.xml
   def update
-    @notag_list = true
     @dl_feed = DlFeed.find(params[:id])
 
     respond_to do |format|
@@ -82,7 +78,6 @@ class DlFeedsController < ApplicationController
   # DELETE /dl_feeds/1
   # DELETE /dl_feeds/1.xml
   def destroy
-    @notag_list = true
     @dl_feed = DlFeed.find(params[:id])
     @dl_feed.destroy
 

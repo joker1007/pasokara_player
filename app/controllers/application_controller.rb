@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
+  include AuthenticatedSystem
+
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
   #
@@ -26,6 +28,10 @@ class ApplicationController < ActionController::Base
       end
     end
     true
+  end
+
+  def no_tag_load
+    @no_tag_load = true
   end
 
   def oauth

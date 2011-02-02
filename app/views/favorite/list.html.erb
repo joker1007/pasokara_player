@@ -1,4 +1,4 @@
-<h1><%= image_tag("icon/search.png", :class => "parent_dir", :size => "32x32") %><%= h @user.name %>のお気に入り</h1>
+<h1><%= image_tag("icon/search.png", :class => "parent_dir", :size => "32x32") %><%= h current_user.name %>のお気に入り</h1>
 <% form_tag do -%>
   <%= hidden_field_tag "query", params[:query] %>
   <label for="sort">ソート: </label><%= select_tag "sort", options_for_select(PasokaraFile::SORT_OPTIONS, params[:sort]) %>
@@ -7,7 +7,7 @@
 <div id="entity_list" class="autopagerize_page_element">
   <ul>
   <% @pasokaras.each do |pasokara| %>
-    <li class="<%= pasokara.class.to_s.underscore %>">
+    <li id="<%= pasokara.html_id %>" class="<%= pasokara.class.to_s.underscore %>">
       <%= favorite_li(pasokara) %>
     </li>
   <% end %>

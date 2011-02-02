@@ -23,10 +23,10 @@ module ApplicationHelper
         <li>#{link_to("予約確認", {:controller => 'queue', :action => 'list'}, :id => "queue")}</li>
         <li>#{link_to("りれき", {:controller => 'sing_log', :action => 'list'}, :id => "history")}</li>
     }
-    if session[:current_user]
+    if current_user
       str += %Q{
         <li>#{link_to("お気に入り", {:controller => 'favorite', :action => 'list'}, :id => "favorite")}</li>
-        <li>#{link_to("設定変更", {:controller => 'user', :action => 'edit'}, :id => "user_edit")}</li>
+        <li>#{link_to("設定変更", edit_user_path(current_user.id), :id => "user_edit")}</li>
       }
     end
     str += %Q{

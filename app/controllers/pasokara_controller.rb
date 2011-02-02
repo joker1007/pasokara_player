@@ -1,6 +1,8 @@
 # _*_ coding: utf-8 _*_
 class PasokaraController < ApplicationController
   layout 'pasokara_player'
+  before_filter :no_tag_load, :only => [:preview]
+  before_filter :login_required, :only => [:queue]
   before_filter :top_tag_load, :except => [:tag_search, :solr_search, :thumb]
   before_filter :related_tag_load, :only => [:tag_search]
 
@@ -21,7 +23,7 @@ class PasokaraController < ApplicationController
     else
       render :text => "パラメーターが不正です。", :status => 404 and return
     end
-    QueuedFile.enq @pasokara, session[:current_user]
+    QueuedFile.enq @pasokara, current_user.id
 
     message = "#{@pasokara.name} の予約が完了しました"
     if request.xhr?
@@ -72,7 +74,6 @@ class PasokaraController < ApplicationController
   end
 
   def preview
-    @notag_list = true
     @pasokara = PasokaraFile.find(params[:id])
     extname = File.extname(@pasokara.fullpath)
     if request.mobile? and (request.mobile.iphone? or request.mobile.ipad?)

@@ -36,6 +36,17 @@ label {
   padding-bottom: 4px;
 }
 
+.error_notification {
+  border: 2px solid #B22222;
+  max-width: 1040px;
+  background-color: #FFC0CB;
+  margin-top: 20px;
+  padding-top: 4px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-bottom: 4px;
+}
+
 .clearfix:after {
   content: ".";
   display: block;
@@ -66,7 +77,10 @@ div.usage p{
 div.usage img {
   border: 4px solid #a00;
 }
-
+div.login {
+  padding-left: 10px;
+  padding-bottom: 30px;
+}
 div.dl_feed {
   padding-left: 10px;
   padding-bottom: 30px;

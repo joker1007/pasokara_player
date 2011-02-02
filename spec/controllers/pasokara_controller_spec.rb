@@ -16,26 +16,21 @@ describe PasokaraController do
 
   describe "GET '/pasokara/queue/8340'" do
     before do
-      PasokaraFile.should_receive(:find).with("8340", :select => "id, name, nico_name, duration").and_return(@esp_raging)
       get 'queue', :id => "8340"
     end
 
-    it "リクエストが成功しリダイレクトされること" do
+    it "リクエストが失敗しリダイレクトされること" do
       response.should be_redirect
     end
 
-    it "COOL&CREATE - ESP RAGING [myu314 remix].aviのデータが読み込まれること" do
-      assigns[:pasokara].id.should == 8340
-    end
-
-    it "dir/indexにリダイレクトされること" do
-      response.should redirect_to("/")
+    it "sessions/newにリダイレクトされること" do
+      response.should redirect_to(new_session_path)
     end
   end
   
   describe "GET '/pasokara/queue/8340' user_id = 1" do
     before do
-      session[:current_user] = 1
+      session[:user_id] = 1
       QueuedFile.should_receive(:enq).with(@esp_raging, 1)
       get 'queue', :id => "8340"
     end
@@ -53,8 +48,9 @@ describe PasokaraController do
     end
   end
   
-  describe "GET '/pasokara/queue/sm7601746'" do
+  describe "GET '/pasokara/queue/sm7601746' user_id = 1" do
     before do
+      session[:user_id] = 1
       PasokaraFile.should_receive(:find_by_nico_name).with("sm7601746", :select => "id, name, nico_name, duration").and_return(@just_be_friends)
       get 'queue', :id => "sm7601746"
     end
@@ -72,8 +68,9 @@ describe PasokaraController do
     end
   end
 
-  describe "GET '/pasokara/queue/abcd'" do
+  describe "GET '/pasokara/queue/abcd' user_id = 1" do
     before do
+      session[:user_id] = 1
       get 'queue', :id => "abcd"
     end
 

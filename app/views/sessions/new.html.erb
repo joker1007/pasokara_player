@@ -1,0 +1,27 @@
+<div class="login">
+<h1>ログイン</h1>
+<p>
+一度ログインすると、ページ下部の一覧に表示され、<br />
+ID入力せずに切り替えることが出来るようになります。
+</p>
+
+<% form_tag session_path do -%>
+<p><%= label_tag 'ユーザーID' %><br />
+<%= text_field_tag 'login', @login %></p>
+
+<p><%= label_tag 'パスワード' %><br/>
+<%= password_field_tag 'password', nil %></p>
+
+<p><%= submit_tag 'ログインする' %></p>
+<% end -%>
+<hr />
+<h3>このデバイスでログインしているユーザー</h3>
+<ol>
+<% @users.each do |user| %>
+
+  <li class="user_list"><%= link_to(user.name, switch_user_path(:id => user)) %></li>
+
+<% end %>
+</ol>
+<%= link_to("ログアウト", logout_path) %>
+</div>

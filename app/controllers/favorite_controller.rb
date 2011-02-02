@@ -1,13 +1,14 @@
 # _*_ coding: utf-8 _*_
 class FavoriteController < ApplicationController
   before_filter :top_tag_load
+  before_filter :login_required
   layout "pasokara_player"
 
   def add
     @pasokara = PasokaraFile.find(params[:id])
-    unless @user.pasokara_files.include? @pasokara
-      if @user.pasokara_files << @pasokara
-        message = "#{@pasokara.name}が#{@user.name}のお気に入りに追加されました"
+    unless current_user.pasokara_files.include? @pasokara
+      if current_user.pasokara_files << @pasokara
+        message = "#{@pasokara.name}が#{current_user.name}のお気に入りに追加されました"
       else
         message = "お気に入りの追加に失敗しました"
       end
@@ -27,12 +28,13 @@ class FavoriteController < ApplicationController
 
   def remove
     @pasokara = PasokaraFile.find(params[:id])
-    Favorite.find_by_user_id_and_pasokara_file_id(session[:current_user], params[:id]).destroy
-    message = "#{@pasokara.name}が#{@user.name}のお気に入りから削除されました"
+    Favorite.find_by_user_id_and_pasokara_file_id(current_user.id, params[:id]).destroy
+    message = "#{@pasokara.name}が#{current_user.name}のお気に入りから削除されました"
 
     if request.xhr?
       render :update do |page|
         page.alert(message)
+        page.visual_effect :fade, @pasokara.html_id
       end
     else
       flash[:notice] = message
@@ -41,14 +43,14 @@ class FavoriteController < ApplicationController
   end
 
   def list
-    unless @user
+    unless current_user
       redirect_to :controller => "user", :action => "switch" and return
     else
       options = {:page => params[:page], :per_page => 50}
       order = order_options
       options.merge!(order)
 
-      @pasokaras = @user.pasokara_files.paginate(options)
+      @pasokaras = current_user.pasokara_files.paginate(options)
     end
 
     respond_to do |format|

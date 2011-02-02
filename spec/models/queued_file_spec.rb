@@ -34,7 +34,7 @@ describe QueuedFile do
     QueuedFile.delete_all
     QueuedFile.enq(@just_be_friends)
     QueuedFile.deq.pasokara_file.should == @just_be_friends
-    QueuedFile.enq(@just_be_friends, 1)
+    QueuedFile.enq(@just_be_friends, 11)
     dequeued = QueuedFile.deq
     dequeued.pasokara_file.should == @just_be_friends
     dequeued.user.should == @test_user1

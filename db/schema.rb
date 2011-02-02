@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110201031744) do
+ActiveRecord::Schema.define(:version => 20110202130634) do
 
   create_table "computers", :force => true do |t|
     t.string   "name",                          :null => false
@@ -109,12 +109,20 @@ ActiveRecord::Schema.define(:version => 20110201031744) do
   add_index "tags", ["name"], :name => "index_tags_on_name"
 
   create_table "users", :force => true do |t|
-    t.string   "name",                                    :null => false
+    t.string   "name",                                                       :null => false
     t.string   "twitter_access_token"
     t.string   "twitter_access_secret"
-    t.boolean  "tweeting",              :default => true
+    t.boolean  "tweeting",                                 :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "login",                     :limit => 40
+    t.string   "email",                     :limit => 100
+    t.string   "crypted_password",          :limit => 40
+    t.string   "salt",                      :limit => 40
+    t.string   "remember_token",            :limit => 40
+    t.datetime "remember_token_expires_at"
   end
+
+  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 
 end

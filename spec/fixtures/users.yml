@@ -1,13 +1,51 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 test_user1:
-  id: 1
+  id: 11
+  login: testuser1
   name: "てすと1"
+  salt:                      902ba3cda1883801594b6e1b452790cc53948fda # SHA1('0')
+  crypted_password:          f3954bd3830c79985205615d8471ae102b916a55 # 'monkey'
   created_at: 2009-10-12 16:49:25
   updated_at: 2009-10-31 06:05:19
 
 test_user2:
-  id: 2
+  id: 12
+  login: testuser2
   name: "てすと2"
+  salt:                      902ba3cda1883801594b6e1b452790cc53948fda # SHA1('0')
+  crypted_password:          f3954bd3830c79985205615d8471ae102b916a55 # 'monkey'
   created_at: 2009-10-12 16:49:25
   updated_at: 2009-10-31 06:05:19
+
+quentin:
+  id:                        1
+  login:                     quentin
+  name:                      quentin-name
+  email:                     quentin@example.com
+  salt:                      902ba3cda1883801594b6e1b452790cc53948fda # SHA1('0')
+  crypted_password:          f3954bd3830c79985205615d8471ae102b916a55 # 'monkey'
+  created_at:                <%= 5.days.ago.to_s :db  %>
+  remember_token_expires_at: <%= 1.days.from_now.to_s %>
+  remember_token:            0ade7c2cf97f75d009975f4d720d1fa6c19f4897
+      
+aaron:
+  id:                        2
+  login:                     aaron
+  name:                      aaron-name
+  email:                     aaron@example.com
+  salt:                      fe5dbbcea5ce7e2988b8c69bcfdfde8904aabc1f # SHA1('1')
+  crypted_password:          86691472887360ff83fc7099c6a50f994ba1422f # 'monkey'
+  created_at:                <%= 1.days.ago.to_s :db %>
+  remember_token_expires_at: 
+  remember_token:            
+
+
+old_password_holder:
+  id:                        3
+  login:                     old_password_holder
+  name:                      salty-name
+  email:                     salty_dog@example.com
+  salt:                      7e3041ebc2fc05a40c60028e2c4901a81035d3cd
+  crypted_password:          00742970dc9e6319f8019fd54864d3ea740f04b1 # test
+  created_at:                <%= 1.days.ago.to_s :db %>
+
+

@@ -1,4 +1,13 @@
 ActionController::Routing::Routes.draw do |map|
+  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  map.login '/login', :controller => 'sessions', :action => 'new'
+  map.switch_user '/switch_user/:id', :controller => 'sessions', :action => 'switch'
+  map.register '/register', :controller => 'users', :action => 'create'
+  map.signup '/signup', :controller => 'users', :action => 'new'
+  map.resources :users, :collection => {:switch => :get}
+
+  map.resource :session
+
   map.resources :dl_feeds
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -18,8 +27,8 @@ ActionController::Routing::Routes.draw do |map|
   map.all_tag 'all_tag', :controller => 'pasokara', :action => 'all_tag'
   map.last_queue 'queue/last.:format', :controller => 'queue', :action => 'last'
   map.dequeue 'queue/deque.:format', :controller => 'queue', :action => 'deque'
-  map.twitter_auth 'twitter/auth', :controller => 'user', :action => 'twitter_auth'
-  map.twitter_finalize 'twitter/finalize', :controller => 'user', :action => 'twitter_finalize'
+  map.twitter_auth 'twitter/auth', :controller => 'users', :action => 'twitter_auth'
+  map.twitter_finalize 'twitter/finalize', :controller => 'users', :action => 'twitter_finalize'
   map.pasokara_list 'pasokara/list.:format', :controller => 'pasokara', :action => 'list'
 
   # This route can be invoked with purchase_url(:id => product.id)
