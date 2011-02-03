@@ -1,7 +1,7 @@
 # _*_ coding: utf-8 _*_
 class QueueController < ApplicationController
   layout 'pasokara_player'
-  before_filter :top_tag_load, :only => [:list]
+  before_filter :no_tag_load, :only => [:list]
 
 
   def list
