@@ -10,16 +10,24 @@ describe UsersController do
 
   it 'allows signup' do
     lambda do
+      session[:user_id] = 1
       create_user
       response.should be_redirect
     end.should change(User, :count).by(1)
   end
 
+  it 'login required to signup' do
+    lambda do
+      create_user(:login => nil)
+      response.should be_redirect new_session_path
+    end
+  end
   
 
 
   it 'requires login on signup' do
     lambda do
+      session[:user_id] = 1
       create_user(:login => nil)
       assigns[:user].errors.on(:login).should_not be_nil
       response.should be_success
@@ -28,6 +36,7 @@ describe UsersController do
   
   it 'requires password on signup' do
     lambda do
+      session[:user_id] = 1
       create_user(:password => nil)
       assigns[:user].errors.on(:password).should_not be_nil
       response.should be_success
@@ -36,6 +45,7 @@ describe UsersController do
   
   it 'requires password confirmation on signup' do
     lambda do
+      session[:user_id] = 1
       create_user(:password_confirmation => nil)
       assigns[:user].errors.on(:password_confirmation).should_not be_nil
       response.should be_success

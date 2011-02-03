@@ -24,6 +24,9 @@ class SessionsController < ApplicationController
       self.current_user = user
       session[:logined_users] ||= []
       session[:logined_users].push(user.id) unless session[:logined_users].include? user.id
+      if guest = User.find_by_login("guest")
+        session[:logined_users].push(guest.id)
+      end
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
       redirect_back_or_default('/')
@@ -51,9 +54,18 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:logined_users] ||= []
-    session[:logined_users].delete(current_user.id)
+    session[:logined_users].delete_if {|i| i == current_user.id}
+    session_tmp = session[:logined_users].dup
     logout_killing_session!
+    session[:logined_users] = session_tmp
     flash[:notice] = "ログアウトしました"
+    redirect_back_or_default('/')
+  end
+
+  def destroy_all
+    logout_killing_session!
+    session[:logined_users] = []
+    flash[:notice] = "全ユーザーをログアウトしました"
     redirect_back_or_default('/')
   end
 

@@ -48,6 +48,10 @@ div.title {
   -webkit-border-top-right-radius: 10px;
 }
 
+div.title span.title {
+  color: white;
+}
+
 li.directory {
   margin-left: 10px;
   margin-top: 4px;

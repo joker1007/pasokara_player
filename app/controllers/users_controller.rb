@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   layout 'pasokara_player'
 
   before_filter :no_tag_load
-  before_filter :login_required, :only => [:edit, :update, :twitter_auth, :twitter_finalize]
+  before_filter :login_required
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
   

@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  map.logout_all '/logout_all', :controller => 'sessions', :action => 'destroy_all'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.switch_user '/switch_user/:id', :controller => 'sessions', :action => 'switch'
   map.register '/register', :controller => 'users', :action => 'create'
