@@ -2,7 +2,7 @@
 class PasokaraController < ApplicationController
   layout 'pasokara_player'
   before_filter :no_tag_load, :only => [:preview]
-  before_filter :login_required, :only => [:queue]
+  before_filter :login_required, :only => [:queue, :preview]
   before_filter :top_tag_load, :except => [:tag_search, :solr_search, :thumb]
   before_filter :related_tag_load, :only => [:tag_search]
 

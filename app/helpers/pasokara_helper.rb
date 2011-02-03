@@ -14,14 +14,16 @@ module PasokaraHelper
   def pasokara_file_li(pasokara)
     if current_user
       title = link_to_remote(h(pasokara.name), :confirm => "#{pasokara.name}を予約に追加しますか？", :url => {:controller => 'pasokara', :action => 'queue', :id => pasokara.id}, :html => {:href => url_for(:controller => 'pasokara', :action => 'queue', :id => pasokara.id), :class => "queue_link"})
+      preview = link_to("[プレビュー]", pasokara.preview_path, :class => "preview_link", :target => "_blank")
     else 
       title = content_tag(:span, h(pasokara.name), :class => "title")
+      preview = content_tag(:span, "[プレビュー]", :class => "preview")
     end
 
     content_tag(:div, :class => "title") do
       image_tag("icon/music_48x48.png", :size => @icon_size, :class => "entity_icon") +
       title + 
-      link_to("[プレビュー]", pasokara.preview_path, :class => "preview_link", :target => "_blank") +
+      preview + 
       link_to("[関連動画を探す]", {:controller => "pasokara", :action => "related_search", :id => pasokara.id}, :class => "related_search_link", :target => "_blank") +
       content_tag(:span, :class => "duration") {pasokara.duration_str} +
       link_to_remote(image_tag("icon/star_off_48.png", :size => @icon_size), :confirm => "#{pasokara.name}をお気に入りに追加しますか？", :url => {:controller => "favorite", :action => "add", :id => pasokara.id}, :html => {:href => url_for(:controller => "favorite", :action => "add", :id => pasokara.id), :class => "add_favorite"})
