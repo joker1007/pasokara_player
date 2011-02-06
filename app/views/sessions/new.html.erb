@@ -25,5 +25,5 @@ ID入力せずに切り替えることが出来るようになります。
 </ol>
 <%= link_to("ログアウト", logout_path) %><br />
 <br />
-<%= link_to("全員ログアウト", logout_all_path) %>
+<%= link_to("全員ログアウト", logout_all_path, :confirm => "全員をログアウトしてもよろしいですか？") %>
 </div>
