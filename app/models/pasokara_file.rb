@@ -90,6 +90,23 @@ SQL
     "/video/#{subdir}/#{id}#{extname}"
   end
 
+  def exist?
+    File.exist?(self.fullpath)
+  end
+
+  def extname
+    File.extname(self.fullpath)
+  end
+
+  def mp4?
+    exist? and extname == ".mp4"
+  end
+
+  def flv?
+    exist? and extname == ".flv"
+  end
+
+
   def preview_path
     "/pasokara/preview/#{id}"
   end
@@ -103,9 +120,7 @@ SQL
   end
 
   def self.related_tags(tags, limit = 30)
-
     conditions = tags.map {|tag| "a.name = '#{tag}'"}.join(" OR ")
-      
     sql = "select d.id, d.name, COUNT(d.id) as count from (select a.id as id_1, a.name as name_1, b.tag_id, b.taggable_id from tags a inner join taggings b on a.id = b.tag_id where #{conditions} group by b.taggable_id having count(b.taggable_id) = #{tags.size}) t
 inner join taggings c on t.taggable_id = c.taggable_id
 inner join tags d on c.tag_id = d.id

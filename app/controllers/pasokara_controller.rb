@@ -77,7 +77,7 @@ class PasokaraController < ApplicationController
     @pasokara = PasokaraFile.find(params[:id])
     extname = File.extname(@pasokara.fullpath)
     if request.mobile? and (request.mobile.iphone? or request.mobile.ipad?)
-      if File.exist?(@pasokara.fullpath) and extname == ".mp4"
+      if !params[:force] and @pasokara.mp4?
         @movie_path = @pasokara.movie_path
         render
       else

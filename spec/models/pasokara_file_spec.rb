@@ -105,6 +105,21 @@ describe PasokaraFile do
     pasokara.nico_url.should == "http://www.nicovideo.jp/watch/" + pasokara.nico_name
   end
 
+  it "mp4?がファイルが存在し拡張子がmp4ファイルであるかを返すこと" do
+    pasokara = create_pasokara_file
+    pasokara.mp4?.should be_true
+  end
+
+  it "mp4?が存在しないファイルにはfalseを返すこと" do
+    pasokara = create_pasokara_file(:fullpath => "/test/nofile.mp4")
+    pasokara.mp4?.should be_false
+  end
+
+  it "flv?がファイルが存在し拡張子がflvファイルであるかを返すこと" do
+    pasokara = create_pasokara_file(:name => "test002.flv", :fullpath => File.join(File.expand_path(File.dirname(__FILE__)), "..", "datas", "test002.flv"))
+    pasokara.flv?.should be_true
+  end
+
   it "related_tagsが適切に関係するタグを返すこと" do
     tags = PasokaraFile.related_tags(["COOL&CREATE"])
     tags[0].name.should == "COOL&CREATE"
@@ -113,6 +128,12 @@ describe PasokaraFile do
     tags[1].count.should == 2
     tags[2].name.should == "あまね"
     tags[2].count.should == 1
+  end
+
+  def create_pasokara_file(option_attrs = {})
+    attrs = {:name => "test001.mp4", :md5_hash => "asdfjl2asjfasd83jasdkfj", :fullpath => File.join(File.expand_path(File.dirname(__FILE__)), "..", "datas", "test001.mp4")}
+    attrs = attrs.merge(option_attrs)
+    PasokaraFile.create(attrs)
   end
 
 end
