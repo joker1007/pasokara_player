@@ -1,9 +1,5 @@
+# _*_ coding: utf-8 _*_
 MEMCACHE_SERVER = "localhost:11211"
-PRE_SLEEP = 5
-MPC_PATH = 'c:\mpc.exe'
-NICOPLAY_PATH = 'c:\uwsc.exe'
-TWEET = true
+SOLR_SERVER = "localhost:8983"
 TWITTER_CONSUMER_KEY = "consumer_key"
 TWITTER_CONSUMER_SECRET = "consumer_secret"
-TWITTER_AUTH_KEY = "auth_key"
-TWITTER_AUTH_SECRET = "secret"
