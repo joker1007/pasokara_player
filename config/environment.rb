@@ -21,7 +21,9 @@ Rails::Initializer.run do |config|
   config.gem "solr-ruby", :lib => "solr"
   config.gem "pit"
   config.gem "rvideo"
-  config.gem "twitter", :version => "=0.8.4"
+  config.gem "resque"
+  config.gem "memcache-client", :lib => "memcache"
+  config.gem "twitter", :version => "0.8.4"
   config.gem "greatseth-rvideo", :lib => "rvideo", :source => "http://gems.github.com"
   config.gem "cosine-active_record_encoding", :lib => "active_record_encoding", :source => "http://gems.github.com" if "".respond_to?(:force_encoding)
   # config.gem "aws-s3", :lib => "aws/s3"
