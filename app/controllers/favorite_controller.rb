@@ -21,8 +21,14 @@ class FavoriteController < ApplicationController
         page.alert(message)
       end
     else
-      flash[:notice] = message
-      redirect_to root_path
+      respond_to do |format|
+        format.html {
+          flash[:notice] = message
+          redirect_to root_path
+        }
+        format.xml { render :xml => message.to_xml }
+        format.json { render :json => message.to_json }
+      end
     end
   end
 
@@ -37,21 +43,23 @@ class FavoriteController < ApplicationController
         page.visual_effect :fade, @pasokara.html_id
       end
     else
-      flash[:notice] = message
-      redirect_to :action => "list"
+      respond_to do |format|
+        format.html {
+          flash[:notice] = message
+          redirect_to :action => "list"
+        }
+        format.xml { render :xml => message.to_xml }
+        format.json { render :json => message.to_json }
+      end
     end
   end
 
   def list
-    unless current_user
-      redirect_to :controller => "user", :action => "switch" and return
-    else
-      options = {:page => params[:page], :per_page => 50}
-      order = order_options
-      options.merge!(order)
+    options = {:page => params[:page], :per_page => 50}
+    order = order_options
+    options.merge!(order)
 
-      @pasokaras = current_user.pasokara_files.paginate(options)
-    end
+    @pasokaras = current_user.pasokara_files.paginate(options)
 
     respond_to do |format|
       format.html

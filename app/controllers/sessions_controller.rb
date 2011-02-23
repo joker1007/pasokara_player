@@ -49,7 +49,7 @@ class SessionsController < ApplicationController
     else
       flash[:error] = "ログインしていません"
     end
-    redirect_to login_path
+    redirect_back_or_default login_path
   end
 
   def destroy
