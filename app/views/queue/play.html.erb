@@ -14,7 +14,7 @@
     }
 
     function addListeners() {
-      if (player) { 
+      if (player) {
         player.addModelListener("STATE", "jump_to_next_queue");
       } else {
         setTimeout("addListeners()",100);

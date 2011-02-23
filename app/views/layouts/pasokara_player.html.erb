@@ -19,6 +19,7 @@
     jQuery.noConflict();
     j$ = jQuery;
 
+    j$("img").lazyload();
     j$(document).ready(function() {
       j$('div.title a.queue_link').linkwrapper();
       j$('li.queue a').linkwrapper();
@@ -33,11 +34,10 @@
          gradientColor: "#AAA",
          gradientPosition: 20,
          gradientLength: 50,
-         gradientSteps: 20 
+         gradientSteps: 20
       });
-    })
+    });
 
-    j$("img").lazyload();
   </script>
 </head>
 <body>

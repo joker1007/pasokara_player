@@ -2,13 +2,13 @@
 <% if @tag_words -%>
   <div id="tag_scope"><%= scoped_tags(@tag_words) %></div>
 <% end -%>
-<% form_tag do -%>
+<%= form_tag %>
   <%= hidden_field_tag "query", params[:query] %>
   <%= hidden_field_tag "field", params[:field] %>
   <%= hidden_field_tag "filter", params[:filter] %>
   <label for="sort">ソート: </label><%= select_tag "sort", options_for_select(PasokaraFile::SORT_OPTIONS, params[:sort]) %>
   <%= submit_tag "並び替え" %>
-<% end -%>
+</form>
 <% cache(:query => @query, :filter => params[:filter], :field => params[:field], :page => params[:page], :sort => params[:sort]) do -%>
   <div id="entity_list" class="autopagerize_page_element">
     <ul>
