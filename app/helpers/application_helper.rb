@@ -4,15 +4,15 @@ module ApplicationHelper
   include PasokaraHelper
 
   def header_loading
-    stylesheet_link_tag('main') +
-    stylesheet_link_tag('entity') +
-    stylesheet_link_tag('header') +
-    stylesheet_link_tag('scaffold') +
-    javascript_include_tag(:defaults) +
-    javascript_include_tag("jquery-1.5.min.js") +
-    javascript_include_tag("jquery-fonteffect-1.0.0.min.js") +
-    javascript_include_tag("jquery.linkwrapper-1.0.3.js") +
-    javascript_include_tag("jquery.lazyload.mini.js")
+    stylesheet_link_tag('main') + "\n" +
+    stylesheet_link_tag('entity') + "\n" +
+    stylesheet_link_tag('header') + "\n" +
+    stylesheet_link_tag('scaffold') + "\n" +
+    javascript_include_tag(:defaults) + "\n" +
+    javascript_include_tag("jquery-1.5.min.js") + "\n" +
+    javascript_include_tag("jquery.lazyload.mini.js") + "\n" +
+    javascript_include_tag("jquery-fonteffect-1.0.0.min.js") + "\n" +
+    javascript_include_tag("jquery.linkwrapper-1.0.3.js")
   end
 
   def navi_bar

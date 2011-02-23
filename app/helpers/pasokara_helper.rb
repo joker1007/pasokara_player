@@ -57,7 +57,7 @@ module PasokaraHelper
   def info_list(entity)
     %Q{
       <div id="info-list-#{entity.id}" class="info_list">
-        <div class="thumb clearfix">#{image_tag(url_for(:controller => "pasokara", :action => "thumb", :id => entity.id), :size => "160x120")}</div>
+        <div class="thumb clearfix">#{image_tag(url_for(:controller => "pasokara", :action => "thumb", :id => entity.id), :size => "160x120", :class => "thumb")}</div>
         <div class="nico_info clearfix">
           <span class="info_key">ニコニコID:</span><span class="info_value">#{link_to(entity.nico_name, entity.nico_url) if entity.nico_name}</span><br />
           <span class="info_key">投稿日:</span><span class="info_value">#{h entity.nico_post_str}</span><br />
