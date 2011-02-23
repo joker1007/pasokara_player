@@ -8,9 +8,8 @@ module ApplicationHelper
     stylesheet_link_tag('entity') +
     stylesheet_link_tag('header') +
     stylesheet_link_tag('scaffold') +
-    stylesheet_link_tag('jquery.fancybox') +
     javascript_include_tag(:defaults) +
-    javascript_include_tag("jquery-1.3.2.min.js") +
+    javascript_include_tag("jquery-1.5.min.js") +
     javascript_include_tag("jquery-fonteffect-1.0.0.min.js") +
     javascript_include_tag("jquery.linkwrapper-1.0.3.js") +
     javascript_include_tag("jquery.lazyload.mini.js")
