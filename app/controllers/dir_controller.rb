@@ -4,19 +4,12 @@ class DirController < ApplicationController
   before_filter :top_tag_load
 
   def index
-    unless fragment_exist?(:action => "index", :page => params[:page])
-      @top_dirs = Directory.paginate(:all, :conditions => ["directory_id is null"], :order => "name", :page => params[:page], :per_page => 50)
-      @grouping = {}
-      @top_dirs.each do |dir|
-        @grouping["Root"] ||= []
-        @grouping["Root"] << dir
-      end
-    end
+    @top_dirs = Directory.paginate(:all, :conditions => ["directory_id is null"], :order => "name", :page => params[:page], :per_page => 50)
 
     respond_to do |format|
       format.html
-      format.xml { render :xml => @grouping.to_xml }
-      format.json { render :json => @grouping.to_json }
+      format.xml { render :xml => @top_dirs.to_xml }
+      format.json { render :json => @top_dirs.to_json }
     end
   end
 
@@ -26,8 +19,12 @@ class DirController < ApplicationController
     end
 
     @dir = Directory.find(params[:id], :include => :pasokara_files)
-    unless fragment_exist?(:action => "show", :page => params[:page])
-      @entities = @dir.entities.paginate(:page => params[:page], :per_page => 50)
+    @entities = @dir.entities.paginate(:page => params[:page], :per_page => 50)
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @entities.to_xml }
+      format.json { render :json => @entities.to_json }
     end
   end
 

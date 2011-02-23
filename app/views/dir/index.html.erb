@@ -1,13 +1,9 @@
 <%# encoding: utf8 %>
 
-<% cache(:action => "index", :page => params[:page]) do -%>
-  <% @grouping.each do |rootpath, dirs| %>
-    <h2><%= h rootpath %></h2>
-    <ul class="autopagerize_page_element">
-      <% dirs.each do |entity| %>
-        <%= entity_li(entity) %>
-      <% end %>
-    </ul>
+<h2><%= "Root" %></h2>
+<ul class="autopagerize_page_element">
+  <% @top_dirs.each do |entity| %>
+    <%= entity_li(entity) %>
   <% end %>
-  <%= will_paginate(@top_dirs) %>
-<% end -%>
+</ul>
+<%= will_paginate(@top_dirs) %>
