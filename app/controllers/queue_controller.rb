@@ -10,12 +10,18 @@ class QueueController < ApplicationController
       render :update do |page|
         page.replace_html("queue_table", :partial => "list", :object => @queue_list)
       end
+    else
+      respond_to do |format|
+        format.html
+        format.xml { render :xml => @queue_list.to_xml }
+        format.json { render :json => @queue_list.to_json }
+      end
     end
   end
 
   def play
     @queue = QueuedFile.find(:first, :order => "created_at", :include => :pasokara_file)
-    
+
     unless @queue
       render :action => "no_movie" and return
     end
