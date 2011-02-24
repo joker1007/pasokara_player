@@ -58,14 +58,19 @@ class PasokaraController < ApplicationController
 
   def thumb
     expires_in(8.hours, :public => true)
-    if data = CACHE[params[:id]]
+    begin
+      data = CACHE[params[:id]]
+    rescue MemCache::MemCacheError
+      send_file("#{RAILS_ROOT}/public/images/noimg-1_3.gif", :disposition => "inline", :type => "image/gif") and return
+    end
+
+    if data
       send_data(data, :filename => "#{params[:id]}.jpg", :disposition => "inline", :type => "image/jpeg")
     else
       send_file("#{RAILS_ROOT}/public/images/noimg-1_3.gif", :disposition => "inline", :type => "image/gif")
     end
   end
 
-  # 要修正
   def movie
     @pasokara = PasokaraFile.find(params[:id])
     movie_file = @pasokara.fullpath
@@ -94,27 +99,6 @@ class PasokaraController < ApplicationController
       else
         render :text => "Not Flash Movie", :status => 404
       end
-    end
-  end
-
-  def search
-    @query = params[:query].respond_to?(:force_encoding) ? params[:query].force_encoding(Encoding::UTF_8) : params[:query]
-    unless fragment_exist?(:query => @query, :page => params[:page])
-      query_words = @query.split(/[\s　]/)
-      conditions = query_words.inject([""]) {|cond_arr, query| cond_arr[0] += "name LIKE ? AND "; cond_arr << "%#{query}%"}
-      conditions[0] = conditions[0][0..-6]
-
-      order = order_options
-
-      @pasokaras = PasokaraFile.union([{:conditions => conditions}.merge(pasokara_files_select), PasokaraFile.find_options_for_find_tagged_with(query_words, {:on => :tags, :match_all => true, :order => "name"}.merge(pasokara_files_select))], order)
-
-      @pasokaras = @pasokaras.paginate(:page => params[:page], :per_page => per_page)
-    end
-
-    respond_to do |format|
-      format.html
-      format.xml { render :xml => @pasokaras.to_xml }
-      format.json { render :json => @pasokaras.to_json }
     end
   end
 
@@ -240,7 +224,7 @@ class PasokaraController < ApplicationController
       end
     else
       flash[:notice] = @pasokara.tag_list.join(", ")
-      redirect_to :controller => "dir", :action => "index"
+      redirect_to root_path
     end
   end
 
@@ -272,7 +256,7 @@ class PasokaraController < ApplicationController
       end
     else
       flash[:notice] = "#{@pasokara.name}から#{tag}を削除しました"
-      redirect_to :controller => "dir", :action => "index"
+      redirect_to root_path
     end
   end
 
