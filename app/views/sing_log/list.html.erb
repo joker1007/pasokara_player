@@ -1,5 +1,5 @@
 <h1>歌ログ</h1>
-<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", :controller => 'dir', :action => 'index') %><br /><br />
+<%= image_tag("icon/home.png", :size => "24x24") %><%= link_to("Go Top Directory", root_path) %><br /><br />
 <div id="sing_log_table">
 <% if @sing_logs.empty? %>
   Empty
@@ -7,7 +7,14 @@
   <ol>
   <% @sing_logs.each do |sing_log| %>
 
-    <li class="queue"><span class="clearfix" style="float: right"><%= h(sing_log.user.name) + " | " if sing_log.user %><%= sing_log.created_at.strftime("%Y/%m/%d %H:%M") %></span><div style="display: inline-block; max-width: 550px;" ><%= image_tag("icon/music_48x48.png", :size => "24x24", :class=> "entity_icon") %><%= if current_user; link_to(sing_log.pasokara_file.name, :controller => "pasokara", :action => "queue", :id => sing_log.pasokara_file.id); else; h(sing_log.pasokara_file.name); end %></div></li>
+    <li class="queue">
+      <span class="clearfix" style="float: right">
+        <%= h(sing_log.user.name) + " | " if sing_log.user %><%= sing_log.created_at.strftime("%Y/%m/%d %H:%M") %>
+      </span>
+      <div style="display: inline-block; max-width: 550px;" >
+        <%= image_tag("icon/music_48x48.png", :size => "24x24", :class=> "entity_icon") %><%= enqueue_link(sing_log.pasokara_file) %>
+      </div>
+    </li>
 
   <% end %>
   </ol>

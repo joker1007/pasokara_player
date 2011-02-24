@@ -111,4 +111,8 @@ module PasokaraHelper
       end
     end
   end
+
+  def enqueue_link(pasokara, html_options = {})
+    link_to_if(current_user, pasokara.name, {:controller => "pasokara", :action => "queue", :id => pasokara.id}, html_options)
+  end
 end
