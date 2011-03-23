@@ -42,17 +42,10 @@ class PasokaraController < ApplicationController
 
   def show
     @pasokara = PasokaraFile.find(params[:id])
-    if request.xhr?
-      render :update do |page|
-        page.insert_html :after, "tag-list-#{params[:id]}", info_list(@pasokara)
-        page.replace "show-info-#{params[:id]}", ""
-      end
-    else
-      respond_to do |format|
-        format.html
-        format.xml { render :xml => @pasokara.to_xml }
-        format.json { render :json => @pasokara.to_json }
-      end
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @pasokara.to_xml }
+      format.json { render :json => @pasokara.to_json }
     end
   end
 

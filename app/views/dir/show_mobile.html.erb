@@ -1,0 +1,21 @@
+<%# encoding: utf-8 %>
+<div data-role="page" data-theme="a" id="dir-show-<%= @dir.id.to_s %>">
+  <div data-role="header">
+    <a href="#" data-rel="back" data-icon="back">Back</a>
+    <h1><%= h @dir.name %></h1>
+    <a href="#search" data-icon="search" data-transition="slidedown" class="ui-btn-right">Search</a>
+  </div>
+
+  <div data-role="content">
+    <ul data-role="listview" data-theme="c" data-dividertheme="b">
+      <% @entities.each do |entity| %>
+        <% cache("jqm_pasokara_li_#{entity.id}") do %>
+          <%= jqm_entity_li(entity) %>
+        <% end %>
+      <% end %>
+    </ul>
+    <%= will_paginate(@entities) %>
+  </div>
+</div>
+
+<%= jqm_search_page %>

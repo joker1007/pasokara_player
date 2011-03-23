@@ -2,7 +2,7 @@
 class SessionsController < ApplicationController
   layout "pasokara_player"
 
-  before_filter :no_tag_load
+  before_filter :top_tag_load
 
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem

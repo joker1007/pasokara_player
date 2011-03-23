@@ -2,6 +2,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   include PasokaraHelper
+  include JqmHelper
 
   def header_loading
     stylesheet_link_tag('main') + "\n" +
@@ -13,6 +14,16 @@ module ApplicationHelper
     javascript_include_tag("jquery.lazyload.mini.js") + "\n" +
     javascript_include_tag("jquery-fonteffect-1.0.0.min.js") + "\n" +
     javascript_include_tag("jquery.linkwrapper-1.0.3.js")
+  end
+
+  def jquery_loading
+    javascript_include_tag("jquery-1.5.min.js") + "\n"
+  end
+
+  def jquery_mobile_loading
+    javascript_include_tag("http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.js") + "\n" +
+    stylesheet_link_tag("http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.css") +  "\n" +
+    stylesheet_link_tag("jquery.mobile-custom.css")
   end
 
   def navi_bar
@@ -80,7 +91,7 @@ module ApplicationHelper
   end
 
   def header_tag_list(tags, query = nil)
-    content_tag(:div, :class => "all_tag_list", :id => "all_tag_list") do 
+    content_tag(:div, :class => "all_tag_list", :id => "all_tag_list") do
       content_tag("h3", "タグ一覧", :style => "display: inline; margin-right: 10px;") +
       link_to("[全てのタグ一覧]", {:controller => "tag", :action => "list"}, :class => "tag_list_link") + "<br />\n" +
       tags.inject("") do |str, t|

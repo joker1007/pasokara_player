@@ -1,0 +1,19 @@
+<div data-role="page" data-theme="a" id="home">
+  <div data-role="header">
+    <a href="#login" data-transition="slidedown">Login</a>
+    <h1>Pasokara Player</h1>
+    <a href="#search" data-icon="search" data-transition="slidedown" class="ui-btn-right">Search</a>
+  </div>
+
+  <div data-role="content">
+    <ul data-role="listview" data-theme="c" data-dividertheme="b">
+      <li data-role="list-divider">ディレクトリ</li>
+      <% @top_dirs.each do |dir| %>
+        <%= jqm_entity_li(dir) %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<%= jqm_search_page %>
+<%= jqm_login_page %>
