@@ -17,14 +17,12 @@ class ApplicationController < ActionController::Base
   def top_tag_load
     tag_limit = request.mobile? ? 50 : 50
     @tag_list_cache_key = "top_tags_#{tag_limit}"
-    unless fragment_exist?(@tag_list_cache_key)
-      options = {:limit => tag_limit, :order => "count desc, tags.name asc"}
-      @header_tags = PasokaraFile.tag_counts(options)
-      @header_tags.each do |tag|
-        tag.instance_variable_set(:@query, params[:tag])
-        def tag.link_options
-          {:controller => "pasokara", :action => "append_search_tag", :append => name, :tag => @query}
-        end
+    options = {:limit => tag_limit, :order => "count desc, tags.name asc"}
+    @header_tags = PasokaraFile.tag_counts(options)
+    @header_tags.each do |tag|
+      tag.instance_variable_set(:@query, params[:tag])
+      def tag.link_options
+        {:controller => "pasokara", :action => "append_search_tag", :append => name, :tag => @query}
       end
     end
     true

@@ -115,37 +115,33 @@ class PasokaraController < ApplicationController
 
     res = @solr.query(solr_query, prm)
 
-    unless fragment_exist?(:query => solr_query, :filter => params[:filter], :field => params[:field], :page => params[:page], :sort => params[:sort])
-      @pasokaras = WillPaginate::Collection.new(page, per_page)
-      res.hits.each do |result|
-        pasokara = PasokaraFile.new(result)
-        pasokara.id = result["id"]
-        @pasokaras << pasokara
-      end
-
-      @pasokaras.total_entries = res.total_hits
+    @pasokaras = WillPaginate::Collection.new(page, per_page)
+    res.hits.each do |result|
+      pasokara = PasokaraFile.new(result)
+      pasokara.id = result["id"]
+      @pasokaras << pasokara
     end
+
+    @pasokaras.total_entries = res.total_hits
 
     @tag_list_cache_key = "solr_tag_#{solr_query}_#{params[:filter]}_#{params[:field]}"
-    unless fragment_exist?(@tag_list_cache_key)
 
-      facets = res.field_facets("tag")
+    facets = res.field_facets("tag")
 
-      # ヘルパーメソッド向けにインターフェースを合わせる
-      facets.each do |facet|
-        facet.instance_variable_set(:@filters, @filters)
-        facet.instance_variable_set(:@query, @query)
-        facet.instance_variable_set(:@field, params[:field])
-        facet.instance_eval do
-          def count; self["value"]; end
-          def link_options
-            {:controller => "pasokara", :action => "solr_search", :query => @query, :field => @field, :filter => @filters.join("+") + "+tag:#{name}"}
-          end
+    # ヘルパーメソッド向けにインターフェースを合わせる
+    facets.each do |facet|
+      facet.instance_variable_set(:@filters, @filters)
+      facet.instance_variable_set(:@query, @query)
+      facet.instance_variable_set(:@field, params[:field])
+      facet.instance_eval do
+        def count; self["value"]; end
+        def link_options
+          {:controller => "pasokara", :action => "solr_search", :query => @query, :field => @field, :filter => @filters.join("+") + "+tag:#{name}"}
         end
       end
-
-      @header_tags = facets
     end
+
+    @header_tags = facets
 
     respond_to do |format|
       format.html { render :action => 'search' }
@@ -167,16 +163,14 @@ class PasokaraController < ApplicationController
       end
     end
 
-    unless fragment_exist?(:query => @query, :page => params[:page], :sort => params[:sort])
-      find_options = {:on => :tags, :match_all => true, :order => "name"}
+    find_options = {:on => :tags, :match_all => true, :order => "name"}
 
-      order = order_options
+    order = order_options
 
-      find_options.merge!(order)
+    find_options.merge!(order)
 
-      @pasokaras = PasokaraFile.tagged_with(@tag_words, find_options).find(:all, pasokara_files_select).paginate(:page => params[:page], :per_page => per_page)
+    @pasokaras = PasokaraFile.tagged_with(@tag_words, find_options).find(:all, pasokara_files_select).paginate(:page => params[:page], :per_page => per_page)
       
-    end
 
     respond_to do |format|
       format.html { render :action => 'search' }
@@ -260,13 +254,11 @@ class PasokaraController < ApplicationController
 
     tag_limit = request.mobile? ? 50 : 50
     @tag_list_cache_key = "#{@query}_related_tags_#{tag_limit}"
-    unless fragment_exist?(@tag_list_cache_key)
-      @header_tags = PasokaraFile.related_tags(@tag_words, tag_limit)
-      @header_tags.each do |tag|
-        tag.instance_variable_set(:@query, params[:tag])
-        def tag.link_options
-          {:controller => "pasokara", :action => "append_search_tag", :append => name, :tag => @query}
-        end
+    @header_tags = PasokaraFile.related_tags(@tag_words, tag_limit)
+    @header_tags.each do |tag|
+      tag.instance_variable_set(:@query, params[:tag])
+      def tag.link_options
+        {:controller => "pasokara", :action => "append_search_tag", :append => name, :tag => @query}
       end
     end
   end
