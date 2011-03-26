@@ -1,11 +1,14 @@
 # _*_ coding: utf-8 _*_
 module JqmHelper
-  def jqm_search_page
+  def jqm_search_page(custom_options = {})
+    default_options = {:role => "page", :html_id => "search", :theme => "a"}
+    options = default_options.merge(custom_options)
     output = <<-HTML
-    <div data-role="page" data-theme="a" id="search">
+    <div data-role="#{options[:role]}" data-theme="#{options[:theme]}" id="#{options[:html_id]}">
       <div data-role="header">
-         <a href="/" data-icon="home" data-transition="slide" data-direction="reverse">Home</a>
-         <h1>曲検索</h1>
+        <a href="#" data-rel="back" data-icon="back">Back</a>
+        <h1>曲検索</h1>
+        <a href="/" data-icon="home" data-transition="slide" data-direction="reverse">Home</a>
       </div>
 
       <div data-role="content" data-theme="a">
@@ -21,9 +24,9 @@ module JqmHelper
         <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
           <li data-role="list-divider">Topタグ一覧</li>
           HTML
-          @header_tags.each do |tag|
+          @header_tags.each do |t|
             output += <<-HTML
-            <li>#{h(tag.name)}<span class="ui-li-count ui-btn-up-c ui-btn-corner-all">#{tag.count.to_s}</span></li>
+            <li>#{link_to(h(t.name), t.link_options)}<span class="ui-li-count ui-btn-up-c ui-btn-corner-all">#{t.count.to_s}</span></li>
             HTML
           end
     output += <<-HTML

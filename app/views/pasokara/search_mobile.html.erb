@@ -1,0 +1,21 @@
+<%# encoding: utf-8 %>
+<div data-role="page" data-theme="a" id="solr-search">
+  <div data-role="header">
+    <a href="#" data-rel="back" data-icon="back">Back</a>
+    <h1><%= h @query %></h1>
+    <a href="#search2" data-icon="search" data-transition="slidedown" class="ui-btn-right">Search</a>
+  </div>
+
+  <div data-role="content">
+    <ul data-role="listview" data-theme="c" data-dividertheme="b">
+      <% @pasokaras.each do |pasokara| %>
+        <% cache("jqm_pasokara_li_#{pasokara.id}") do %>
+          <%= jqm_entity_li(pasokara) %>
+        <% end %>
+      <% end %>
+    </ul>
+    <h3><%= page_entries_info @pasokaras, :entry_name => 'Pasokara' %></h3>
+    <%= will_paginate(@pasokaras, :params => {:query => params[:query], :sort => params[:sort], :filter => params[:filter], :field => params[:field]}, :container => false) %>
+  </div>
+</div>
+<%= jqm_search_page(:html_id => "search2") %>
