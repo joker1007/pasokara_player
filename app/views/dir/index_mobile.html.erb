@@ -6,13 +6,29 @@
   </div>
 
   <div data-role="content">
+    <%= jqm_header_tag %>
+  </div>
+
+  <% if WillPaginate::ViewHelpers.total_pages_for_collection(@top_dirs) > 1 %>
+  <div data-role="content">
+    <%= will_paginate(@top_dirs, :container => false) %>
+  </div>
+  <% end %>
+
+  <div data-role="content">
     <ul data-role="listview" data-theme="c" data-dividertheme="b">
-      <li data-role="list-divider">ディレクトリ</li>
+      <li data-role="list-divider"><%= page_entries_info @top_dirs, :entry_name => 'Root Dir' %></li>
       <% @top_dirs.each do |dir| %>
         <%= jqm_entity_li(dir) %>
       <% end %>
     </ul>
   </div>
+
+  <% if WillPaginate::ViewHelpers.total_pages_for_collection(@top_dirs) > 1 %>
+  <div data-role="content">
+    <%= will_paginate(@top_dirs, :container => false) %>
+  </div>
+  <% end %>
 </div>
 
 <%= jqm_search_page %>

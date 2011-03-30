@@ -1,5 +1,33 @@
 # _*_ coding: utf-8 _*_
 module JqmHelper
+  def jqm_search_form
+    output = <<-HTML
+      <form action="#{url_for(:controller => 'pasokara', :action => 'solr_search', :query => nil, :page => nil)}" method="post">
+        <div data-role="fieldcontain">
+          <label for="query">検索:</label>
+          <input type="search" name="query" id="search" placeholder="Search" />
+          <label for="field">検索対象:</label>
+          #{select_tag("field", options_for_select([["全て", "a"], ["名前", "n"], ["タグ", "t"], ["説明", "d"], ["Raw", "r"]], params[:field]))}
+          <input type="submit" data-theme="c" value="Search" />
+        </div>
+      </form>
+    HTML
+  end
+
+  def jqm_header_tag(title = "Topタグ一覧")
+    list_html = @header_tags.inject("") do |html, t|
+      html += "<li>#{link_to(h(t.name), t.link_options)}<span class=\"ui-li-count ui-btn-up-c ui-btn-corner-all\">#{t.count.to_s}</span></li>\n"
+    end
+    output = <<-HTML
+      <div data-role="collapsible" data-collapsed="true" data-theme="a">
+        <h3>#{title}</h3>
+        <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
+          #{list_html}
+        </ul>
+      </div>
+    HTML
+  end
+
   def jqm_search_page(custom_options = {})
     default_options = {:role => "page", :html_id => "search", :theme => "a"}
     options = default_options.merge(custom_options)
@@ -8,29 +36,10 @@ module JqmHelper
       <div data-role="header">
         <a href="#" data-rel="back" data-icon="back">Back</a>
         <h1>曲検索</h1>
-        <a href="/" data-icon="home" data-transition="slide" data-direction="reverse">Home</a>
       </div>
 
-      <div data-role="content" data-theme="a">
-        <form action="#{url_for(:controller => 'pasokara', :action => 'solr_search', :query => nil, :page => nil)}" method="post">
-          <div data-role="fieldcontain">
-            <label for="query">検索:</label>
-            <input type="search" name="query" id="search" value="" />
-            <label for="field">検索対象:</label>
-            #{select_tag("field", options_for_select([["全て", "a"], ["名前", "n"], ["タグ", "t"], ["説明", "d"], ["Raw", "r"]], params[:field]))}
-            <input type="submit" data-theme="c" value="Search" />
-          </div>
-        </form>
-        <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
-          <li data-role="list-divider">Topタグ一覧</li>
-          HTML
-          @header_tags.each do |t|
-            output += <<-HTML
-            <li>#{link_to(h(t.name), t.link_options)}<span class="ui-li-count ui-btn-up-c ui-btn-corner-all">#{t.count.to_s}</span></li>
-            HTML
-          end
-    output += <<-HTML
-        </ul>
+      <div data-role="content">
+        #{jqm_search_form}
       </div>
     </div>
     HTML
@@ -38,6 +47,9 @@ module JqmHelper
   end
 
   def jqm_login_page
+    logined_users = @users ? @users.inject("") do |html, user|
+      html += "<li>#{link_to(user.name, switch_user_path(:id => user))}</li>"
+    end : "<li>No User</li>"
     output = <<-HTML
     <div data-role="page" data-theme="a" id="login">
       <div data-role="header">
@@ -63,7 +75,7 @@ module JqmHelper
         </form>
         <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
           <li data-role="list-divider">ログイン済みユーザー</li>
-          <li>test</li>
+          #{logined_users}
         </ul>
       </div>
     </div>

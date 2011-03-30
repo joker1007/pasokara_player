@@ -6,6 +6,12 @@
     <a href="#search" data-icon="search" data-transition="slidedown" class="ui-btn-right">Search</a>
   </div>
 
+  <% if WillPaginate::ViewHelpers.total_pages_for_collection(@entities) > 1 %>
+  <div data-role="content">
+    <%= will_paginate(@entities, :container => false) %>
+  </div>
+  <% end %>
+
   <div data-role="content">
     <ul data-role="listview" data-theme="c" data-dividertheme="b">
       <% @entities.each do |entity| %>
@@ -14,8 +20,13 @@
         <% end %>
       <% end %>
     </ul>
-    <%= will_paginate(@entities) %>
   </div>
+
+  <% if WillPaginate::ViewHelpers.total_pages_for_collection(@entities) > 1 %>
+  <div data-role="content">
+    <%= will_paginate(@entities, :container => false) %>
+  </div>
+  <% end %>
 </div>
 
 <%= jqm_search_page %>
