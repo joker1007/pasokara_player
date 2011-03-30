@@ -6,14 +6,22 @@
   </div>
 
   <div data-role="content">
-    <h3><%= h @pasokara.name %></h3>
-    <a href="<%= url_for(:action => "queue", :id => @pasokara.id) %>" data-role="button" data-theme="c">予約する</a>
-    <hr />
     <div class="ui-grid-b">
       <div class="ui-block-a">&nbsp;</div>
       <div class="ui-block-b"><%= image_tag(url_for(:controller => "pasokara", :action => "thumb", :id => @pasokara.id), :class => "thumb") %></div>
       <div class="ui-block-c">&nbsp;</div>
     </div>
+    <h3><%= h @pasokara.name %></h3>
+    <a href="<%= url_for(:action => "queue", :id => @pasokara.id) %>" data-role="button" data-theme="c">予約する</a>
+    <% if current_user %>
+      <% if @pasokara.id_favored_by(current_user) %>
+      <a href="<%= url_for(:controller => "favorite", :action => "add", :id => @pasokara.id) %>" data-role="button" data-theme="d" data-icon="star">お気に入りから削除する</a>
+      <% else %>
+      <a href="<%= url_for(:controller => "favorite", :action => "remove", :id => @pasokara.id) %>" data-role="button" data-theme="e" data-icon="delete">お気に入りに追加する</a>
+      <% end %>
+    <% end %>
+  </div>
+  <div data-role="content">
     <ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="b">
       <li data-role="list-divider">動画情報</li>
       <%= jqm_info_list(@pasokara) %>

@@ -8,6 +8,7 @@ class PasokaraFile < ActiveRecord::Base
   belongs_to :directory
   belongs_to :computer, :include => true
   has_many :users, :through => :favorites
+  has_many :favorites
   has_many :sing_logs
 
   validates_uniqueness_of :md5_hash
@@ -102,6 +103,10 @@ SQL
 
   def flv?
     exist? and extname == ".flv"
+  end
+
+  def is_favored_by(user)
+    users.include?(user)
   end
 
 

@@ -109,22 +109,22 @@ module JqmHelper
       </li>
       <li>
         <div class="ui-grid-a">
-          <span class="ui-block-a">投稿日:</span><span class="ui-block-b">#{h entity.nico_post_str}</span><br />
+          <span class="ui-block-a">投稿日:</span><span class="ui-block-b">#{h entity.nico_post_str}</span>
         </div>
       </li>
       <li>
         <div class="ui-grid-a">
-          <span class="ui-block-a">再生数:</span><span class="ui-block-b">#{number_with_delimiter(entity.nico_view_counter)}</span><br />
+          <span class="ui-block-a">再生数:</span><span class="ui-block-b">#{number_with_delimiter(entity.nico_view_counter)}</span>
         </div>
       </li>
       <li>
         <div class="ui-grid-a">
-          <span class="ui-block-a">コメント数:</span><span class="ui-block-b">#{number_with_delimiter(entity.nico_comment_num)}</span><br />
+          <span class="ui-block-a">コメント数:</span><span class="ui-block-b">#{number_with_delimiter(entity.nico_comment_num)}</span>
         </div>
       </li>
       <li>
         <div class="ui-grid-a">
-          <span class="ui-block-a">マイリスト数:</span><span class="ui-block-b">#{number_with_delimiter(entity.nico_mylist_counter)}</span><br />
+          <span class="ui-block-a">マイリスト数:</span><span class="ui-block-b">#{number_with_delimiter(entity.nico_mylist_counter)}</span>
         </div>
       </li>
     }
