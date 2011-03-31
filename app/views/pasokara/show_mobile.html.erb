@@ -14,7 +14,7 @@
     <h3><%= h @pasokara.name %></h3>
     <a href="<%= url_for(:action => "queue", :id => @pasokara.id) %>" data-role="button" data-theme="c">予約する</a>
     <% if current_user %>
-      <% if @pasokara.id_favored_by(current_user) %>
+      <% if @pasokara.is_favored_by(current_user) %>
       <a href="<%= url_for(:controller => "favorite", :action => "add", :id => @pasokara.id) %>" data-role="button" data-theme="d" data-icon="star">お気に入りから削除する</a>
       <% else %>
       <a href="<%= url_for(:controller => "favorite", :action => "remove", :id => @pasokara.id) %>" data-role="button" data-theme="e" data-icon="delete">お気に入りに追加する</a>

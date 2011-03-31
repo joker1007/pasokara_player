@@ -36,6 +36,7 @@ module JqmHelper
       <div data-role="header">
         <a href="#" data-rel="back" data-icon="back">Back</a>
         <h1>曲検索</h1>
+        <a href="/" data-icon="home" data-transition="slide" data-direction="reverse">Home</a>
       </div>
 
       <div data-role="content">
@@ -47,14 +48,15 @@ module JqmHelper
   end
 
   def jqm_login_page
-    logined_users = @users ? @users.inject("") do |html, user|
+    users = User.find(session[:logined_users])
+    logined_users = users ? users.inject("") do |html, user|
       html += "<li>#{link_to(user.name, switch_user_path(:id => user))}</li>"
     end : "<li>No User</li>"
     output = <<-HTML
     <div data-role="page" data-theme="a" id="login">
       <div data-role="header">
-         <a href="/" data-icon="home" data-transition="slide" data-direction="reverse">Home</a>
-         <h1>Login</h1>
+        <a href="#" data-rel="back" data-icon="back">Back</a>
+        <h1>Login</h1>
       </div>
 
       <div data-role="content">
