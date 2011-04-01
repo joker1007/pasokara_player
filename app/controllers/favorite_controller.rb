@@ -15,20 +15,19 @@ class FavoriteController < ApplicationController
     else
       message = "既に登録済みです"
     end
-
-    if request.xhr?
-      render :update do |page|
-        page.alert(message)
-      end
-    else
-      respond_to do |format|
-        format.html {
+    respond_to do |format|
+      format.html {
+        if !request.mobile? and request.xhr?
+          render :update do |page|
+            page.alert(message)
+          end
+        else
           flash[:notice] = message
           redirect_to root_path
-        }
-        format.xml { render :xml => message.to_xml }
-        format.json { render :json => message.to_json }
-      end
+        end
+      }
+      format.xml { render :xml => message.to_xml }
+      format.json { render :json => {:message => message}.to_json }
     end
   end
 
@@ -37,20 +36,20 @@ class FavoriteController < ApplicationController
     Favorite.find_by_user_id_and_pasokara_file_id(current_user.id, params[:id]).destroy
     message = "#{@pasokara.name}が#{current_user.name}のお気に入りから削除されました"
 
-    if request.xhr?
-      render :update do |page|
-        page.alert(message)
-        page.visual_effect :fade, @pasokara.html_id
-      end
-    else
-      respond_to do |format|
-        format.html {
+    respond_to do |format|
+      format.html {
+        if !request.mobile? and request.xhr?
+          render :update do |page|
+            page.alert(message)
+            page.visual_effect :fade, @pasokara.html_id
+          end
+        else
           flash[:notice] = message
           redirect_to :action => "list"
-        }
-        format.xml { render :xml => message.to_xml }
-        format.json { render :json => message.to_json }
-      end
+        end
+      }
+      format.xml { render :xml => message.to_xml }
+      format.json { render :json => {:message => message}.to_json }
     end
   end
 
