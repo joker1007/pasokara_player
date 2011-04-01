@@ -8,3 +8,8 @@ li.pasokara_file .ui-li-desc {
   white-space: normal;
   margin: -0.0em 0px 0.6em;
 }
+
+.jqm-thumb {
+  padding: 15px;
+  text-align: center;
+}
