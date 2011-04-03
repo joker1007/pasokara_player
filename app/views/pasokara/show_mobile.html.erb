@@ -1,4 +1,29 @@
 <div data-role="page" data-theme="a" id="pasokara-show-<%= @pasokara.id.to_s %>">
+  <script>
+    $(".add-favorite").click(function() {
+      $.ajax({
+        url: $(this).attr("access-url"),
+        dataType: "json",
+        success: function(data) {
+          alert(data.message);
+          $("#add-favorite-<%= @pasokara.id %>").hide();
+          $("#remove-favorite-<%= @pasokara.id %>").show();
+        }
+      })
+    });
+
+    $(".remove-favorite").click(function() {
+      $.ajax({
+        url: $(this).attr("access-url"),
+        dataType: "json",
+        success: function(data) {
+          alert(data.message);
+          $("#remove-favorite-<%= @pasokara.id %>").hide();
+          $("#add-favorite-<%= @pasokara.id %>").show();
+        }
+      })
+    });
+  </script>
   <div data-role="header">
     <a href="#" data-rel="back" data-icon="back">Back</a>
     <h1>Pasokara Player</h1>
@@ -12,11 +37,12 @@
     <h3><%= h @pasokara.name %></h3>
     <a href="<%= url_for(:action => "queue", :id => @pasokara.id) %>" data-role="button" data-theme="c">予約する</a>
     <% if current_user %>
-      <% if @pasokara.is_favored_by(current_user) %>
-      <a href="<%= url_for(:controller => "favorite", :action => "remove", :id => @pasokara.id) %>" data-role="button" data-theme="d" data-icon="delete">お気に入りから削除する</a>
-      <% else %>
-      <a href="<%= url_for(:controller => "favorite", :action => "add", :id => @pasokara.id) %>" data-role="button" data-theme="e" data-icon="star" onclick="get_and_message(\"<%= url_for(:controller => "favorite", :action => "add", :id => @pasokara.id) %>\")">お気に入りに追加する</a>
-      <% end %>
+      <div id="remove-favorite-<%= @pasokara.id %>" style="<%= @pasokara.is_favored_by(current_user) ? "" : "display: none;" %>">
+        <button data-role="button" data-theme="a" data-icon="delete" class="remove-favorite" access-url="<%= url_for(:controller => "favorite", :action => "remove", :id => @pasokara.id, :format => "json") %>">お気に入りから削除する</button>
+      </div>
+      <div id="add-favorite-<%= @pasokara.id %>" style="<%= @pasokara.is_favored_by(current_user) ? "display: none;" : "" %>">
+        <button data-role="button" data-theme="e" data-icon="star" class="add-favorite" access-url="<%= url_for(:controller => "favorite", :action => "add", :id => @pasokara.id, :format => "json") %>">お気に入りに追加する</button>
+      </div>
     <% end %>
   </div>
   <div data-role="content">

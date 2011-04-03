@@ -27,7 +27,7 @@ class FavoriteController < ApplicationController
         end
       }
       format.xml { render :xml => message.to_xml }
-      format.json { render :json => {:message => message}.to_json }
+      format.json { render :json => {:message => message} }
     end
   end
 
