@@ -5,7 +5,7 @@ module JqmHelper
       <form action="#{url_for(:controller => 'pasokara', :action => 'solr_search', :query => nil, :page => nil)}" method="post">
         <div data-role="fieldcontain">
           <label for="query">検索:</label>
-          <input type="search" name="query" id="search" placeholder="Search" />
+          <input data-theme="c" type="search" name="query" id="search" placeholder="Search" />
           <label for="field">検索対象:</label>
           #{select_tag("field", options_for_select([["全て", "a"], ["名前", "n"], ["タグ", "t"], ["説明", "d"], ["Raw", "r"]], params[:field]))}
           <input type="submit" data-theme="c" value="Search" />
@@ -48,7 +48,7 @@ module JqmHelper
   end
 
   def jqm_login_page
-    users = User.find(session[:logined_users])
+    users = User.find(session[:logined_users]) if session[:logined_users]
     logined_users = users ? users.inject("") do |html, user|
       html += "<li>#{link_to(user.name, switch_user_path(:id => user))}</li>"
     end : "<li>No User</li>"
