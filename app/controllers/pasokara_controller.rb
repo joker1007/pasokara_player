@@ -26,17 +26,19 @@ class PasokaraController < ApplicationController
     QueuedFile.enq @pasokara, current_user.id
 
     message = "#{@pasokara.name} の予約が完了しました"
-    if request.xhr?
-      render :update do |page|
-        page.alert(message)
-      end
-    else
-      flash[:notice] = message
-      respond_to do |format|
-        format.html { redirect_to root_path }
-        format.xml { render :xml => @pasokaras.to_xml }
-        format.json { render :json => @pasokaras.to_json }
-      end
+    respond_to do |format|
+      format.html {
+        if !request.mobile? and request.xhr?
+          render :update do |page|
+            page.alert(message)
+          end
+        else
+          flash[:notice] = message
+          redirect_to root_path
+        end
+      }
+      format.xml { render :xml => message.to_xml }
+      format.json { render :json => {:message => message}.to_json }
     end
   end
 

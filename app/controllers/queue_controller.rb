@@ -5,17 +5,17 @@ class QueueController < ApplicationController
 
 
   def list
-    @queue_list = QueuedFile.find(:all, :order => "created_at", :include => :pasokara_file)
-    if request.xhr?
-      render :update do |page|
-        page.replace_html("queue_table", :partial => "list", :object => @queue_list)
-      end
-    else
-      respond_to do |format|
-        format.html
-        format.xml { render :xml => @queue_list.to_xml }
-        format.json { render :json => @queue_list.to_json }
-      end
+    @queue_list = QueuedFile.paginate(:all, :order => "created_at", :include => :pasokara_file, :page => params[:page], :per_page => 50)
+    respond_to do |format|
+      format.html {
+        if !request.mobile? and request.xhr?
+          render :update do |page|
+            page.replace_html("queue_table", :partial => "list", :object => @queue_list)
+          end
+        end
+      }
+      format.xml { render :xml => @queue_list.to_xml }
+      format.json { render :json => @queue_list.to_json }
     end
   end
 
@@ -39,6 +39,11 @@ class QueueController < ApplicationController
     @queue = QueuedFile.find(params[:id])
     @queue.destroy
     redirect_to :action => 'list'
+  end
+
+  #jQuery Mobile
+  def confirm_remove
+    @queue = QueuedFile.find(params[:id])
   end
 
   def last

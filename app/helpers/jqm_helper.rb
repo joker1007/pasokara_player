@@ -102,6 +102,13 @@ module JqmHelper
     content_tag(:p, h(pasokara.name))
   end
 
+  def jqm_queued_file_li(queue)
+    image_tag("icon/music_48x48.png", :size => @icon_size, :class => "ui-li-icon") +
+    link_to(h(" "), {:controller => "pasokara", :action => "show", :id => queue.pasokara_file.id}) +
+    content_tag(:p, h(queue.pasokara_file.name)) +
+    link_to(h("取消"), {:controller => "queue", :action => "confirm_remove", :id => queue.id}, "data-rel".to_sym => "dialog", "data-transition".to_sym => "pop")
+  end
+
   def jqm_info_list(entity)
     %Q{
       <li>

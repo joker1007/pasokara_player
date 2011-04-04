@@ -23,6 +23,16 @@
         }
       })
     });
+
+    $(".add-queue").click(function() {
+      $.ajax({
+        url: $(this).attr("access-url"),
+        dataType: "json",
+        success: function(data) {
+          alert(data.message);
+        }
+      })
+    });
   </script>
   <div data-role="header">
     <a href="#" data-rel="back" data-icon="back">Back</a>
@@ -35,7 +45,7 @@
   </div>
   <div data-role="content">
     <h3><%= h @pasokara.name %></h3>
-    <a href="<%= url_for(:action => "queue", :id => @pasokara.id) %>" data-role="button" data-theme="c">予約する</a>
+    <button data-role="button" data-theme="c" data-icon="plus" class="add-queue" access-url="<%= url_for(:action => "queue", :id => @pasokara.id, :format => "json") %>">予約する</button>
     <% if current_user %>
       <div id="remove-favorite-<%= @pasokara.id %>" style="<%= @pasokara.is_favored_by(current_user) ? "" : "display: none;" %>">
         <button data-role="button" data-theme="a" data-icon="delete" class="remove-favorite" access-url="<%= url_for(:controller => "favorite", :action => "remove", :id => @pasokara.id, :format => "json") %>">お気に入りから削除する</button>

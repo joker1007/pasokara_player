@@ -1,0 +1,16 @@
+<div data-role="page" data-theme="a" id="queue-confirm-remove">
+  <div data-role="header">
+    <h1>確認ダイアログ</h1>
+  </div>
+
+  <div data-role="content">
+    <h2>
+      以下の予約を<br />
+      本当に取消しますか？
+    </h2>
+    <p><%= h @queue.pasokara_file.name %></p>
+    <a href="<%= url_for(:controller => "queue", :action => "remove", :id => @queue.id) %>" data-role="button" data-theme="c" data-icon="delete">予約取消</a>
+    <a href="<%= url_for(:controller => "queue", :action => "list") %>" data-role="button" data-theme="a">キャンセル</a>
+  </div>
+
+</div>
