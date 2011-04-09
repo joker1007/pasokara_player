@@ -4,3 +4,6 @@
 [submodule "vendor/plugins/resque"]
 	path = vendor/plugins/resque
 	url = git://github.com/defunkt/resque.git
+[submodule "vendor/plugins/jpmobile"]
+	path = vendor/plugins/jpmobile
+	url = git://github.com/jpmobile/jpmobile.git
