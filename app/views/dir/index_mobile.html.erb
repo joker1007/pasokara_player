@@ -1,8 +1,9 @@
 <div data-role="page" data-theme="a" id="home">
-  <div data-role="header">
-    <a href="#login" data-transition="slidedown">Login</a>
+  <div data-role="header" data-position="fixed">
+    <%= jqm_login_button %>
     <h1>Pasokara Player</h1>
     <a href="#search" data-icon="search" data-transition="slidedown" class="ui-btn-right">Search</a>
+    <%= jqm_nav_bar %>
   </div>
 
   <div data-role="content">
@@ -29,6 +30,7 @@
     <%= will_paginate(@top_dirs, :container => false) %>
   </div>
   <% end %>
+
 </div>
 
 <%= jqm_search_page %>

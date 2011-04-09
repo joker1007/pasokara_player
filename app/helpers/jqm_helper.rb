@@ -1,5 +1,24 @@
 # _*_ coding: utf-8 _*_
 module JqmHelper
+  def jqm_nav_bar
+    login_menu = ""
+    if current_user
+      login_menu += "<li>#{link_to("お気に入り", {:controller => "favorite", :action => "list"})}</li>\n"
+      login_menu += "<li>#{link_to("設定", edit_user_path(current_user))}</li>\n"
+    end
+
+    output = <<-HTML
+      <div data-role="navbar">
+        <ul>
+          <li>#{link_to("ホーム", root_path)}</li>
+          <li>#{link_to("予約確認", {:controller => "queue", :action => "list"})}</li>
+          #{login_menu}
+        </ul>
+      </div>
+    HTML
+    output
+  end
+
   def jqm_search_form
     output = <<-HTML
       <form action="#{url_for(:controller => 'pasokara', :action => 'solr_search', :query => nil, :page => nil)}" method="post">
@@ -47,6 +66,14 @@ module JqmHelper
     output
   end
 
+  def jqm_login_button
+    if current_user
+      link_to(current_user.name, "#login", "data-transition".to_sym => "slidedown", "data-theme".to_sym => "c")
+    else
+      link_to("Login", "#login", "data-transition".to_sym => "slidedown")
+    end
+  end
+
   def jqm_login_page
     users = User.find(session[:logined_users]) if session[:logined_users]
     logined_users = users ? users.inject("") do |html, user|
@@ -79,10 +106,15 @@ module JqmHelper
           <li data-role="list-divider">ログイン済みユーザー</li>
           #{logined_users}
         </ul>
+
+        #{jqm_logout_all}
       </div>
     </div>
     HTML
     output
+  end
+
+  def jqm_logout_all
   end
 
   def jqm_entity_li(entity)

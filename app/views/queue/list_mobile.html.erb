@@ -1,8 +1,9 @@
 <div data-role="page" data-theme="d" id="queue-list">
-  <div data-role="header">
+  <div data-role="header" data-position="fixed">
     <a href="#" data-rel="back" data-icon="back">Back</a>
     <h1>予約一覧</h1>
     <a href="#search" data-icon="search" data-transition="slidedown" class="ui-btn-right">Search</a>
+    <%= jqm_nav_bar %>
   </div>
 
   <% if WillPaginate::ViewHelpers.total_pages_for_collection(@queue_list) > 1 %>

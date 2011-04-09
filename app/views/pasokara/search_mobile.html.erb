@@ -1,9 +1,10 @@
 <%# encoding: utf-8 %>
 <div data-role="page" data-theme="a" id="solr-search">
-  <div data-role="header">
+  <div data-role="header" data-position="fixed">
     <a href="#" data-rel="back" data-icon="back">Back</a>
     <h1><%= h @query %></h1>
     <a href="#search" data-icon="search" data-transition="slidedown" class="ui-btn-right">Search</a>
+    <%= jqm_nav_bar %>
   </div>
 
   <div data-role="content">

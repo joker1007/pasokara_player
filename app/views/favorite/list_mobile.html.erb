@@ -1,9 +1,10 @@
 <%# encoding: utf-8 %>
 <div data-role="page" data-theme="a" id="favorite">
-  <div data-role="header">
+  <div data-role="header" data-position="fixed">
     <a href="#" data-rel="back" data-icon="back">Back</a>
     <h1>お気に入り</h1>
     <a href="#search" data-icon="search" data-transition="slidedown" class="ui-btn-right">Search</a>
+    <%= jqm_nav_bar %>
   </div>
 
   <% if WillPaginate::ViewHelpers.total_pages_for_collection(@pasokaras) > 1 %>

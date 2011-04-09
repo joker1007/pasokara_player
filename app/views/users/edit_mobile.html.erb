@@ -1,0 +1,19 @@
+<div data-role="page" data-theme="a" id="user-edit-<%= current_user.id %>">
+  <div data-role="header" data-position="fixed">
+    <a href="#" data-rel="back" data-icon="back">Back</a>
+    <h1>設定</h1>
+    <a href="#search" data-icon="search" data-transition="slidedown" class="ui-btn-right">Search</a>
+    <%= jqm_nav_bar %>
+  </div>
+
+  <div data-role="content">
+    <% form_for current_user, :url => {:action => "update"} do |f| %>
+      <div data-role="fieldcontain">
+        <label for="tweeting">Tweeting:</label>
+        <%= f.select :tweeting, options_for_select([["False", false], ["True", true]], :selected => current_user.tweeting), {}, "data-role".to_sym => "slider" %>
+        </select>
+      </div>
+    <% end %>
+  </div>
+
+</div>
