@@ -24,6 +24,7 @@ Rails::Initializer.run do |config|
   config.gem "twitter", :version => "0.8.4"
   config.gem "greatseth-rvideo", :lib => "rvideo", :source => "http://gems.github.com"
   config.gem "cosine-active_record_encoding", :lib => "active_record_encoding", :source => "http://gems.github.com" if "".respond_to?(:force_encoding)
+  config.gem 'elkinsware-erubis_rails_helper', :lib => 'erubis_rails_helper', :source => 'http://gems.github.com'
   # config.gem "aws-s3", :lib => "aws/s3"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
@@ -47,11 +48,11 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
-require 'erubis/helpers/rails_helper'
+#require 'erubis/helpers/rails_helper'
 Erubis::Helpers::RailsHelper.engine_class = Erubis::FastEruby
 #Erubis::Helpers::RailsHelper.init_properties = {}
 #Erubis::Helpers::RailsHelper.show_src = nil
-#Erubis::Helpers::RailsHelper.preprocessing = true
+Erubis::Helpers::RailsHelper.preprocessing = true
 
 require File.join(File.dirname(__FILE__), 'pp_setting')
 
