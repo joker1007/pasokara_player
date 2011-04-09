@@ -11,6 +11,13 @@ class SessionsController < ApplicationController
   def new
     session[:logined_users] ||= []
     @users = User.find(session[:logined_users])
+    respond_to do |format|
+      format.html{
+        if request.xhr?
+          render :layout => false
+        end
+      }
+    end
   end
 
   def create

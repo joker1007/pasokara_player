@@ -68,9 +68,9 @@ module JqmHelper
 
   def jqm_login_button
     if current_user
-      link_to(current_user.name, "#login", "data-transition".to_sym => "slidedown", "data-theme".to_sym => "c")
+      link_to(current_user.name, login_path, "data-transition".to_sym => "slidedown", "data-theme".to_sym => "c")
     else
-      link_to("Login", "#login", "data-transition".to_sym => "slidedown")
+      link_to("Login", login_path, "data-transition".to_sym => "slidedown")
     end
   end
 
@@ -139,6 +139,12 @@ module JqmHelper
     link_to(h(" "), {:controller => "pasokara", :action => "show", :id => queue.pasokara_file.id}) +
     content_tag(:p, h(queue.pasokara_file.name)) +
     link_to(h("取消"), {:controller => "queue", :action => "confirm_remove", :id => queue.id}, "data-rel".to_sym => "dialog", "data-transition".to_sym => "pop")
+  end
+
+  def jqm_sing_log_li(sing_log)
+    image_tag("icon/music_48x48.png", :size => @icon_size, :class => "ui-li-icon") +
+    link_to(h(" "), {:controller => "pasokara", :action => "show", :id => sing_log.pasokara_file.id}) +
+    content_tag(:p, h(sing_log.pasokara_file.name))
   end
 
   def jqm_info_list(entity)

@@ -1,0 +1,31 @@
+<div data-role="page" data-theme="d" id="sing-log-list">
+  <div data-role="header" data-position="fixed">
+    <a href="#" data-rel="back" data-icon="back">Back</a>
+    <h1>再生履歴</h1>
+    <a href="#search" data-icon="search" data-transition="slidedown" class="ui-btn-right">Search</a>
+    <%= jqm_nav_bar %>
+  </div>
+
+  <% if WillPaginate::ViewHelpers.total_pages_for_collection(@sing_logs) > 1 %>
+  <div data-role="content">
+    <%= will_paginate(@sing_logs, :container => false) %>
+  </div>
+  <% end %>
+
+  <div data-role="content">
+    <ol data-role="listview" data-theme="c" data-dividertheme="e" data-split-icon="delete" data-split-theme="a">
+      <li data-role="list-divider"><%= page_entries_info @sing_logs, :entry_name => 'Sing Log' %></li>
+      <% @sing_logs.each do |queue| %>
+        <%= jqm_entity_li(queue) %>
+      <% end %>
+    </ol>
+  </div>
+
+  <% if WillPaginate::ViewHelpers.total_pages_for_collection(@sing_logs) > 1 %>
+  <div data-role="content">
+    <%= will_paginate(@sing_logs, :container => false) %>
+  </div>
+  <% end %>
+</div>
+
+<%= jqm_search_page %>

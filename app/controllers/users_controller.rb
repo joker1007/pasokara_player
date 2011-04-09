@@ -33,10 +33,13 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if request.xhr?
-      render :action => "edit", :layout => false
-    else
-      render :action => "edit"
+    redirect_to login_path and return unless current_user
+    respond_to do |format|
+      format.html {
+        if request.xhr?
+          render :layout => false
+        end
+      }
     end
   end
 
