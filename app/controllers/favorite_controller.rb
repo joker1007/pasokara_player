@@ -61,7 +61,11 @@ class FavoriteController < ApplicationController
     @pasokaras = current_user.pasokara_files.paginate(options)
 
     respond_to do |format|
-      format.html
+      format.html {
+        if request.xhr?
+          render :layout => false
+        end
+      }
       format.xml { render :xml => @pasokaras.to_xml }
       format.json { render :json => @pasokaras.to_json }
     end

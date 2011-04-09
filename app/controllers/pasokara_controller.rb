@@ -45,7 +45,11 @@ class PasokaraController < ApplicationController
   def show
     @pasokara = PasokaraFile.find(params[:id])
     respond_to do |format|
-      format.html
+      format.html {
+        if request.xhr?
+          render :layout => false
+        end
+      }
       format.xml { render :xml => @pasokara.to_xml }
       format.json { render :json => @pasokara.to_json }
     end
@@ -146,7 +150,13 @@ class PasokaraController < ApplicationController
     @header_tags = facets
 
     respond_to do |format|
-      format.html { render :action => 'search' }
+      format.html {
+        if request.xhr?
+          render :action => 'search', :layout => false
+        else
+          render :action => 'search'
+        end
+      }
       format.xml { render :xml => @pasokaras.to_xml }
       format.json { render :json => @pasokaras.to_json }
     end
@@ -175,7 +185,13 @@ class PasokaraController < ApplicationController
       
 
     respond_to do |format|
-      format.html { render :action => 'search' }
+      format.html {
+        if request.xhr?
+          render :action => 'search', :layout => false
+        else
+          render :action => 'search'
+        end
+      }
       format.xml { render :xml => @pasokaras.to_xml }
       format.json { render :json => @pasokaras.to_json }
     end

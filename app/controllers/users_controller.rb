@@ -33,6 +33,11 @@ class UsersController < ApplicationController
   end
 
   def edit
+    if request.xhr?
+      render :action => "edit", :layout => false
+    else
+      render :action => "edit"
+    end
   end
 
   def update

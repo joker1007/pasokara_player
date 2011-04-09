@@ -8,9 +8,13 @@ class QueueController < ApplicationController
     @queue_list = QueuedFile.paginate(:all, :order => "created_at", :include => :pasokara_file, :page => params[:page], :per_page => 50)
     respond_to do |format|
       format.html {
-        if !request.mobile? and request.xhr?
-          render :update do |page|
-            page.replace_html("queue_table", :partial => "list", :object => @queue_list)
+        if request.xhr?
+          if request.mobile?
+            render :layout => false
+          else
+            render :update do |page|
+              page.replace_html("queue_table", :partial => "list", :object => @queue_list)
+            end
           end
         end
       }
@@ -44,6 +48,11 @@ class QueueController < ApplicationController
   #jQuery Mobile
   def confirm_remove
     @queue = QueuedFile.find(params[:id])
+    if request.xhr?
+      render :action => "confirm_remove", :layout => false
+    else
+      render :action => "confirm_remove"
+    end
   end
 
   def last

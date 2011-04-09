@@ -22,7 +22,11 @@ class DirController < ApplicationController
     @entities = @dir.entities.paginate(:page => params[:page], :per_page => 50)
 
     respond_to do |format|
-      format.html
+      format.html {
+        if request.xhr?
+          render :layout => false
+        end
+      }
       format.xml { render :xml => @entities.to_xml }
       format.json { render :json => @entities.to_json }
     end
