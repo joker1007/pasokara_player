@@ -9,7 +9,7 @@ class QueueController < ApplicationController
     respond_to do |format|
       format.html {
         if request.xhr?
-          if request.mobile?
+          if request.smart_phone?
             render :layout => false
           else
             render :update do |page|

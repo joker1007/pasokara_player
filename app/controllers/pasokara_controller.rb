@@ -28,7 +28,7 @@ class PasokaraController < ApplicationController
     message = "#{@pasokara.name} の予約が完了しました"
     respond_to do |format|
       format.html {
-        if !request.mobile? and request.xhr?
+        if request.xhr?
           render :update do |page|
             page.alert(message)
           end
@@ -80,7 +80,7 @@ class PasokaraController < ApplicationController
   def preview
     @pasokara = PasokaraFile.find(params[:id])
     extname = File.extname(@pasokara.fullpath)
-    if request.mobile? and (request.mobile.iphone? or request.mobile.ipad?)
+    if request.smart_phone?
       if !params[:force] and @pasokara.mp4?
         @movie_path = @pasokara.movie_path
         render

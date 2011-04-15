@@ -17,7 +17,7 @@ class FavoriteController < ApplicationController
     end
     respond_to do |format|
       format.html {
-        if !request.mobile? and request.xhr?
+        if request.xhr?
           render :update do |page|
             page.alert(message)
           end
@@ -38,7 +38,7 @@ class FavoriteController < ApplicationController
 
     respond_to do |format|
       format.html {
-        if !request.mobile? and request.xhr?
+        if request.xhr?
           render :update do |page|
             page.alert(message)
             page.visual_effect :fade, @pasokara.html_id
