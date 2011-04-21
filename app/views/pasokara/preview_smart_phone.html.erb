@@ -4,12 +4,12 @@
     var throbber;
     function throbber_init() {
       throbber = new ThrobberA({size: 64});
-      throbber.show(document.getElementById("jqm-throbber"));
+      throbber.show(document.getElementById("jqm-throbber-<%= @pasokara.id.to_s %>"));
     }
 
     function add_video_tag(id, path) {
       var video = $("<video>").attr("id", "video-" + id).attr("width", 480).attr("height", 320).attr("controls", "controls").attr("src", path);
-      $("#jqm-video").append(video);
+      $("#jqm-video-<%= @pasokara.id.to_s %>").append(video);
     }
 
     function check_m3u8(id, path, count) {
@@ -45,8 +45,8 @@
 
   <div data-role="content">
     <h3><%= h @pasokara.name %></h3>
-    <span id="jqm-throbber"></span>
-    <div id="jqm-video"></div>
+    <span id="jqm-throbber-<%= @pasokara.id.to_s %>" class="jqm-throbber"></span>
+    <div id="jqm-video-<%= @pasokara.id.to_s %>" class="jqm-video"></div>
     <%= link_to "強制エンコード", {:id => @pasokara.id, :force => true}, "data-role".to_sym => "button", "data-theme".to_sym => "c" %>
   </div>
 </div>
