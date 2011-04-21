@@ -31,7 +31,7 @@
       })
     }
 
-    $("#pasokara-preview-<%= @pasokara.id.to_s %>").pagecreate(function() {
+    $("#pasokara-preview-<%= @pasokara.id.to_s %>").live("pagecreate", function() {
       throbber_init();
       check_m3u8(<%= @pasokara.id %>, "<%= @movie_path %>", 0);
     });
