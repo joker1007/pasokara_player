@@ -48,6 +48,7 @@
   </div>
   <div data-role="content">
     <h3><%= h @pasokara.name %></h3>
+    <%= link_to "プレビュー", {:action => "preview", :id => @pasokara.id}, "data-role".to_sym => "button", "data-theme".to_sym => "c" %>
     <button data-role="button" data-theme="c" data-icon="plus" class="add-queue" access-url="<%= url_for(:action => "queue", :id => @pasokara.id, :format => "json") %>">予約する</button>
     <% if current_user %>
       <div id="remove-favorite-<%= @pasokara.id %>" style="<%= @pasokara.is_favored_by(current_user) ? "" : "display: none;" %>">
