@@ -4,7 +4,7 @@
     var throbber;
     function throbber_init() {
       throbber = new ThrobberA({size: 64});
-      throbber.show(document.getElementById("throbber"));
+      throbber.show(document.getElementById("jqm-throbber"));
     }
 
     function add_video_tag(id, path) {
@@ -45,8 +45,8 @@
 
   <div data-role="content">
     <h3><%= h @pasokara.name %></h3>
-    <span id="throbber"></span>
-    <div id="video"></div>
+    <span id="jqm-throbber"></span>
+    <div id="jqm-video"></div>
     <%= link_to "強制エンコード", {:id => @pasokara.id, :force => true}, "data-role".to_sym => "button", "data-theme".to_sym => "c" %>
   </div>
 </div>
