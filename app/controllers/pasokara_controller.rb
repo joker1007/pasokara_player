@@ -83,16 +83,16 @@ class PasokaraController < ApplicationController
     if request.smart_phone?
       if !params[:force] and @pasokara.mp4?
         @movie_path = @pasokara.movie_path
-        render
+        render :action => "preview"
       else
         @movie_path = @pasokara.m3u8_path
         @pasokara.do_encode(request.raw_host_with_port) unless @pasokara.encoded?
 
-        render
+        render :action => "preview"
       end
     else
       if @pasokara.mp4? or @pasokara.flv?
-        render
+        render :action => "preview"
       else
         render :text => "Not Flash Movie", :status => 404
       end
