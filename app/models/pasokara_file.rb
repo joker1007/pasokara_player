@@ -122,6 +122,18 @@ SQL
     stream_prefix + ".m3u8"
   end
 
+  def m3u8_path
+    "/video/#{m3u8_filename}"
+  end
+
+  def encoded?
+    File.exist?(File.join(RAILS_ROOT, "public", m3u8_path))
+  end
+
+  def do_encode(host)
+    Resque.enqueue(Job::VideoEncoder, id, host)
+  end
+
   def self.related_tags(tags, limit = 30)
     conditions = tags.map {|t| "a.name = #{ActiveRecord::Base.sanitize(t)}"}.join(" OR ")
     sql = "select d.id, d.name, COUNT(d.id) as count from (select a.id as id_1, a.name as name_1, b.tag_id, b.taggable_id from tags a inner join taggings b on a.id = b.tag_id where #{conditions} group by b.taggable_id having count(b.taggable_id) = #{tags.size}) t

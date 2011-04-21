@@ -85,15 +85,13 @@ class PasokaraController < ApplicationController
         @movie_path = @pasokara.movie_path
         render
       else
-        @movie_path = "/video/#{@pasokara.m3u8_filename}"
-        unless File.exist?("#{RAILS_ROOT}/public/video/#{@pasokara.m3u8_filename}")
-          Resque.enqueue(Job::VideoEncoder, @pasokara.id, request.raw_host_with_port)
-        end
+        @movie_path = @pasokara.m3u8_path
+        @pasokara.do_encode(request.raw_host_with_port) unless @pasokara.encoded?
 
         render
       end
     else
-      if File.exist?(@pasokara.fullpath) and extname =~ /mp4|flv/
+      if @pasokara.mp4? or @pasokara.flv?
         render
       else
         render :text => "Not Flash Movie", :status => 404
