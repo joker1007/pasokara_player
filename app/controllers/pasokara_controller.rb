@@ -81,7 +81,7 @@ class PasokaraController < ApplicationController
     @pasokara = PasokaraFile.find(params[:id])
     @movie_path = @pasokara.stream_path(request.raw_host_with_port, params[:force])
     respond_to do |format|
-      format.json {render :json => @movie_path.json}
+      format.json {render :json => {:path => @movie_path}.to_json}
     end
   end
 
