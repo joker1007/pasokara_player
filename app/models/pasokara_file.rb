@@ -140,6 +140,7 @@ SQL
     else
       path = m3u8_path
       do_encode(host) unless encoded?
+      sleep 2
     end
     path
   end
