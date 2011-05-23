@@ -15,11 +15,13 @@ class QueuedFile < ActiveRecord::Base
 
   def self.deq
     queue = QueuedFile.find(:first, :order => "created_at")
-    if queue
+    if queue and !(queue.pasokara_file.encoding)
       SingLog.create(:pasokara_file_id => queue.pasokara_file_id, :user_id => queue.user_id)
       queue.destroy
+      queue
+    else
+      nil
     end
-    queue
   end
 
 end

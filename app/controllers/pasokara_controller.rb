@@ -23,6 +23,7 @@ class PasokaraController < ApplicationController
     else
       render :text => "パラメーターが不正です。", :status => 404 and return
     end
+    @pasokara.stream_path
     QueuedFile.enq @pasokara, current_user.id
 
     message = "#{@pasokara.name} の予約が完了しました"
