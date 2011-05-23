@@ -77,19 +77,20 @@ class PasokaraController < ApplicationController
     send_file(movie_file, :filename => "#{params[:id]}#{extname}", :x_sendfile => true)
   end
 
+  def get_stream
+    @pasokara = PasokaraFile.find(params[:id])
+    @movie_path = @pasokara.stream_path(request.raw_host_with_port, params[:force])
+    respond_to do |format|
+      format.json {render :json => @movie_path.json}
+    end
+  end
+
   def preview
     @pasokara = PasokaraFile.find(params[:id])
     extname = File.extname(@pasokara.fullpath)
     if request.smart_phone?
-      if !params[:force] and @pasokara.mp4?
-        @movie_path = @pasokara.movie_path
-        render :action => "preview"
-      else
-        @movie_path = @pasokara.m3u8_path
-        @pasokara.do_encode(request.raw_host_with_port) unless @pasokara.encoded?
-
-        render :action => "preview"
-      end
+      @movie_path = @pasokara.stream_path(request.raw_host_with_port, params[:force])
+      render :action => "preview"
     else
       if @pasokara.mp4? or @pasokara.flv?
         render :action => "preview"
