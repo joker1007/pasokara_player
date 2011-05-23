@@ -73,21 +73,19 @@ class PasokaraController < ApplicationController
   def movie
     @pasokara = PasokaraFile.find(params[:id])
     movie_file = @pasokara.fullpath
-    extname = File.extname(movie_file)
-    send_file(movie_file, :filename => "#{params[:id]}#{extname}", :x_sendfile => true)
+    send_file(movie_file, :filename => "#{params[:id]}#{@pasokara.extname}", :x_sendfile => true)
   end
 
   def get_stream
     @pasokara = PasokaraFile.find(params[:id])
     @movie_path = @pasokara.stream_path(request.raw_host_with_port, params[:force])
     respond_to do |format|
-      format.json {render :json => {:path => @movie_path}.to_json}
+      format.json {render :json => {:path => @movie_path, :type => @pasokara.extname}.to_json}
     end
   end
 
   def preview
     @pasokara = PasokaraFile.find(params[:id])
-    extname = File.extname(@pasokara.fullpath)
     if request.smart_phone?
       @movie_path = @pasokara.stream_path(request.raw_host_with_port, params[:force])
       render :action => "preview"
