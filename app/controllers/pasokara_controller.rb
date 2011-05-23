@@ -17,9 +17,9 @@ class PasokaraController < ApplicationController
 
   def queue
     if params[:id] =~ /^\d+$/
-      @pasokara = PasokaraFile.find(params[:id], :select => "id, name, nico_name, duration")
+      @pasokara = PasokaraFile.find(params[:id], :select => "id, name, nico_name, duration, fullpath")
     elsif params[:id] =~ /sm\d+/
-      @pasokara = PasokaraFile.find_by_nico_name(params[:id], :select => "id, name, nico_name, duration")
+      @pasokara = PasokaraFile.find_by_nico_name(params[:id], :select => "id, name, nico_name, duration, fullpath")
     else
       render :text => "パラメーターが不正です。", :status => 404 and return
     end
