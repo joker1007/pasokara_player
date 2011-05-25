@@ -77,6 +77,14 @@ class PasokaraController < ApplicationController
     send_file(movie_file, :filename => "#{params[:id]}#{@pasokara.extname}", :x_sendfile => true)
   end
 
+  def stream
+    @pasokara = PasokaraFile.find(params[:id])
+    @movie_path = @pasokara.stream_path(request.raw_host_with_port, params[:force])
+    respond_to do |format|
+      format.html {render :layout => false}
+    end
+  end
+
   def get_stream
     @pasokara = PasokaraFile.find(params[:id])
     @movie_path = @pasokara.stream_path(request.raw_host_with_port, params[:force])
