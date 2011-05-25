@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<meta charset="UTF-8">
+<title>Stream.html</title>
+<script>
+  window.onload = function() {
+    var videoElement = document.getElementById("video-<%=h @pasokara.id%>");
+    videoElement.load();
+    videoElement.play();
+  };
+</script>
+<body>
+  <video id="video-<%=h @pasokara.id%>" controls>
+    <source src="<%=@movie_path%>" type="video/mp4">
+  </video>
+  <%= link_to("強制エンコード", :force => true) %>
+</body>
+</html>
