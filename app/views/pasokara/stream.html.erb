@@ -1,18 +1,26 @@
 <!DOCTYPE HTML>
 <html lang="ja">
-<meta charset="UTF-8">
-<title>Stream.html</title>
-<script>
-  window.onload = function() {
-    var videoElement = document.getElementById("video-<%=h @pasokara.id%>");
-    videoElement.load();
-    videoElement.play();
-  };
-</script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>Stream.html</title>
+  <%= javascript_include_tag "jquery-1.5.min" %>
+  <script>
+    $(function() {
+      var videoElement = document.getElementById("video-<%=h @pasokara.id%>");
+      videoElement.addEventListener('ended', function() {
+        Titanium.App.fireEvent("onWebView", {status:"ended"});
+      });
+      videoElement.load();
+      videoElement.play();
+    });
+  </script>
+</head>
 <body>
   <video id="video-<%=h @pasokara.id%>" controls>
     <source src="<%=@movie_path%>" type="video/mp4">
   </video>
+  <br>
   <%= link_to("強制エンコード", :force => true) %>
 </body>
 </html>
