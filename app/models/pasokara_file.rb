@@ -139,8 +139,10 @@ SQL
       path = movie_path
     else
       path = m3u8_path
-      do_encode(host) unless encoded?
-      sleep 2
+      unless encoded?
+        do_encode(host)
+        sleep 2
+      end
     end
     path
   end
