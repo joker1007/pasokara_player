@@ -5,6 +5,7 @@ class PasokaraController < ApplicationController
   before_filter :login_required, :only => [:queue, :preview]
   before_filter :top_tag_load, :except => [:tag_search, :solr_search, :thumb]
   before_filter :related_tag_load, :only => [:tag_search]
+  cache_page :thumb
 
   def list
     @pasokaras = PasokaraFile.find(:all, :select => "id, name, nico_name, duration")
