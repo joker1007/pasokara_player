@@ -5,7 +5,7 @@ module Util
     def self.create_links
       video_dir = File.join(RAILS_ROOT, "public", "video")
       pasokaras = PasokaraFile.all(:select => "id, fullpath")
-      system("rm -rf #{File.join(video_dir,"*")}")
+      #system("rm -rf #{File.join(video_dir,"*")}")
 
       pasokaras.each do |pasokara|
         if pasokara.flv? || pasokara.mp4?
